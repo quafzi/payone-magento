@@ -1,0 +1,96 @@
+<?php
+/**
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the GNU General Public License (GPL 3)
+ * that is bundled with this package in the file LICENSE.txt
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Payone_Core to newer
+ * versions in the future. If you wish to customize Payone_Core for your
+ * needs please refer to http://www.payone.de for more information.
+ *
+ * @category        Payone
+ * @package         design_adminhtml_default_default
+ * @subpackage      template
+ * @copyright       Copyright (c) 2012 <info@noovias.com> - www.noovias.com
+ * @author          Matthias Walter <info@noovias.com>
+ * @license         <http://www.gnu.org/licenses/> GNU General Public License (GPL 3)
+ * @link            http://www.noovias.com
+ */
+?>
+<b>Hier können Sie die Optionen für den Versand von Artikelinformationen konfigurieren. Diese Informationen werden bei den Abfragen Autorisation,<br>
+    Vorautorisation und Capture an PAYONE übermittelt. Anhand dieser Informationen können dann auf der PAYONE Plattform Rechnungen erzeugt werden.<br>
+    Um diese Optionen nutzen zu können ist eine Beauftragung des Moduls Invoicing bei PAYONE notwendig.
+</b><br>
+<br>
+<div class="field-name">PDF Download aktivieren</div>
+<div class="field-description">
+    Hier können Sie den Download der Rechnung von PAYONE aktivieren / deaktivieren.<br>
+    Sie erhalten dann an der Rechnung einen zusätzlichen Button zum Download des PDF.<br>
+    <b>Optionen:</b><br>
+    <ul>
+        <li>Ja</li>
+        <li>Nein</li>
+    </ul>
+</div>
+<br>
+<div class="field-name">Rechnungsinformationen übertragen</div>
+<div class="field-description">
+    Hier können Sie die Übertragung der Rechnungsinformationen aktivieren / deaktivieren.<br>
+    <b>Optionen:</b><br>
+    <ul>
+        <li>Ja</li>
+        <li>Nein</li>
+    </ul>
+</div>
+<br>
+<div class="field-name">Dynamischer Text auf der Rechnung</div>
+<div class="field-description">
+    Dieser Text kann zusätzlich an PAYONE übergeben werden und erscheint im Anschluss gem. Ihrer Spezifikationen auf dem Rechnungsdokument.<br>
+    Der Text hat eine Maximale Länge von 255 Zeichen. Alle Zeichen über diese Länge hinaus werden abgeschnitten.<br>
+    Um Informationen aus Magento zu übergeben stehen einige Variablen zur Verfügung die Sie in den Text einfließen lassen können.<br>
+    <br>
+    Die Namen der Variablen müssen wie folgt notiert werden.<br>
+    <b>{{VARIABLENAME}}</b><br>
+    <br>
+    <b>Beispiel:</b>
+    <br>
+    Ihre Rechnung zur Bestellung {{order_increment_id}}<br>
+    <br>
+    <b>Folgende Variablen stehen zur Verfügung:</b><br>
+    <ul>
+        <li><b>{{order_increment_id}}</b> wird ersetzt durch die Bestellnummer</li>
+        <li><b>{{order_id}}</b> wird ersetzt durch die Datenbank-ID der Bestellung</li>
+        <li><b>{{customer_increment_id}}</b> wird ersetzt durch die Kundennummer</li>
+        <li><b>{{customer_id}}</b> wird ersetzt durch die Datenbank-ID des Kunden</li>
+        <li><b>{{invoice_increment_id}}</b> wird ersetzt durch die Rechnungsnummer</li>
+    </ul>
+</div>
+<br>
+<div class="field-name">Dynamischer Text auf der Gutschrift</div>
+<div class="field-description">
+    Dieser Text kann zusätzlich an PAYONE übergeben werden und erscheint im Anschluss gem. Ihrer Spezifikationen auf dem Gutschriftsdokument.<br>
+    Der Text hat eine Maximale Länge von 255 Zeichen. Alle Zeichen über diese Länge hinaus werden abgeschnitten.<br>
+    Um Informationen aus Magento zu übergeben stehen einige Variablen zur Verfügung die Sie in den Text einfließen lassen können.<br>
+    <br>
+    Die Namen der Variablen müssen wie folgt notiert werden.<br>
+    <b>{{VARIABLENAME}}</b><br>
+    <br>
+    <b>Beispiel:</b>
+    <br>
+    Ihre Gutschrift zur Rechnung {{invoice_increment_id}}<br>
+    <br>
+    <b>Folgende Variablen stehen zur Verfügung:</b><br>
+    <ul>
+        <li><b>{{order_increment_id}}</b> wird ersetzt durch die Bestellnummer</li>
+        <li><b>{{order_id}}</b> wird ersetzt durch die Datenbank-ID der Bestellung</li>
+        <li><b>{{customer_increment_id}}</b> wird ersetzt durch die Kundennummer</li>
+        <li><b>{{customer_id}}</b> wird ersetzt durch die Datenbank-ID des Kunden</li>
+        <li><b>{{invoice_increment_id}}</b> wird ersetzt durch die Rechnungsnummer</li>
+        <li><b>{{creditmemo_increment_id}}</b> wird ersetzt durch die Nummer der Gutschrift</li>
+    </ul>
+</div>
+<br>

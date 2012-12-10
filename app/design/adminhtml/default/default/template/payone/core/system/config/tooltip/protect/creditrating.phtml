@@ -1,0 +1,148 @@
+<?php
+/**
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the GNU General Public License (GPL 3)
+ * that is bundled with this package in the file LICENSE.txt
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Payone_Core to newer
+ * versions in the future. If you wish to customize Payone_Core for your
+ * needs please refer to http://www.payone.de for more information.
+ *
+ * @category        Payone
+ * @package         design_adminhtml_default_default
+ * @subpackage      template
+ * @copyright       Copyright (c) 2012 <info@noovias.com> - www.noovias.com
+ * @author          Matthias Walter <info@noovias.com>
+ * @license         <http://www.gnu.org/licenses/> GNU General Public License (GPL 3)
+ * @link            http://www.noovias.com
+ */
+?>
+<b>Die Bonitätsprüfung wird in Zusammenarbeit mit arvato Infoscore durchgeführt.<br>
+    ACHTUNG: Diese Prüfung ist nur für Kunden aus Deutschland möglich.<br>
+</b>
+<br>
+<div class="field-name">Aktiviert</div>
+<div class="field-description">
+    Hier aktivieren Sie die Bonitätsprüfung mit allen folgenden Konfigurationsmöglichkeiten.<br>
+    <br>
+    <b>Optionen:</b><br>
+    <ul>
+        <li>Ja</li>
+        <li>Nein</li>
+    </ul>
+</div>
+<br>
+<div class="field-name">Zeitpunkt der Prüfung</div>
+<div class="field-description">
+    Hier können Sie definieren wann der Kunde geprüft werden soll.<br>
+    <br>
+    <b>Optionen:</b><br>
+    <ul>
+        <li>Vor Auswahl der Zahlart<br>
+            Die Bonität des Kunden wird geprüft, wenn die notwendigen Adress und Namesinformationen vorliegen. Dies geschieht vor der Auswahl der Zahlart.<br>
+            Diese Prüfung findet nicht sichtbar für den Kunden im Hintergrund statt.
+        </li>
+        <li>Nach Auswahl der Zahlart<br>
+            Bei Auswahl dieser Option erscheint ein Auswahlfeld in dem Sie auswählen können für welche Zahlarten eine anschließende Bonitätsprüfung stattfinden soll.<br>
+            Optional können Sie einstellen, ob ein "Allgemeinerhinweis" angezeigt werden soll und ob eine "Zustimmung des Kunden" notwendig ist.
+        </li>
+    </ul>
+</div>
+<br><div class="field-name">Bonitätschecktyp</div>
+<div class="field-description">
+    Hier können Sie konfigurieren welche Art von Überprüfung der Bonität durchgeführt werden soll.<br>
+    <br>
+    <b>Optionen:</b><br>
+    <ul>
+        <li>Infoscore harte Merkmale<br>
+            Prüfung auf so genannte "harte" Negativmerkmale (z.B. Verbraucherinsolvenzverfahren, Haftbefehl zur Eidesstattlichen Versicherung oder<br>
+            Erzwingung der Abgabe der Eidesstattlichen Versicherung).
+        </li>
+        <li>Infoscore alle Merkmale<br>
+            Prüfung auf so genannte "harte" Negativmerkmale (z.B. Verbraucherinsolvenzverfahren, Haftbefehl zur Eidesstattlichen Versicherung oder<br>
+            Erzwingung der Abgabe der Eidesstattlichen Versicherung), "mittlere" Negativmerkmale (z.B. Mahnbescheid, Vollstreckungsbescheid oder Zwangsvollstreckung)<br>
+            und "weiche" Negativmerkmale (z.B. Inkasso-Mahnverfahren eingeleitet, Fortlauf des außergerichtlichen Inkasso-Mahnverfahrens nach Teilzahlung,<br>
+            Einstellung des außergerichtlichen Inkasso-Mahnverfahrens wegen Aussichtslosigkeit).
+        </li>
+        <li>Infoscore alle Merkmale + Boniscore<br>
+            Prüfung auf so genannte "harte" Negativmerkmale (z.B. Verbraucherinsolvenzverfahren, Haftbefehl zur Eidesstattlichen Versicherung oder<br>
+            Erzwingung der Abgabe der Eidesstattlichen Versicherung), "mittlere" Negativmerkmale (z.B. Mahnbescheid, Vollstreckungsbescheid oder Zwangsvollstreckung)<br>
+            und "weiche" Negativmerkmale (z.B. Inkasso-Mahnverfahren eingeleitet, Fortlauf des außergerichtlichen Inkasso-Mahnverfahrens nach Teilzahlung,<br>
+            Einstellung des außergerichtlichen Inkasso-Mahnverfahrens wegen Aussichtslosigkeit). Der Boniscore ist ein Scorewert und ermöglicht eine<br>
+            höhere Trennschärfe bei vorliegenden Negativmerkmalen.
+        </li>
+    </ul>
+</div>
+<br>
+<div class="field-name">Erlaubte Zahlarten bei Ampelwert "GELB"</div>
+<div class="field-description">
+    Hier wählen Sie die erlaubten Zahlarten bei einem Ergenis vom Typ <i>GELB</i> aus.<br>
+</div>
+<br>
+<div class="field-name">Erlaubte Zahlarten bei Ampelwert "ROT"</div>
+<div class="field-description">
+    Hier wählen Sie die erlaubten Zahlarten bei einem Ergenis vom Typ <i>ROT</i> aus.<br>
+</div>
+<br>
+<div class="field-name">A/B-Test-Modus aktivieren</div>
+<div class="field-description">
+    Stellen Sie hier die Häufigkeit der Bonitätsprüfungen ein.<br>
+    <br>
+    <b>Optionen:</b><br>
+    <ul>
+        <li>Ja<br>
+            Es wird ein Eingabefeld dargestellt in dem Sie die Anzahl als Ganzwert eintragen können mit der die jeweils n'te Bestellung<br>
+            nach den Kriterien aller anderen Parameter duchgeführt wird.
+        </li>
+        <li>Nein</li>
+    </ul>
+</div>
+<br>
+<div class="field-name">Behandlung von Fehlern</div>
+<div class="field-description">
+    Konfiguration wie an dieser Stelle, bei Fehlern in der Prüfung oder Nichterreichbarkeit der Bonitätsprüfungssysteme, verfahren werden soll.<br>
+    Dies bezieht sich auf die Rückmeldung von der PAYONE Plattform mit dem Ergebnis
+    <span style="color:red; font-style:italic;">ERROR</span><br>
+    <br>
+    <b>Optionen:</b><br>
+    <ul>
+        <li>Bestellprozess fortführen</li>
+        <li>Bestellprozess abbrechen</li>
+    </ul>
+</div>
+<br>
+<div class="field-name">Gültigkeit</div>
+<div class="field-description">
+    Hier kann die Gültigkeitsdauer einer Bonitätsprüfung in Tagen eingestellt werden. Innerhalb dieses Zeitraumes werden keine weiteren Anfragen für diesen Benutzer gestellt.<br>
+    Vorraussetzung dafür ist das dieser Kunde registriert ist oder sich innerhalb des ersten Vorgangs registiert hat.<br>
+    <br>
+    <b>ACHTUNG</b> Für Gastkäufer greift die Gültigkeit nicht.<br>
+</div>
+<br>
+<div class="field-name">Betriebsmodus</div>
+<div class="field-description">
+    Hier legen Sie fest in welchem Betriebsmodus die Anfrage an die PAYONE Plattform gestellt wird.<br>
+    <br>
+    <b>Optionen:</b><br>
+    <ul>
+        <li>Test</li>
+        <li>Live</li>
+    </ul>
+</div>
+<br>
+<div class="field-name">Mindestwert für Gesamtbestellung</div>
+<div class="field-description">
+    Der hier zu konfigurierende Wert ist der Wert, ab dem eine Bonitätsprüfung durchgeführt wird.<br>
+    Ist der Gesamtwarenkorbwert unterhalb dieses Wertes wird keine Bonitätsprüfung ausgeführt.<br>
+</div>
+<br>
+<div class="field-name">Höchstwert für Gesamtbestellung</div>
+<div class="field-description">
+    Der hier zu konfigurierende Wert ist der Wert, bis zu dem eine Bonitätsprüfung durchgeführt wird.<br>
+    Ist der Gesamtwarenkorbwert oberhalb dieses Wertes wird keine Bonitätsprüfung ausgeführt.<br>
+</div>
+<br>

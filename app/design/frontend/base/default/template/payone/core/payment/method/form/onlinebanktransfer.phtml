@@ -1,0 +1,95 @@
+<?php
+/**
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the GNU General Public License (GPL 3)
+ * that is bundled with this package in the file LICENSE.txt
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Payone_Core to newer
+ * versions in the future. If you wish to customize Payone_Core for your
+ * needs please refer to http://www.payone.de for more information.
+ *
+ * @category        Payone
+ * @package         design_frontend_base_default
+ * @subpackage      template
+ * @copyright       Copyright (c) 2012 <info@noovias.com> - www.noovias.com
+ * @author          Matthias Walter <info@noovias.com>
+ * @license         <http://www.gnu.org/licenses/> GNU General Public License (GPL 3)
+ * @link            http://www.noovias.com
+ */
+
+/** @var $this Payone_Core_Block_Payment_Method_Form_OnlineBankTransfer */
+$code = $this->getMethodCode();
+$country = $this->getCountry();
+$paymentConfigId = $this->getInfoData('payone_config_payment_method_id');
+$paymentType = $this->getInfoData('payone_onlinebanktransfer_type');
+
+$maxLengthAccountNumber = 10;
+if ($country == 'AT') {
+    $maxLengthAccountNumber = 11;
+}
+?>
+<fieldset class="form-list">
+    <ul id="payment_form_<?php echo $code; ?>" style="display:none">
+        <li>
+            <div class="input-box">
+                <label for="<?php echo $code; ?>_account_number">
+                    <?php echo $this->__('Online bank transfer type'); ?>&nbsp;<span class="required">*</span>
+                </label><br/>
+                <select id="<?php echo $code ?>_obt_type_select" name="<?php echo $code ?>_obt_type_select"
+                        class="required-entry" onchange="payoneSwitchOnlineBankTransfer(this);">
+                    <option value=""><?php echo $this->__('--Please Select--') ?></option>
+                    <?php
+                    foreach ($this->getTypes() as $key => $type):
+                        $typeConfigId = $type['config_id'];
+                        $selected = '';
+                        if($typeConfigId == $paymentConfigId && $paymentType == $type['code'])
+                        {
+                            $paymentConfigId = $typeConfigId;
+                            $selected = 'selected="selected"';
+                        }
+                        ?>
+                        <option value="<?php echo $key ?>"<?php echo $selected; ?>>
+                            <?php echo $type['name']; ?><span><?php echo $type['fee']; ?></span>
+                        </option>
+                        <?php endforeach; ?>
+                </select>
+
+                <input type="hidden" id="<?php echo $code ?>_obt_type" name="payment[payone_onlinebanktransfer_type]" value="<?php echo $paymentType; ?>" class=""/>
+                <input type="hidden" name="payment[payone_config_payment_method_id]"
+                       id="<?php echo $code ?>_config_id" value="<?php echo $paymentConfigId; ?>"/>
+            </div>
+        </li>
+        <?php if ($this->isAvailableAccountNumber()): ?>
+        <li id="account_number_wrap">
+            <div class="input-box">
+                <label for="<?php echo $code ?>_account_number">
+                    <?php echo $this->__('Account number') ?>&nbsp;<span class="required">*</span>
+                </label><br/>
+                <input type="text" id="<?php echo $code ?>_account_number" name="payment[payone_account_number]"
+                       title="<?php echo $this->__('Account number') ?>"
+                       class="validate-digits required-entry input-text" value="" autocomplete="off"
+                       maxlength="<?php echo $maxLengthAccountNumber; ?>"/>
+            </div>
+        </li>
+        <?php endif;?>
+        <?php if ($this->isAvailableBankCode()): ?>
+        <li id="bank_code_wrap">
+            <div class="input-box">
+                <label for="<?php echo $code ?>_bank_code">
+                    <?php echo $this->__('Bank code') ?>&nbsp;<span class="required">*</span>
+                </label><br/>
+                <input type="text" id="<?php echo $code ?>_bank_code" name="payment[payone_bank_code]"
+                       title="<?php echo $this->__('Bank code') ?>" class="validate-digits required-entry input-text"
+                       value="" maxlength="10"/>
+            </div>
+        </li>
+        <?php endif;?>
+        <?php if ($this->isAvailableBankGroup()): ?>
+        <?php echo $this->getBlockHtmlBankGroup(); ?>
+        <?php endif;?>
+    </ul>
+</fieldset>

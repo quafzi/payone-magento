@@ -1,0 +1,72 @@
+<?php
+/**
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the GNU General Public License (GPL 3)
+ * that is bundled with this package in the file LICENSE.txt
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Payone_Core to newer
+ * versions in the future. If you wish to customize Payone_Core for your
+ * needs please refer to http://www.payone.de for more information.
+ *
+ * @category        Payone
+ * @package         design_adminhtml_default_default
+ * @subpackage      template
+ * @copyright       Copyright (c) 2012 <info@noovias.com> - www.noovias.com
+ * @author          Matthias Walter <info@noovias.com>
+ * @license         <http://www.gnu.org/licenses/> GNU General Public License (GPL 3)
+ * @link            http://www.noovias.com
+ */
+?>
+<b>Konfigurieren Sie hier den E-Mailversand bei Nutzung von AVS (Address Verfication System). Diese Funktion wird von American Express bereitgestellt<br>
+    und überprüft die numerischen Bestandteile einer angegeben Adresse mit den gespeicherten Daten auf Seiten von American Express. Je nach Ergebnis<br>
+    werden unterschiedliche Werte nach einer Anfrage zurückgesendet.<br>
+    <br>
+    Diese Funktion ist nur nutzbar bei Zahlung mit der Kreditkarte von American Express und muss gesondert bei PAYONE beauftragt werden.
+</b><br>
+<br>
+<div class="field-name">Aktiviert</div>
+<div class="field-description">
+    Hier aktivieren Sie den AVS-Emailversand.<br>
+    <br>
+    <b>Optionen:</b><br>
+    <ul>
+        <li>Ja</li>
+        <li>Nein</li>
+    </ul>
+</div>
+<br>
+<div class="field-name">Sende Email für AVS-Werte</div>
+<div class="field-description">
+    <b>Optionen:</b><br>
+    <ul>
+        <li>Hausnummer ist ok, Postleitzahl ist nicht ok</li>
+        <li>Hausnummer und Postleitzahl sind ok</li>
+        <li>Weder Hausnummer noch Postleitzahl sind ok</li>
+        <li>Anfrage wird nicht unterstützt</li>
+        <li>Hausnummer ist nicht ok, aber Postleitzahl ist ok</li>
+    </ul>
+</div>
+<br><div class="field-name">Absender</div>
+<div class="field-description">
+    Hier können Sie den Absender der Mail auswählen den Sie in den Magento Einstellungen definiert haben.<br>
+</div>
+<br>
+<div class="field-name">Empfänger</div>
+<div class="field-description">
+    Hier können Sie den Empfänger der Mail auswählen den Sie in den Magento Einstellungen definiert haben.<br>
+</div>
+<br>
+<div class="field-name">Kopie an</div>
+<div class="field-description">
+    Hier können Sie als Freitext kommasepariert weitere Empfänger angeben.<br>
+</div>
+<br>
+<div class="field-name">Vorlage</div>
+<div class="field-description">
+    Hier wählen Sie die Vorlage aus die beim Versand der AVS-Email verwendet werden soll.<br>
+</div>
+<br>

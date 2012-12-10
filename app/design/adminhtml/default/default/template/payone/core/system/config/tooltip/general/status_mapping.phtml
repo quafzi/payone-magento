@@ -1,0 +1,66 @@
+<?php
+/**
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the GNU General Public License (GPL 3)
+ * that is bundled with this package in the file LICENSE.txt
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Payone_Core to newer
+ * versions in the future. If you wish to customize Payone_Core for your
+ * needs please refer to http://www.payone.de for more information.
+ *
+ * @category        Payone
+ * @package         design_adminhtml_default_default
+ * @subpackage      template
+ * @copyright       Copyright (c) 2012 <info@noovias.com> - www.noovias.com
+ * @author          Matthias Walter <info@noovias.com>
+ * @license         <http://www.gnu.org/licenses/> GNU General Public License (GPL 3)
+ * @link            http://www.noovias.com
+ */
+?>
+<p><strong>Der Status der Zahlung wird von der PAYONE Plattform mittels der Transaktionsstatusmeldung an den
+    Magento-Onlineshop versendet.<br>
+    Dieser Status kann viele verschiedene Zustände annehmen die äbhängig von der Zahlart sein können. An dieser Stelle
+    können Sie bestimmen<br>
+    welcher Zustand mit welchem Status in Magento verknüpft werden soll. Dies können Sie für alle Zahlarten
+    vornehmen.<br>
+</strong></p>
+<ul class="payone-config-warning">
+    <li class="payone-config-warning-content"><span>Stellen Sie weiterhin sicher, dass die Cronjobs für ihr System korrekt eingerichtet sind.<span></li>
+</ul>
+<br>
+<div class="field-name">Transaktionsstatus-Meldung</div>
+<div class="field-description">
+    <b>Optionen:</b><br>
+    <ul>
+        <li>Erfolg</li>
+        <li>Einzug</li>
+        <li>Zahlung</li>
+        <li>Unterzahlung</li>
+        <li>Rückbelastung</li>
+        <li>Rückerstattung</li>
+        <li>Forderung</li>
+        <li>Mahnstatus</li>
+        <li>Buchung</li>
+        <li>Abrechnung</li>
+        <li>Umbuchung</li>
+        <li>Rechnungsbeleg</li>
+    </ul>
+</div>
+<br>
+<div class="field-name">Magento-Status</div>
+<div class="field-description">
+    <b>Optionen:</b><br>
+    <ul>
+        <li>Ausstehend</li>
+        <li>Verarbeitung</li>
+        <li>Vollständig</li>
+        <li>Geschlossen</li>
+        <li>Storniert</li>
+        <li>Zurückgestellt</li>
+    </ul>
+</div>
+<br>

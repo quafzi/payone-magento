@@ -1,0 +1,79 @@
+<?php
+/**
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the GNU General Public License (GPL 3)
+ * that is bundled with this package in the file LICENSE.txt
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Payone_Core to newer
+ * versions in the future. If you wish to customize Payone_Core for your
+ * needs please refer to http://www.payone.de for more information.
+ *
+ * @category        Payone
+ * @package         design_frontend_base_default
+ * @subpackage      template
+ * @copyright       Copyright (c) 2012 <info@noovias.com> - www.noovias.com
+ * @author          Matthias Walter <info@noovias.com>
+ * @license         <http://www.gnu.org/licenses/> GNU General Public License (GPL 3)
+ * @link            http://www.noovias.com
+ */
+?>
+<?php
+$code = $this->getMethodCode();
+$country = $this->getCountry();
+if ($country == 'AT'): ?>
+<li id="bank_group_wrap" style="display: none;">
+    <div class="input-box">
+        <label for="<?php echo $code ?>_bank_group">
+            <?php echo $this->__('Bank group') ?>&nbsp;<span class="required">*</span>
+        </label><br/>
+        <select name="payment[payone_bank_group]" id="<?php echo $code ?>_bank_group">
+            <option value="ARZ_OVB">Commercial credit cooperatives (Volksbank)</option>
+            <option value="ARZ_BAF">Bank for doctors and independent professions</option>
+            <option value="ARZ_NLH">Hypo state bank Lower Austria</option>
+            <option value="ARZ_VLH">Hypo state bank Voralberg</option>
+            <option value="ARZ_BCS">Bankhaus Carl Spängler & Co. AG</option>
+            <option value="ARZ_HTB">Hypo bank Tyrol</option>
+            <option value="ARZ_HAA">Hypo Alpe Adria</option>
+            <option value="ARZ_IKB">Investkredit bank</option>
+            <option value="ARZ_OAB">Österreichische Apothekerbank</option>
+            <option value="ARZ_IMB">Immobank</option>
+            <option value="ARZ_GRB">Gärtnerbank</option>
+            <option value="ARZ_HIB">HYPO Investment bank</option>
+            <option value="BA_AUS">Bank Austria</option>
+            <option value="BAWAG_BWG">BAWAG</option>
+            <option value="BAWAG_PSK">PSK Bank</option>
+            <option value="BAWAG_ESY">easybank</option>
+            <option value="BAWAG_SPD">Sparda Bank</option>
+            <option value="SPARDAT_EBS">Erste Bank</option>
+            <option value="SPARDAT_BBL">Bank Burgenland</option>
+            <option value="RAC_RAC">Raiffeisen bank</option>
+            <option value="HRAC_OOS">Hypo bank Upper Austria</option>
+            <option value="HRAC_SLB">Hypo bank Salzburg</option>
+            <option value="HRAC_STM">Hypo bank Styria</option>
+        </select>
+    </div>
+</li>
+<?php endif; ?>
+<?php if ($country == 'NL'): ?>
+<li id="bank_group_wrap_nl" style="display: block;">
+    <div class="input-box">
+        <label for="<?php echo $code ?>_bank_group"><?php echo $this->__('Bank group') ?> <span
+                class="required">*</span></label><br/>
+        <select name="payment[payone_bank_group]" id="<?php echo $code ?>_bank_group">
+            <option value="ABN_AMRO_BANK">ABN AMRO</option>
+            <option value="FORTIS_BANK">Fortis</option>
+            <option value="FRIESLAND_BANK">Friesland Bank</option>
+            <option value="ING_BANK">ING</option>
+            <option value="RABOBANK">Rabobank</option>
+            <option value="SNS_BANK">SNS BANK</option>
+            <option value="ASN_BANK">ASN Bank</option>
+            <option value="SNS_REGIO_BANK">SNS Regio Bank</option>
+            <option value="TRIODOS_BANK">Triodos Bank</option>
+        </select>
+    </div>
+</li>
+<?php endif; ?>

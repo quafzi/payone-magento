@@ -1,0 +1,127 @@
+<?php
+/**
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the GNU General Public License (GPL 3)
+ * that is bundled with this package in the file LICENSE.txt
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Payone_Core to newer
+ * versions in the future. If you wish to customize Payone_Core for your
+ * needs please refer to http://www.payone.de for more information.
+ *
+ * @category        Payone
+ * @package         design_adminhtml_default_default
+ * @subpackage      template
+ * @copyright       Copyright (c) 2012 <info@noovias.com> - www.noovias.com
+ * @author          Matthias Walter <info@noovias.com>
+ * @license         <http://www.gnu.org/licenses/> GNU General Public License (GPL 3)
+ * @link            http://www.noovias.com
+ */
+?>
+<?php
+/** @var $parent Payone_Core_Block_Adminhtml_System_Config_Tooltip */
+$parent = $this->getParentBlock();
+$id = $parent->getElement()->getId();
+$method = str_replace(array('payone_payment_template_', '_hint'), '', $id);
+
+$template = 'payone/core/system/config/tooltip/payment/' . $method . '.phtml';
+
+$html = $parent->getChildHintHtml($template);
+echo $html;
+?>
+<div class="field-name">Aktiviert</div>
+<div class="field-description">
+    Hier aktivieren / deaktivieren Sie die Zahlungsmethode.<br>
+</div>
+<br>
+<div class="field-name">Reihenfolge</div>
+<div class="field-description">
+    Hier definieren Sie per Ganzzahl die Position in der diese Zahlmethode im Checkout dargestellt wird.<br>
+</div>
+<br>
+<div class="field-name">Name</div>
+<div class="field-description">
+    Hier können Sie den Namen der Zahlmethode definieren. Dieser Name wird auch im Checkout dargestellt.<br>
+</div>
+<br>
+<div class="field-name">Bearbeitungsgebühr</div>
+<div class="field-description">
+    Hier können Sie länderabhängig Gebühren für diese Zahlmethode definieren.<br>
+</div>
+<br>
+<div class="field-name">Mindestwert für die Gesamtbestellung</div>
+<div class="field-description">
+    Hier können Sie konfigurieren wie hoch der Wert der Gesamtbestellung mindestens sein muss, damit diese
+    Zahlungsmethode im Checkout angeboten wird.<br>
+</div>
+<br>
+<div class="field-name">Höchstwert für die Gesamtbestellung</div>
+<div class="field-description">
+    Hier können Sie konfigurieren wie hoch der Wert der Gesamtbestellung sein darf, damit diese Zahlungsmethode im
+    Checkout angeboten wird.<br>
+</div>
+<br>
+<div class="field-name">Betriebsmodus</div>
+<div class="field-description">
+    Hier legen Sie fest in welchem Betriebsmodus die Anfrage an die PAYONE Plattform gestellt wird.<br>
+    <br>
+    <b>Optionen:</b><br>
+    <ul>
+        <li>Test</li>
+        <li>Live</li>
+    </ul>
+</div>
+<br>
+<div class="field-name">Nutze Globale Einstellungen</div>
+<div class="field-description">
+    Hier können Sie einstellen ob für die Zahlungsmethode die Globalen Einstellungen genutzt werden sollen.<br>
+</div>
+<br>
+<b>Bei Auswahl von 'Nutze Globale Einstellungen' Nein</b>
+<br>
+<br>
+<div class="field-name">Zahlung aus erlaubten Ländern</div>
+<div class="field-description">
+    Definieren Sie die Länder, in denen diese Einstellungen gelten. Die Einstellung folgt dem Magento Länderauswahlstandard.<br>
+</div>
+<br>
+<div class="field-name">Merchant - ID</div>
+<div class="field-description">
+    Die Kundennummer, die Sie für Ihren Account bei PAYONE erhalten haben.<br>
+</div>
+<br>
+<div class="field-name">Portal-ID</div>
+<div class="field-description">
+    Die Identifikationsnummer des Zahlungsportals über das alle Transaktionen für Ihren Shop abgewickelt werden sollen.<br>
+</div>
+<br>
+<div class="field-name">Sub-Account-ID</div>
+<div class="field-description">
+    Die Identifikationsnnummer der Abrechnungseinheit die Sie im PMI erstellt haben.<br>
+</div>
+<br>
+<div class="field-name">Sicherheitsschlüssel (Key)</div>
+<div class="field-description">
+    Tragen Sie hier den von Ihnen definierten PMI-Sicherheitsschlüssel ein, um eine gesicherte Kommunikation zu gewährleisten.<br>
+</div>
+<br>
+<div class="field-name">Autorisierungsmethode</div>
+<div class="field-description">
+    Hier können Sie einstellen welches Verfahren Sie für Ihre Transaktion verwenden wollen.<br>
+    <br>
+    <b>Optionen:</b><br>
+    <ul>
+        <li>Vorautorisierung<br>
+            Dieses Verfahren versucht zunächst eine Reservierung des Betrages auf dem ausgewählten Zahlungsmittel. Zu einen späteren Zeitpunkt<br>
+            wird per Capture das Geld vom Zahlungsmittel abgebucht. Dieses Verfahren ist zu empfehlen, wenn Sie Versender von materiellen Gütern sind.<br>
+            Erst zum Zeitpunkt des Warenversandes wird dann der Geldeinzug vorgenommen.
+        </li>
+        <li>Autorisierung<br>
+            Dieses Verfahren zieht das Geld sofort vom ausgewählten Zahlungsmittel ein. Diese Methode empfiehlt sich für alle imateriellen Güter oder Content.
+        </li>
+    </ul>
+    <br>
+</div>

@@ -1,0 +1,69 @@
+<?php
+/**
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the GNU General Public License (GPL 3)
+ * that is bundled with this package in the file LICENSE.txt
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Payone_Core to newer
+ * versions in the future. If you wish to customize Payone_Core for your
+ * needs please refer to http://www.payone.de for more information.
+ *
+ * @category        Payone
+ * @package         design_adminhtml_default_default
+ * @subpackage      template
+ * @copyright       Copyright (c) 2012 <info@noovias.com> - www.noovias.com
+ * @author          Matthias Walter <info@noovias.com>
+ * @license         <http://www.gnu.org/licenses/> GNU General Public License (GPL 3)
+ * @link            http://www.noovias.com
+ */
+?>
+<?php
+/**
+ * @var $this Payone_Core_Block_Adminhtml_System_Config_Hint
+ */
+?>
+<p>
+    <b>Zahlart</b><br>
+    <br>
+    Hier fügen Sie eine weitere Zahlmethode zur Nutzung im Checkout Ihres Shop hinzu.
+</p>
+Folgende Zahlarten stehen zur Verfügung:<br>
+<ul>
+    <li>Vorkasse (advance_payment)</li>
+    <li>Nachnahme (cash_on_delivery)</li>
+    <li>Kreditkarte (creditcard)</li>
+    <li>Lastschrift (debit_payment)</li>
+    <li>Rechnung (invoice)</li>
+    <li>Onlineüberweisung (online_bank_transfer)</li>
+    <li>Wallet (wallet)</li>
+</ul>
+<br>
+In der Übersicht sehen Sie die einzelnen angelegten Zahlarten mit folgenden Informationen:<br>
+<br>
+<ul>
+    <li><strong>Reihenfolge</strong>
+        <br>Ganze Zahl die definiert an welcher Position im Checkout die Zahlmethode angezeigt wird
+    </li>
+    <li><strong>Name</strong>
+        <br>Der von Ihnen eingegebene Name der Zahlmethode
+    </li>
+    <li><strong>Art</strong>
+        <br>Die technische Bezeichnung der Zahlmethode
+    </li>
+    <li><strong>Geltungsbereich</strong>
+        <br>Anzeige für welche Ebene Ihres Magento-Shops diese Konfiguration gültig ist
+    </li>
+    <li><strong>Aktiviert</strong>
+        <br>Zeigt an ob diese Zahlmethode aktiv ist oder nicht.
+    </li>
+    <li><strong>ID</strong>
+        <br>eindeutige Identifikationsnummer der Zahlmethode
+    </li>
+    <li><strong>Aktion</strong>
+        <br>Hier ist der Link zum Bearbeiten der jeweiligen Zahlungsmethode enthalten
+    </li>
+</ul>

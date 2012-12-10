@@ -1,0 +1,155 @@
+<?php
+/**
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the GNU General Public License (GPL 3)
+ * that is bundled with this package in the file LICENSE.txt
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Payone_Core to newer
+ * versions in the future. If you wish to customize Payone_Core for your
+ * needs please refer to http://www.payone.de for more information.
+ *
+ * @category        Payone
+ * @package         design_adminhtml_default_default
+ * @subpackage      template
+ * @copyright       Copyright (c) 2012 <info@noovias.com> - www.noovias.com
+ * @author          Matthias Walter <info@noovias.com>
+ * @license         <http://www.gnu.org/licenses/> GNU General Public License (GPL 3)
+ * @link            http://www.noovias.com
+ */
+?>
+<div class="field-name">Aktiviert</div>
+<div class="field-description">
+    Hier aktivieren Sie die Prüfung der Adresse mit allen folgenden Konfigurationsmöglichkeiten.<br>
+    <br>
+    <b>Optionen:</b><br>
+    <ul>
+        <li>Ja</li>
+        <li>Nein</li>
+    </ul>
+</div>
+<br>
+<div class="field-name">Prüfe Rechnungsadresse</div>
+<div class="field-description">
+    Hier können Sie konfigurieren wie die Prüfung der Rechnungsadresse durchgeführt wird.<br>
+    <br>
+    <b>Optionen:</b><br>
+    <ul>
+        <li>kein</li>
+        <li>Basic</li>
+        <li>Person</li>
+    </ul>
+    <br>
+
+    <div class="payone-group-hint">
+        <h6>Basic</h6>
+        Prüfung der Adresse auf Existenz sowie Ergänzung und Korrektur der Adresse (Möglich für Adressen aus
+        Deutschland,
+        Österreich, Schweiz, Niederlande, Belgien, Luxemburg, Frankreich, Italien, Spanien, Portugal, Dänemark,
+        Schweden,
+        Finnland, Norwegen, Polen, Slowakei, Tschechien, Ungarn, USA, Kanada)<br>
+        <h6>Person</h6>
+        Prüfung ob die Person unter der angegebenen Adresse bekannt ist, Prüfung der Adresse auf Existenz sowie
+        Ergänzung und Korrektur der Adresse (nur Deutschland)<br>
+        <br>
+    </div>
+</div>
+<br>
+<div class="field-name">Prüfe Lieferadresse</div>
+<div class="field-description">
+    Hier können Sie konfigurieren wie die Prüfung der Lieferadresse durchgeführt wird.<br>
+    <br>
+    <b>Optionen:</b><br>
+    <ul>
+        <li>kein</li>
+        <li>Basic</li>
+        <li>Person</li>
+    </ul>
+</div>
+<br>
+<div class="field-name">Betriebsmodus</div>
+<div class="field-description">
+    Hier legen Sie fest in welchem Betriebsmodus die Anfrage an die PAYONE Plattform gestellt wird.<br>
+    <br>
+    <b>Optionen:</b><br>
+    <ul>
+        <li>Test</li>
+        <li>Live</li>
+    </ul>
+</div>
+<br>
+<div class="field-name">Mindestwert für Gesamtbestellung</div>
+<div class="field-description">
+    Der hier zu konfigurierende Wert ist der Wert ab dem eine Adressprüfung durchgeführt wird. <br>
+    Ist der Gesamtwarenkorbwert unterhalb dieses Wertes wird keine Adressprüfung ausgeführt.
+</div>
+<br>
+<div class="field-name">Höchstwert für Gesamtbestellung</div>
+<div class="field-description">
+    Der hier zu konfigurierende Wert ist der Wert bis zu dem eine Adressprüfung durchgeführt wird.<br>
+    Ist der Gesamtwarenkorbwert oberhalb dieses Wertes wird keine Adressprüfung ausgeführt.
+</div>
+<br>
+<div class="field-name">
+    <span style="font-style:italic;">Personstatusmapping</span>
+</div>
+<div class="field-description">
+    Bei der Konfiguration der Adressprüfung auf die Detailtiefe _Person_ können hier zu jedem Rückgabewert Ampelwerte
+    festgelegt werden.
+    <br>
+    Diese Ampelwerte haben im weiteren Zahlungsprozess Einfluss auf die Anzeige der Zahlarten.<br>
+    <br>
+    <b>Optionen:</b><br>
+    <ul>
+        <li>Personstatus
+            <ul>
+                <li>Vor & Nachname bekannt</li>
+                <li>Nachname bekannt</li>
+                <li>Vor & Nachname nicht bekannt</li>
+                <li>Mehrdeutigkeit bei Name zu Anschrift</li>
+                <li>Nicht zustellbar</li>
+                <li>Person verstorben</li>
+                <li>Adresse postalisch falsch</li>
+            </ul>
+        </li>
+        <li>Score
+            <ul>
+                <li>Grün</li>
+                <li>Gelb</li>
+                <li>Rot</li>
+            </ul>
+        </li>
+    </ul>
+</div>
+<br>
+<div class="field-name">Behandlung von Fehlern</div>
+<div class="field-description">
+    Konfiguration wie an dieser Stelle bei Fehlern in der Prüfung oder Nichterreichbarkeit der Adressprüfungssysteme
+    verfahren werden soll.
+    <br>
+    Dies bezieht sich auf die Rückmeldung von der PAYONE Plattform mit dem Ergebnis
+    <span style="color:red; font-style:italic;">ERROR</span>
+    <br>
+    <br>
+    <b>Optionen:</b><br>
+    <ul>
+        <li>Bestellprozess fortführen</li>
+        <li>Bestellprozess abbrechen</li>
+    </ul>
+</div>
+<br>
+<div class="field-name">Gültigkeit</div>
+<div class="field-description">
+    Hier kann die Gültigkeitsdauer in Tagen einer Adressüberprüfung eingestellt werden.<br>
+    Innerhalb dieses Zeitraumes werden keine weiteren Anfragen für diesen Benutzer gestellt.<br>
+    Vorraussetzung dafür ist das dieser Kunde registriert ist oder sich innerhalb des ersten Vorgangs registiert
+    hat.<br>
+    <br>
+    <b>Achtung</b> Für Gastkäufer greift die Gültigkeit nicht.
+</div>
+<br>
+<br>
+<br>

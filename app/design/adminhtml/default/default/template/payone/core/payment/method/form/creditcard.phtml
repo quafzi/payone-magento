@@ -1,0 +1,106 @@
+<?php
+/**
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the GNU General Public License (GPL 3)
+ * that is bundled with this package in the file LICENSE.txt
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Payone_Core to newer
+ * versions in the future. If you wish to customize Payone_Core for your
+ * needs please refer to http://www.payone.de for more information.
+ *
+ * @category        Payone
+ * @package         design_adminhtml_default_default
+ * @subpackage      template
+ * @copyright       Copyright (c) 2012 <info@noovias.com> - www.noovias.com
+ * @author          Matthias Walter <info@noovias.com>
+ * @license         <http://www.gnu.org/licenses/> GNU General Public License (GPL 3)
+ * @link            http://www.noovias.com
+ */
+
+/** @var $this Payone_Core_Block_Payment_Method_Form_Creditcard */
+$code = $this->getMethodCode();
+$displayCvc = null;
+?>
+<ul id="payment_form_<?php echo $code ?>" style="display:none">
+    <li>
+        <div class="input-box">
+            <label for="<?php echo $code ?>_cc_owner">
+                <?php echo $this->__('Name on Card') ?>&nbsp;<span class="required">*</span>
+            </label>
+            <br/>
+            <input type="text" id="<?php echo $code ?>_cc_owner" name="payment[cc_owner]"
+                   value="<?php echo $this->getBillingName(); ?>"
+                   title="<?php echo $this->__('Name on Card') ?>"
+                   class="required-entry input-text no-submit" />
+        </div>
+    </li>
+    <!-- Credit card type : -->
+    <li>
+        <div class="input-box">
+            <label for="<?php echo $code; ?>_cc_type">
+                <?php echo $this->__('Credit Card Type'); ?>&nbsp;<span class="required">*</span>
+            </label><br/>
+            <select id="<?php echo $code ?>_cc_type_select" name="<?php echo $code ?>_cc_type_select"
+                    class="no-submit required-entry">
+                <option value=""><?php echo $this->__('--Please Select--') ?></option>
+                <?php
+                foreach ($this->getTypes() as $key => $type):
+                    $selected = $this->getCreditCardType() == $type['code'] ? 'selected="selected"' : '';
+                    ?>
+                    <option value="<?php echo $key ?>"<?php echo $selected; ?>>
+                        <?php echo $type['name'] ?><span><?php echo $type['fee']; ?></span>
+                    </option>
+                    <?php endforeach; ?>
+            </select>
+            <input type="hidden" id="<?php echo $code ?>_cc_type" name="payment[cc_type]" value="" class=""/>
+        </div>
+    </li>
+    <!-- Credit card number : -->
+    <li>
+        <div class="input-box">
+            <label for="<?php echo $code; ?>_cc_number">
+                <?php echo $this->__('Credit Card Number'); ?>&nbsp;<span class="required">*</span>
+            </label><br/>
+            <input type="text" id="<?php echo $code; ?>_cc_number" name="payment[cc_number]" value=""
+                   title="<?php echo $this->__('Credit Card Number'); ?>"
+                   class="input-text validate-cc-number validate-payone-cc-type no-submit"/>
+        </div>
+    </li>
+    <!-- Credit card expiration date : -->
+    <li>
+        <div class="input-box">
+            <label for="<?php echo $code ?>_expiration">
+                <?php echo $this->__('Expiration Date') ?>&nbsp;<span class="required">*</span>
+            </label><br/>
+            <div class="v-fix">
+                <select id="<?php echo $code ?>_cc_expiration_month" name="payment[cc_exp_month]" style="width:140px;"
+                        class="required-entry no-submit month validate-payone-cc-validity-period">
+                    <?php foreach ($this->getCcMonths() as $key => $month): ?>
+                    <option value="<?php echo $key ? $key : '' ?>"<?php if ($key == $this->getCreditCardExpireMonth()): ?>
+                            selected="selected"<?php endif ?>><?php echo $month ?></option>
+                    <?php endforeach ?>
+                </select>
+            </div>
+            <div class="v-fix" style="padding-left:5px;">
+                <select id="<?php echo $code ?>_cc_expiration_year" name="payment[cc_exp_year]"style="width:103px;"
+                        class="year required-entry no-submit">
+                    <?php foreach ($this->getCcYears() as $key => $year): ?>
+                    <option value="<?php echo $key ? $key : '' ?>"<?php if ($key == $this->getCreditCardExpireYear()): ?>
+                            selected="selected"<?php endif ?>><?php echo $year ?></option>
+                    <?php endforeach ?>
+                </select>
+            </div>
+        </div>
+    </li>
+    <li>
+        <input type="hidden" id="payone_pseudocardpan" name="payment[payone_pseudocardpan]" value=""/>
+        <input type="hidden" id="payone_truncatedcardpan" name="payment[cc_number_enc]" value=""/>
+        <input type="hidden" id="<?php echo $code ?>_config_id" name="payment[payone_config_payment_method_id]" value=""/>
+        <input type="hidden" id="<?php echo $code ?>_config" name="payment[request_config]"
+               value="<?php echo $this->escapeHtml($this->getClientApiConfigAsJson()); ?>" class=""/>
+    </li>
+</ul>
