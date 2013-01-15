@@ -901,6 +901,19 @@ class Payone_Core_Model_Factory
         return $service;
     }
 
+
+    /**
+     * @return Payone_Core_Model_Service_Config_PaymentMethod_Create
+     */
+    public function getServiceConfigPaymentMethodCreate()
+    {
+        /** @var $service Payone_Core_Model_Service_Config_PaymentMethod_Create */
+        $service = Mage::getModel('payone_core/service_config_paymentMethod_create');
+        $service->setFactory($this);
+
+        return $service;
+    }
+
     /**
      * @return Payone_Core_Model_Service_Config_XmlGenerate
      */

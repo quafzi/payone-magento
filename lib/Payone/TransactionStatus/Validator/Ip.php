@@ -36,6 +36,9 @@ class Payone_TransactionStatus_Validator_Ip
     /** @var array */
     protected $validIps = array();
 
+    /** @var Payone_TransactionStatus_Config */
+    protected $config = null;
+
     /**
      * @param Payone_TransactionStatus_Request_Interface $request
      * @throws Payone_TransactionStatus_Exception_Validation
@@ -93,10 +96,52 @@ class Payone_TransactionStatus_Validator_Ip
     }
 
     /**
+     * Checks if ProxyCheck should be used. Returns the Remote-IP
+     *
      * @return string
      */
     public function getRemoteAddress()
     {
-        return $_SERVER['REMOTE_ADDR'];
+        $remoteAddr = $_SERVER['REMOTE_ADDR'];
+        if ($this->getProxyCheckEnabled() == 1) {
+            if(array_key_exists('HTTP_X_FORWARDED_FOR', $_SERVER)) {
+                $proxy = $_SERVER['HTTP_X_FORWARDED_FOR'];
+                if (!empty($proxy)) {
+                    $proxyIps = explode(',', $proxy);
+                    $relevantIp = array_shift($proxyIps);
+                    $relevantIp = trim($relevantIp);
+                    if (!empty($relevantIp)) {
+                        return $relevantIp;
+                    }
+                }
+            }
+        }
+        return $remoteAddr;
+
     }
+
+    /**
+     * @return boolean
+     */
+    public function getProxyCheckEnabled()
+    {
+        return $this->getConfig()->getValue('validator/proxy/enabled');
+    }
+
+    /**
+     * @param Payone_TransactionStatus_Config $config
+     */
+    public function setConfig($config)
+    {
+        $this->config = $config;
+    }
+
+    /**
+     * @return Payone_TransactionStatus_Config
+     */
+    public function getConfig()
+    {
+        return $this->config;
+    }
+
 }

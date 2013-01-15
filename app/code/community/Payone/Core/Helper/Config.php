@@ -88,8 +88,19 @@ class Payone_Core_Helper_Config
      */
     public function getConfigPaymentMethodById($id, $storeId = null)
     {
-        $configPayment = $this->getConfigPayment($storeId);
-        $config = $configPayment->getMethodById($id);
+        $general = $this->getConfigGeneral($storeId);
+        $defaultConfig = $general->getGlobal()->toArray();
+        $invoiceTransmit = $general->getParameterInvoice()->getTransmitEnabled();
+
+        // Add invoice_transmit to defaultConfig
+        $defaultConfig['invoice_transmit'] = $invoiceTransmit;
+
+
+        $config = $this->getFactory()->getModelDomainConfigPaymentMethod();
+        $config->load($id);
+        $config->loadMergedData();
+        $config = $config->toConfigPayment($storeId, $defaultConfig);
+
         return $config;
     }
 

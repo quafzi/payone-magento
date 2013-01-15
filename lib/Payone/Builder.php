@@ -52,11 +52,11 @@ class Payone_Builder
         }
         $this->config = $config;
 
-        $this->factories[self::KEY_API] = new Payone_Api_Factory();
+        $this->factories[self::KEY_API] = new Payone_Api_Factory($config->getApiConfig());
         $this->factories[self::KEY_CLIENTAPI] = new Payone_ClientApi_Factory();
         $this->factories[self::KEY_PROTOCOL] = new Payone_Protocol_Factory();
         $this->factories[self::KEY_SETTINGS] = new Payone_Settings_Factory();
-        $this->factories[self::KEY_TRANSACTIONSTATUS] = new Payone_TransactionStatus_Factory();
+        $this->factories[self::KEY_TRANSACTIONSTATUS] = new Payone_TransactionStatus_Factory($config->getTransactionStatusConfig());
 
     }
 
@@ -211,6 +211,7 @@ class Payone_Builder
             {
                 /** @var $validator Payone_TransactionStatus_Validator_Ip */
                 $validator->setValidIps($validIps);
+                $validator->setConfig($this->getConfig()->getTransactionStatusConfig());
             }
         }
 

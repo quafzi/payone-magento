@@ -18,7 +18,7 @@
  * @package log4php
  */
 
-require_once dirname(__FILE__) . '/LoggerAutoloader.php';
+//require_once dirname(__FILE__) . '/LoggerAutoloader.php';
 
 /**
  * This is the central class in the log4php package. All logging operations 

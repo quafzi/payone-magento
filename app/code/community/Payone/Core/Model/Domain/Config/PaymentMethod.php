@@ -97,6 +97,9 @@ class Payone_Core_Model_Domain_Config_PaymentMethod
     /** @var Payone_Core_Model_Factory */
     protected $factory = null;
 
+
+    protected $isNew = false;
+
     /**
      *
      */
@@ -121,6 +124,7 @@ class Payone_Core_Model_Domain_Config_PaymentMethod
         }
 
         $originModel = $this->loadOriginPaymentMethodConfig();
+
         if ($originModel
                 && ($this->getScope() != $originModel->getScope()
                         || $this->getScopeId() != $originModel->getScopeId()
@@ -143,7 +147,7 @@ class Payone_Core_Model_Domain_Config_PaymentMethod
                 $store = $this->getFactory()->getModelCoreStore()->load($this->getScopeId());
                 $websiteId = $store->getWebsiteId();
 
-                $dummy = Mage::getModel('payone_core/domain_config_paymentMethod');
+                $dummy = $this->getFactory()->getModelDomainConfigPaymentMethod();
                 $dummy->setScope($parentScope);
                 $dummy->setScopeId($websiteId);
                 $dummy->setCode($originModel->getCode());
@@ -185,6 +189,7 @@ class Payone_Core_Model_Domain_Config_PaymentMethod
         $this->prepareData();
 
         if ($this->isObjectNew()) {
+            $this->isNew = true; // to trigger actions in _afterSave()
             $this->setCreatedAt(date('Y-m-d H:i:s'));
             $this->setUpdatedAt(date('Y-m-d H:i:s'));
         }
@@ -196,6 +201,126 @@ class Payone_Core_Model_Domain_Config_PaymentMethod
     }
 
     /**
+     * On creation of a new configuration, propagate it to the deeper scopes, with all possible values inherited
+     * _afterSave is called on the new objects as well.
+     *
+     * @return Mage_Core_Model_Abstract
+     */
+    protected function _afterSave()
+    {
+        if ($this->isNew) {
+            // Check the next "deeper" scope, if no config exists, add inherited configs
+            $myScope = $this->getScope();
+            if ($myScope == 'default') {
+                $websites = $this->getFactory()->getModelCoreWebsite()->getCollection();
+
+                // 1 for each website
+                foreach ($websites as $website) {
+                    /** @var $website Mage_Core_Model_Website */
+                    $this->saveChildConfig($website->getId(), 'websites');
+
+                }
+            }
+            elseif ($myScope == 'websites') {
+                /** @var $stores Mage_Core_Model_Mysql4_Store_Collection */
+                $stores = $this->getFactory()->getModelCoreStore()->getCollection();
+                $stores->addFieldToFilter('website_id', $this->getScopeId());
+
+                // 1 for each storeView on the website
+                foreach ($stores as $store) {
+                    /** @var $store Mage_Core_Model_Store */
+                    $this->saveChildConfig($store->getId(), 'stores');
+
+                }
+            }
+        }
+        return parent::_afterSave();
+    }
+
+    /**
+     * Save a child config that inherits all data from current model
+     * 
+     * @param $scopeId
+     * @param $childScope
+     *
+     * @return void
+     */
+    protected function saveChildConfig($scopeId, $childScope)
+    {
+
+        if ($childScope == 'websites') {
+            $parentField = 'parent_default_id';
+        }
+        elseif ($childScope == 'stores') {
+            $parentField = 'parent_websites_id';
+        }
+        else {
+            return;
+        }
+
+        $childConfig = $this->getFactory()->getModelDomainConfigPaymentMethod();
+        $childConfig->setScope($childScope);
+        $childConfig->setScopeId($scopeId);
+        $childConfig->setCode($this->getCode());
+        $childConfig->setData($parentField, $this->getId());
+
+        $childConfig->save();
+
+
+    }
+
+    /**
+     * @param int $storeId
+     * @param array $defaultConfig
+     * @return Payone_Core_Model_Config_Payment_Method_Interface
+     */
+    public function toConfigPayment($storeId, array $defaultConfig = array())
+    {
+        /**
+         * The object we want to return:
+         * @var $configMethod Payone_Core_Model_Config_Payment_Method */
+        $configMethod = $this->getFactory()->getModelConfigPaymentMethod();
+
+        $configMethod->init($this->_data);
+
+        // Use Global Config if use_global is set
+        if ($configMethod->getUseGlobal()) {
+            $configMethod->init($defaultConfig);
+        }
+        else {
+            // Check globals also if they are not to use
+            foreach ($defaultConfig as $key => $value) {
+                if (!array_key_exists($key, $this->_data) || $this->_data[$key] == '') {
+                    $this->_data[$key] = $value;
+                }
+            }
+            $configMethod->init($this->_data);
+        }
+
+        // init Allowed Countries
+        if (array_key_exists('allowspecific', $this->_data) and $this->getAllowspecific()) {
+            $allowedCountries = $configMethod->getSpecificcountry();
+        }
+        else {
+            $generalAllowedCountries = $this->helperConfig()->getStoreConfig('general/country/allow', $storeId);
+            $allowedCountries = explode(',', $generalAllowedCountries);
+        }
+        $configMethod->setAllowedCountries($allowedCountries);
+
+        $parentDefaultId = $this->getParentDefaultId();
+        $parentWebsitesId = $this->getParentWebsitesId();
+        if (!empty($parentDefaultId) && empty($parentWebsitesId)) {
+            $configMethod->setParent($parentDefaultId);
+            return $configMethod;
+        }
+        elseif (!empty($parentWebsitesId)) {
+            $configMethod->setParent($parentWebsitesId);
+            return $configMethod;
+        }
+        return $configMethod;
+    }
+
+    /**
      * Load original PaymentMethod from Database
      * @return Payone_Core_Model_Domain_Config_PaymentMethod
      */
@@ -204,7 +329,7 @@ class Payone_Core_Model_Domain_Config_PaymentMethod
         if ($this->getId()) {
 
             /** @var $originModel Payone_Core_Model_Domain_Config_PaymentMethod */
-            $originModel = Mage::getModel('payone_core/domain_config_paymentMethod');
+            $originModel = $this->getFactory()->getModelDomainConfigPaymentMethod();
             $originModel->load($this->getId());
             $originModel->prepareData();
             return $originModel;
@@ -448,6 +573,15 @@ class Payone_Core_Model_Domain_Config_PaymentMethod
         $this->unserializeData('fee_config');
         $this->explodeData('types');
         $this->explodeData('specificcountry');
+    }
+
+
+    /**
+     * @return Payone_Core_Helper_Config
+     */
+    protected function helperConfig()
+    {
+        return $this->getFactory()->helperConfig();
     }
 
     /**

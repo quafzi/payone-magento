@@ -164,7 +164,11 @@ abstract class Payone_Core_Model_Mapper_ApiRequest_Payment_Authorize_Abstract
         $language = $helper->getDefaultLanguage();
         $personalData->setLanguage($language);
         $personalData->setVatid($order->getCustomerTaxvat());
-        $personalData->setIp($order->getRemoteIp());
+
+        // Multiple Ips can be included, we only send the last one.
+        $remoteIps = explode(',', $order->getRemoteIp());
+        $lastRemoteIp = array_pop($remoteIps);
+        $personalData->setIp($lastRemoteIp);
 
         // US and CA always need state and shipping_state paramters
         if ($billingCountry == 'US' or $billingCountry == 'CA') {

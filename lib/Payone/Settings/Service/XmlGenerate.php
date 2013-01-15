@@ -35,6 +35,8 @@ class Payone_Settings_Service_XmlGenerate
     const TAG_CONFIG_ROOT = 'config';
     const CLASS_PREFIX = 'Payone_Settings_Data_ConfigFile_';
 
+    /** @var DOMDocument */
+    private $dom;
 
     // @todo neue Methode generate mit gleichen Parametern
     // @todo wandelt anhand Shop "gruppiert" um und fügt mehrere Shops umwandlungen zusammen in ein config-root
@@ -52,14 +54,16 @@ class Payone_Settings_Service_XmlGenerate
     public function generate(Payone_Settings_Data_ConfigFile_Root $config)
     {
         // @todo wandelt anhand Shop "gruppiert" um und fügt mehrere Shops umwandlungen zusammen in ein config-root
-        $configXml = new SimpleXMLElement('<' . $config->getKey() . '>' . '</' . $config->getKey() . '>');
+        $this->dom = new DOMDocument('1.0', 'UTF-8');
 
+        $root = $this->appendElement($this->dom, $config->getKey());
 
         foreach ($config->getShop() as $key => $value) {
-            $shop = $this->mapShop($value, $configXml);
+            $shop = $this->mapShop($value, $root);
         }
 
-        $xmlString = $configXml->asXML();
+        $this->dom->formatOutput = true;
+        $xmlString = $this->dom->saveXML();
 
         return $xmlString;
     }
@@ -120,15 +124,15 @@ class Payone_Settings_Service_XmlGenerate
 
     /**
      * @param Payone_Settings_Data_ConfigFile_Shop $shopConfig
-     * @param SimpleXMLElement $configXml
+     * @param DOMElement $configXml
      * @return string
      */
-    protected function mapShop(Payone_Settings_Data_ConfigFile_Shop $shopConfig, SimpleXMLElement $configXml)
+    protected function mapShop(Payone_Settings_Data_ConfigFile_Shop $shopConfig, DOMElement $configXml)
     {
-        $shopXml = $configXml->addChild($shopConfig->getKey());
+        $shopXml = $this->appendElement($configXml, $shopConfig->getKey());
 
         $this->addChild($shopXml, $shopConfig, 'code');
-        $this->addChild($shopXml, $shopConfig, 'name');
+        $this->addChild($shopXml, $shopConfig, 'name', true);
 
         $shopXml = $this->mapSystem($shopConfig->getSystem(), $shopXml);
 
@@ -142,12 +146,13 @@ class Payone_Settings_Service_XmlGenerate
 
     /**
      * @param Payone_Settings_Data_ConfigFile_Shop_System $systemConfig
-     * @param SimpleXMLElement $shopXml
-     * @return SimpleXMLElement
+     * @param DOMElement $shopXml
+     * @return DOMElement
      */
-    protected function mapSystem(Payone_Settings_Data_ConfigFile_Shop_System $systemConfig, SimpleXMLElement $shopXml)
+    protected function mapSystem(Payone_Settings_Data_ConfigFile_Shop_System $systemConfig, DOMElement $shopXml)
     {
-        $systemXml = $shopXml->addChild($systemConfig->getKey());
+        $systemXml = $this->appendElement($shopXml, $systemConfig->getKey());
+
         $this->addChild($systemXml, $systemConfig, 'name');
         $this->addChild($systemXml, $systemConfig, 'version');
         $this->addChild($systemXml, $systemConfig, 'edition');
@@ -157,35 +162,36 @@ class Payone_Settings_Service_XmlGenerate
 
     /**
      * @param Payone_Settings_Data_ConfigFile_Shop_Global $globalConfig
-     * @param SimpleXMLElement $shopXml
-     * @return SimpleXMLElement
+     * @param DOMElement $shopXml
+     * @return DOMElement
      */
-    protected function mapGlobal(Payone_Settings_Data_ConfigFile_Shop_Global $globalConfig, SimpleXMLElement $shopXml)
+    protected function mapGlobal(Payone_Settings_Data_ConfigFile_Shop_Global $globalConfig, DOMElement $shopXml)
     {
-        $globalXml = $shopXml->addChild($globalConfig->getKey());
+        $globalXml = $this->appendElement($shopXml, $globalConfig->getKey());
+
         $this->addChild($globalXml, $globalConfig, 'mid');
         $this->addChild($globalXml, $globalConfig, 'aid');
         $this->addChild($globalXml, $globalConfig, 'portalid');
         $this->addChild($globalXml, $globalConfig, 'request_type');
-        $this->addChild($globalXml, $globalConfig, 'parameter_invoice');
+        $this->mapParameterInvoice($globalConfig,$globalXml);
         $this->addStatusMapping($globalConfig, $globalXml);
-        $this->addChild($globalXml, $globalConfig, 'payment_creditcard');
+        $this->mapPaymentCreditcard($globalConfig,$globalXml);
         return $shopXml;
     }
 
     /**
      * @param Payone_Settings_Data_ConfigFile_Shop_ClearingTypes $clearingTypes
-     * @param SimpleXMLElement $shopXml
-     * @return SimpleXMLElement
+     * @param DOMElement $shopXml
+     * @return DOMElement
      */
-    protected function mapClearingTypes(Payone_Settings_Data_ConfigFile_Shop_ClearingTypes $clearingTypes, SimpleXMLElement $shopXml)
+    protected function mapClearingTypes(Payone_Settings_Data_ConfigFile_Shop_ClearingTypes $clearingTypes, DOMElement $shopXml)
     {
-        $clearingTypesXml = $shopXml->addChild($clearingTypes->getKey());
+        $clearingTypesXml = $this->appendElement($shopXml, $clearingTypes->getKey());
 
         foreach ($clearingTypes->getClearingtypes() as $keyClearingType => $valueClearingType) {
-            $clearingTypeNode = $clearingTypesXml->addChild($valueClearingType->getKey());
+            $clearingTypeNode = $this->appendElement($clearingTypesXml, $valueClearingType->getKey());
 
-            $this->addChild($clearingTypeNode, $valueClearingType, 'title');
+            $this->addChild($clearingTypeNode, $valueClearingType, 'title', true);
             $this->addChild($clearingTypeNode, $valueClearingType, 'id');
             $this->addChild($clearingTypeNode, $valueClearingType, 'mid');
             $this->addChild($clearingTypeNode, $valueClearingType, 'aid');
@@ -195,7 +201,7 @@ class Payone_Settings_Service_XmlGenerate
             $this->addChild($clearingTypeNode, $valueClearingType, 'max_order_total');
 
             if ($valueClearingType instanceof Payone_Settings_Data_ConfigFile_PaymentMethod_Financing) {
-                /** @var $valueClearingType Payone_Settings_Data_ConfigFile_PaymentMethod_Creditcard */
+                /** @var $valueClearingType Payone_Settings_Data_ConfigFile_PaymentMethod_Financing */
                 $this->addChild($clearingTypeNode, $valueClearingType, 'financingtype');
             }
             $this->addTypesOrGlobalInfo($clearingTypeNode, $valueClearingType);
@@ -207,12 +213,12 @@ class Payone_Settings_Service_XmlGenerate
 
     /**
      * @param Payone_Settings_Data_ConfigFile_Shop_Protect $protectConfig
-     * @param SimpleXMLElement $shopXml
-     * @return SimpleXMLElement
+     * @param DOMElement $shopXml
+     * @return DOMElement
      */
-    protected function mapProtect(Payone_Settings_Data_ConfigFile_Shop_Protect $protectConfig, SimpleXMLElement $shopXml)
+    protected function mapProtect(Payone_Settings_Data_ConfigFile_Shop_Protect $protectConfig, DOMElement $shopXml)
     {
-        $protectXml = $shopXml->addChild($protectConfig->getKey());
+        $protectXml = $this->appendElement($shopXml,$protectConfig->getKey());
 
         $protectXml = $this->mapConsumerscore($protectConfig->getConsumerscore(), $protectXml);
         $protectXml = $this->mapAddresscheck($protectConfig->getAddresscheck(), $protectXml);
@@ -222,12 +228,13 @@ class Payone_Settings_Service_XmlGenerate
 
     /**
      * @param Payone_Settings_Data_ConfigFile_Shop_Misc $miscConfig
-     * @param SimpleXMLElement $shopXml
-     * @return SimpleXMLElement
+     * @param DOMElement $shopXml
+     * @return DOMElement
      */
-    protected function mapMisc(Payone_Settings_Data_ConfigFile_Shop_Misc $miscConfig, SimpleXMLElement $shopXml)
+    protected function mapMisc(Payone_Settings_Data_ConfigFile_Shop_Misc $miscConfig, DOMElement $shopXml)
     {
-        $miscXml = $shopXml->addChild($miscConfig->getKey());
+        $miscXml = $this->appendElement($shopXml, $miscConfig->getKey());
+
         $this->addTransactionstatusForwarding($miscConfig, $miscXml);
         $this->addChild($miscXml, $miscConfig, 'shipping_costs');
         return $shopXml;
@@ -236,12 +243,13 @@ class Payone_Settings_Service_XmlGenerate
 
     /**
      * @param Payone_Settings_Data_ConfigFile_Protect_Consumerscore $consumerscoreConfig
-     * @param SimpleXMLElement $protectXml
-     * @return SimpleXMLElement
+     * @param DOMElement $protectXml
+     * @return DOMElement
      */
-    protected function mapConsumerscore(Payone_Settings_Data_ConfigFile_Protect_Consumerscore $consumerscoreConfig, SimpleXMLElement $protectXml)
+    protected function mapConsumerscore(Payone_Settings_Data_ConfigFile_Protect_Consumerscore $consumerscoreConfig, DOMElement $protectXml)
     {
-        $consumerscoreXml = $protectXml->addChild($consumerscoreConfig->getKey());
+        $consumerscoreXml = $this->appendElement($protectXml, $consumerscoreConfig->getKey());
+
         $this->addChild($consumerscoreXml, $consumerscoreConfig, 'active');
         $this->addChild($consumerscoreXml, $consumerscoreConfig, 'mode');
         $this->addChild($consumerscoreXml, $consumerscoreConfig, 'min_order_total');
@@ -256,12 +264,13 @@ class Payone_Settings_Service_XmlGenerate
 
     /**
      * @param Payone_Settings_Data_ConfigFile_Protect_Addresscheck $addresscheckConfig
-     * @param SimpleXMLElement $protectXml
-     * @return SimpleXMLElement
+     * @param DOMElement $protectXml
+     * @return DOMElement
      */
-    protected function mapAddresscheck(Payone_Settings_Data_ConfigFile_Protect_Addresscheck $addresscheckConfig, SimpleXMLElement $protectXml)
+    protected function mapAddresscheck(Payone_Settings_Data_ConfigFile_Protect_Addresscheck $addresscheckConfig, DOMElement $protectXml)
     {
-        $addresscheckXml = $protectXml->addChild($addresscheckConfig->getKey());
+        $addresscheckXml = $this->appendElement($protectXml, $addresscheckConfig->getKey());
+
         $this->addChild($addresscheckXml, $addresscheckConfig, 'active');
         $this->addChild($addresscheckXml, $addresscheckConfig, 'mode');
         $this->addChild($addresscheckXml, $addresscheckConfig, 'min_order_total');
@@ -273,38 +282,82 @@ class Payone_Settings_Service_XmlGenerate
         return $protectXml;
     }
 
-    public function addTransactionstatusForwarding(Payone_Settings_Data_ConfigFile_Shop_Misc $miscConfig, SimpleXMLElement $miscXml)
+    /**
+     * @param Payone_Settings_Data_ConfigFile_Shop_Global $globalConfig
+     * @param DOMElement $globalXml
+     * @return DOMElement
+     */
+    protected function mapParameterInvoice(Payone_Settings_Data_ConfigFile_Shop_Global $globalConfig, DOMElement $globalXml)
+    {
+        $parameterInvoice = $globalConfig->getParameterInvoice();
+        $parameterInvoiceXml = $this->appendElement($globalXml, 'parameter_invoice');
+
+        $this->appendElement($parameterInvoiceXml, 'invoice_appendix', $parameterInvoice['invoice_appendix'], true);
+        $this->appendElement($parameterInvoiceXml, 'invoice_appendix_refund', $parameterInvoice['invoice_appendix_refund'], true);
+        $this->appendElement($parameterInvoiceXml, 'pdf_download_enabled', $parameterInvoice['pdf_download_enabled']);
+        $this->appendElement($parameterInvoiceXml, 'transmit_enabled', $parameterInvoice['transmit_enabled']);
+
+        return $globalXml;
+    }
+
+    /**
+     * @param Payone_Settings_Data_ConfigFile_Shop_Global $globalConfig
+     * @param DOMElement $globalXml
+     * @return DOMElement
+     */
+    protected function mapPaymentCreditcard(Payone_Settings_Data_ConfigFile_Shop_Global $globalConfig, DOMElement $globalXml)
+    {
+        $paymentCreditcard = $globalConfig->getPaymentCreditcard();
+        $paymentCreditcardXml = $this->appendElement($globalXml, 'payment_creditcard');
+
+        $this->appendElement($paymentCreditcardXml, 'min_validity_period', $paymentCreditcard['min_validity_period']);
+
+        return $globalXml;
+    }
+
+    /**
+     * @param Payone_Settings_Data_ConfigFile_Shop_Misc $miscConfig
+     * @param DOMElement $miscXml
+     */
+    public function addTransactionstatusForwarding(Payone_Settings_Data_ConfigFile_Shop_Misc $miscConfig, DOMElement $miscXml)
     {
         $tasForwarding = $miscConfig->getTransactionstatusforwarding();
-        $tasXml = $miscXml->addChild($tasForwarding->getKey());
+        $tasXml = $this->appendElement($miscXml, $tasForwarding->getKey());
 
         foreach ($tasForwarding->getTransactionstatusForwarding() as $keyTas => $config) {
-            $configNode = $tasXml->addChild('config');
+            $configNode = $this->appendElement($tasXml,'config');
 
             foreach ($config as $key => $value) {
-                $configNode->addAttribute($key, $value);
+                $configNode->setAttribute($key, $value);
             }
         }
     }
 
-    public function addStatusMapping(Payone_Settings_Data_ConfigFile_Shop_Global $globalConfig, SimpleXMLElement $globalXml)
+    /**
+     * @param Payone_Settings_Data_ConfigFile_Shop_Global $globalConfig
+     * @param DOMElement $globalXml
+     */
+    public function addStatusMapping(Payone_Settings_Data_ConfigFile_Shop_Global $globalConfig, DOMElement $globalXml)
     {
         $statusMapping = $globalConfig->getStatusMapping();
-        $tasXml = $globalXml->addChild($statusMapping->getKey());
+        $tasXml = $this->appendElement($globalXml,$statusMapping->getKey());
 
         foreach ($statusMapping->getStatusMapping() as $keyStatusMapping => $valueStatusMapping) {
-
-            $parent = $tasXml->addChild($keyStatusMapping);
+            $parent = $this->appendElement($tasXml,$keyStatusMapping);
 
             foreach ($valueStatusMapping as $key => $value) {
-                $mapNode = $parent->addChild('map');
+                $mapNode = $this->appendElement($parent, 'map');
 
                 $this->addAttribute($mapNode, $key, $value);
             }
         }
     }
 
-    public function addTypesOrGlobalInfo(SimpleXMLElement $cleatringTypeNode, Payone_Settings_Data_ConfigFile_PaymentMethod_Abstract $valueClearingType)
+    /**
+     * @param DOMElement $cleatringTypeNode
+     * @param Payone_Settings_Data_ConfigFile_PaymentMethod_Abstract $valueClearingType
+     */
+    public function addTypesOrGlobalInfo(DOMElement $cleatringTypeNode, Payone_Settings_Data_ConfigFile_PaymentMethod_Abstract $valueClearingType)
     {
         if ($valueClearingType->getTypes() !== NULL && $valueClearingType->getTypes() !== FALSE) {
 
@@ -328,19 +381,21 @@ class Payone_Settings_Service_XmlGenerate
         $this->addChild($parent, $type, 'mode');
     }
 
-    public function addFeeConfig(SimpleXMLElement $cleatringTypeNode, Payone_Settings_Data_ConfigFile_PaymentMethod_Abstract $valueClearingType)
+    /**
+     * @param DOMElement $cleatringTypeNode
+     * @param Payone_Settings_Data_ConfigFile_PaymentMethod_Abstract $valueClearingType
+     */
+    public function addFeeConfig(DOMElement $cleatringTypeNode, Payone_Settings_Data_ConfigFile_PaymentMethod_Abstract $valueClearingType)
     {
         $feeConfig = $valueClearingType->getFeeConfig();
         if (!empty($feeConfig)) {
+            $feeConfigNode = $this->appendElement($cleatringTypeNode,'fee_config');
 
-            $feeConfigNode = $cleatringTypeNode->addChild('fee_config');
             foreach ($feeConfig as $keyFeeConfig => $valueFeeConfig) {
                 if (array_key_exists('value', $valueFeeConfig) && array_key_exists('attribute', $valueFeeConfig)) {
-                    $feeNode = $feeConfigNode->addChild('fee', $valueFeeConfig['value']);
-
+                    $feeNode = $this->appendElement($feeConfigNode, 'fee', $valueFeeConfig['value']);
                     foreach ($valueFeeConfig['attribute'] as $keyFee => $valueFee) {
-                        $feeNode->addAttribute($keyFee, $valueFee);
-
+                        $feeNode->setAttribute($keyFee, $valueFee);
                     }
                 }
             }
@@ -349,48 +404,77 @@ class Payone_Settings_Service_XmlGenerate
 
 
     /**
-     * @param SimpleXMLElement $parent
+     * @param DOMElement $parent
      * @param $object
      * @param $property
-     * @return SimpleXMLElement
+     * @param bool $withCdata
+     * @return DOMElement
      */
-    protected function addChild(SimpleXMLElement $parent, $object, $property)
+    protected function addChild(DOMElement $parent, $object, $property, $withCdata = false)
     {
         $getter = 'get' . str_replace(' ', '', ucwords(str_replace('_', ' ', $property)));
         $data = $object->$getter();
         $child = $parent;
         if (is_array($data)) {
-            $parent = $parent->addChild($property);
+            $parentNode = $this->appendElement($parent,$property);
             foreach ($data as $key => $value) {
-                $child = $parent->addChild($key, $value);
+                $child = $this->appendElement($parentNode, $key, $value, $withCdata);
             }
         }
         else {
             if (isset($data)) {
-                $child = $parent->addChild($property, $data);
+                $child = $this->appendElement($parent, $property, $data, $withCdata);
             }
         }
         return $child;
     }
 
     /**
-     * @param SimpleXMLElement $mapNode
+     * @param DOMElement $mapNode
      * @param $name
      * @param $value
-     * @return SimpleXMLElement
+     * @return DOMElement
      */
-    protected function addAttribute(SimpleXMLElement $mapNode, $name, $value)
+    protected function addAttribute(DOMElement $mapNode, $name, $value)
     {
         if (is_array($value)) {
             foreach ($value as $key => $data) {
-                $mapNode->addAttribute($key, $data);
+                $mapNode->setAttribute($key, $data);
             }
         }
         else {
             if (!empty($data)) {
-                $mapNode->addAttribute($name, $value);
+                $mapNode->setAttribute($name, $value);
             }
         }
         return $mapNode;
+    }
+
+    /**
+     * @param DOMElement|DOMDocument $parent
+     * @param $key
+     * @param $value
+     * @param bool $asCdata
+     * @return DOMElement
+     */
+    protected function appendElement( $parent, $key, $value = null, $asCdata = false)
+    {
+        if($asCdata === true)
+        {
+            $cdata = $this->dom->createCDATASection($value);
+            $child = $this->dom->createElement($key);
+            $child->appendChild($cdata);
+        }
+        else
+        {
+            $child = $this->dom->createElement($key);
+            if($value !== null)
+            {
+                $domValue = $this->dom->createTextNode($value);
+                $child->appendChild($domValue);
+            }
+        }
+        $parent->appendChild($child);
+        return $child;
     }
 }

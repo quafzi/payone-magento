@@ -68,17 +68,13 @@
  * @license         <http://www.gnu.org/licenses/> GNU General Public License (GPL 3)
  * @link            http://www.noovias.com
  */
-class Payone_Config
+abstract class Payone_Config_Abstract
 {
     const KEY_SEPARATOR = '/';
     /** @var array */
     protected $config = array();
 
-    /** @var Payone_Api_Config */
-    protected $apiConfig = null;
-
-    /** @var Payone_TransactionStatus_Config */
-    protected $transactionStatusConfig = null;
+    abstract protected function getDefaultConfigData();
 
     /**
      * @constructor
@@ -88,21 +84,9 @@ class Payone_Config
     public function __construct(array $data = array())
     {
         if (empty($data)) {
-            if($this->getApiConfig() === null)
-            {
-                $this->apiConfig = new Payone_Api_Config();
-            }
-            if($this->getTransactionStatusConfig() === null)
-            {
-                $this->transactionStatusConfig = new Payone_TransactionStatus_Config();
-            }
             $this->config = $this->getDefaultConfigData();
         }
         else {
-            if(array_key_exists('api', $data))
-                $this->setApiConfig($data['api']);
-            if(array_key_exists('transaction_status',$data))
-                $this->setTransactionStatusConfig($data['transaction_status']);
             $this->config = $data;
         }
     }
@@ -127,19 +111,6 @@ class Payone_Config
     }
 
     /**
-     * @return array
-     */
-    protected function getDefaultConfigData()
-    {
-        $configData = array(
-            'api' => $this->getApiConfig(),
-            'transaction_status' => $this->getTransactionStatusConfig()
-        );
-
-        return $configData;
-    }
-
-    /**
      * @param string $key  Key in the form 'something/something'
      * @param mixed $value The value to set, can be any type
      * @param array $tree
@@ -154,12 +125,16 @@ class Payone_Config
             // Disassemble key, extracting the first node of the string:
             $explodedKey = explode(self::KEY_SEPARATOR, $key);
             $currentKey = array_shift($explodedKey);
-            $newKey = implode(self::KEY_SEPARATOR,$explodedKey);
 
-            /** @var $object Payone_Config_Abstract  */
-            $object = $tree[$currentKey];
-            $object->setValue($newKey,$value);
-            return TRUE;
+            // Reassemble shortened key:
+            $newKey = implode(self::KEY_SEPARATOR, $explodedKey);
+            if (FALSE === array_key_exists($currentKey, $tree)) {
+                // Create new array index:
+                $tree[$currentKey] = array();
+            }
+            // Start recursion:
+            return $this->set($newKey, $value, $tree[$currentKey]);
+
         }
         else {
             // Set value (can overwrite an existing value)
@@ -168,6 +143,7 @@ class Payone_Config
             return TRUE;
         }
     }
+
 
     /**
      * Recursively read from a nested array with a key/path
@@ -190,11 +166,19 @@ class Payone_Config
             // Disassemble key, extracting the first node of the string:
             $explodedKey = explode(self::KEY_SEPARATOR, $key);
             $currentKey = array_shift($explodedKey);
-            $newKey = implode(self::KEY_SEPARATOR,$explodedKey);
 
-            /** @var $object Payone_Config_Abstract */
-            $object = $tree[$currentKey];
-            return $object->getValue($newKey);
+            if (array_key_exists($currentKey, $tree)) {
+                // Get the node from the tree:
+                $newTree = $tree[$currentKey];
+
+                // Reassemble key, start recursion:
+                $newKey = implode(self::KEY_SEPARATOR, $explodedKey);
+                return $this->get($newKey, $newTree);
+            }
+            else {
+                return NULL; // Exit recursion, unsuccessful
+            }
+
         }
         elseif (is_array($tree) and array_key_exists($key, $tree)) {
             return $tree[$key]; // Exit recursion, Success!
@@ -205,35 +189,19 @@ class Payone_Config
     }
 
     /**
-     * @param Payone_Api_Config $apiConfig
+     * @param array $config
      */
-    public function setApiConfig($apiConfig)
+    public function setConfig($config)
     {
-        $this->apiConfig = $apiConfig;
+        $this->config = $config;
     }
 
     /**
-     * @return Payone_Api_Config
+     * @return array
      */
-    public function getApiConfig()
+    public function getConfig()
     {
-        return $this->apiConfig;
-    }
-
-    /**
-     * @param Payone_TransactionStatus_Config $transactionStatusConfig
-     */
-    public function setTransactionStatusConfig($transactionStatusConfig)
-    {
-        $this->transactionStatusConfig = $transactionStatusConfig;
-    }
-
-    /**
-     * @return Payone_TransactionStatus_Config
-     */
-    public function getTransactionStatusConfig()
-    {
-        return $this->transactionStatusConfig;
+        return $this->config;
     }
 
 }

@@ -34,6 +34,15 @@ class Payone_Api_Factory
     protected $config = null;
 
     /**
+     * @constructor
+     * @param Payone_Api_Config $config
+     */
+    public function __construct(Payone_Api_Config $config = null)
+    {
+        $this->config = $config;
+    }
+
+    /**
      * @return Payone_Api_Adapter_Interface
      */
     protected function buildHttpClient()
@@ -80,7 +89,17 @@ class Payone_Api_Factory
     public function buildMapperCurrency()
     {
         $mapper = new Payone_Api_Mapper_Currency();
+        $mapper->setPathToProperties($this->getCurrencyPropertiesPath());
         return $mapper;
+    }
+
+    /**
+     * Returns Path to currency.properties file
+     * @return string
+     */
+    protected function getCurrencyPropertiesPath()
+    {
+        return $this->getConfig()->getValue('default/mapper/currency/currency_properties');
     }
 
     /**
@@ -400,5 +419,21 @@ class Payone_Api_Factory
         $validator = new Payone_Api_Validator_DefaultParameters();
 
         return $validator;
+    }
+
+    /**
+     * @param Payone_Api_Config $config
+     */
+    public function setConfig($config)
+    {
+        $this->config = $config;
+    }
+
+    /**
+     * @return Payone_Api_Config
+     */
+    public function getConfig()
+    {
+        return $this->config;
     }
 }

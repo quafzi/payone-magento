@@ -160,8 +160,8 @@ class Payone_Core_Model_Domain_Resource_Config_PaymentMethod_Collection
     }
 
     /**
-     * @param $id
-     *
+     * @param int $id
+     * @param bool $includeDeleted
      * @return Payone_Core_Model_Domain_Resource_Config_PaymentMethod_Collection
      */
     public function getCollectionByWebsiteId($id, $includeDeleted = false)

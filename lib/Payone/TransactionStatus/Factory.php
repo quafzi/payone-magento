@@ -30,6 +30,19 @@
  */
 class Payone_TransactionStatus_Factory
 {
+
+    /** @var Payone_TransactionStatus_Config */
+    protected $config = null;
+
+    /**
+     * @constructor
+     * @param Payone_TransactionStatus_Config $config
+     */
+    public function __construct(Payone_TransactionStatus_Config $config = null)
+    {
+        $this->config = $config;
+    }
+
     /**
      * @return Payone_TransactionStatus_Service_ProtocolRequest
      */
@@ -86,6 +99,22 @@ class Payone_TransactionStatus_Factory
         $validator = new Payone_TransactionStatus_Validator_DefaultParameters();
         $validator->setKey($key);
         return $validator;
+    }
+
+    /**
+     * @param Payone_TransactionStatus_Config $config
+     */
+    public function setConfig($config)
+    {
+        $this->config = $config;
+    }
+
+    /**
+     * @return Payone_TransactionStatus_Config
+     */
+    public function getConfig()
+    {
+        return $this->config;
     }
 
 

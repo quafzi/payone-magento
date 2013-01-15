@@ -28,7 +28,7 @@
  * @license         <http://www.gnu.org/licenses/> GNU General Public License (GPL 3)
  * @link            http://www.noovias.com
  */
-class Payone_Api_Config extends Payone_Config_Abstract
+class Payone_TransactionStatus_Config extends Payone_Config_Abstract
 {
     /**
      * @return array
@@ -37,7 +37,10 @@ class Payone_Api_Config extends Payone_Config_Abstract
     {
         $defaultConfig = array(
             'default' => array(
-                'validator' => 'Payone_Api_Validator_DefaultParameters',
+                'validators' => array(
+                    'Payone_TransactionStatus_Validator_Ip',
+                    'Payone_TransactionStatus_Validator_DefaultParameters',
+                ),
                 'protocol' => array(
                     'filter' => array(
                         'mask_value' => array(
@@ -47,17 +50,12 @@ class Payone_Api_Config extends Payone_Config_Abstract
                     ),
                     'loggers' => array(
                         'Payone_Protocol_Logger_Log4php' => array(
-                            'filename' => 'payone_api.log',
+                            'filename' => 'payone_transactionstatus.log',
                             'max_file_size' => '1MB',
                             'max_file_count' => 20
                         )
                     ),
                 ),
-                'mapper' => array(
-                    'currency' => array(
-                        'currency_properties' => 'currency.properties'
-                    )
-                )
             )
         );
         return $defaultConfig;
