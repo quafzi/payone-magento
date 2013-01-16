@@ -54,14 +54,14 @@ abstract class Payone_Log4php_LoggerPatternConverterSuperglobal extends Payone_L
 		 * accessed when their name is stored in a variable, e.g.:
 		 * 
 		 * $name = '_SERVER';
-		 * $array = $name;
+		 * $array = $$name;
 		 * 
 		 * This code does not work when run from within a method (only when run
 		 * in global scope). But the following code does work: 
 		 * 
 		 * $name = '_SERVER';
-		 * global $name;
-		 * $array = $name;
+		 * global $$name;
+		 * $array = $$name;
 		 * 
 		 * That's why global is used here.
 		 */

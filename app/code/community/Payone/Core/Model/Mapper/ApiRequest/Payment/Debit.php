@@ -62,7 +62,7 @@ class Payone_Core_Model_Mapper_ApiRequest_Payment_Debit
         $request->setBusiness($business);
 
         /** Set Invoiceing-Parameter only if enabled in Config */
-        if ($this->getConfigPayment()->isInvoiceTransmitEnabled()) {
+        if ($this->mustTransmitInvoiceData()) {
             $invoicing = $this->mapInvoicingParameters();
             $request->setInvoicing($invoicing);
         }
