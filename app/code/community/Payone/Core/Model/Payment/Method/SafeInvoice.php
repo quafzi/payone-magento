@@ -55,8 +55,10 @@ class Payone_Core_Model_Payment_Method_SafeInvoice
 
     public function isAvailable($quote = null)
     {
-        if(count($this->getAllConfigsByQuote($quote)) < 1 )
+        if (!empty($quote) &&
+            count($this->getAllConfigsByQuote($quote)) < 1) {
             return false;
+        }
 
         return parent::isAvailable($quote);
     }

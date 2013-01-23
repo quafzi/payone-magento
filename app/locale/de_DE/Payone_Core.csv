@@ -311,10 +311,16 @@
 "Credit Card Type: %s","Kreditkartentyp: %s"
 "Credit Card Number: %s","Kreditkartennummer: %s"
 "Expiration Date: %s/%s","Verfallsdatum: %s/%s"
+"Name on Card","Kreditkarteninhaber"
+"Credit Card Type","Kreditkartentyp"
+"Credit Card Number","Kreditkartennummer"
+"Expiration Date","Verfallsdatum"
 
 "Account holder: %s","Kontoinhaber: %s"
 "Account number: xxx%s","Kontonummer: xxx%s"
 "Bank code: %s","Bankleitzahl: %s"
+
+"Online bank transfer type","Typ"
 
 "Payone Transaction ID: %s","Payone Vorgangsnummer: %s"
 

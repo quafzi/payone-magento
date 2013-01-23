@@ -141,7 +141,7 @@ class Payone_Migrator_Model_Service_Configuration_PaymentMigrate extends Payone_
                     $collection = Mage::getModel('payone_core/domain_config_paymentMethod')->getCollection();
                     $collection->addFieldToFilter('scope', 'stores');
                     $collection->addFieldToFilter('scope_id', $storeId);
-                    $collection->addFieldToFilter('code', $methodCode);
+                    $collection->addFieldToFilter('code', $globalConfig->getCode()); // the newly mapped code
 
                     $storeConfig = $collection->getFirstItem();
 
