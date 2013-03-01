@@ -58,4 +58,27 @@ class Payone_Core_Block_Payment_Method_Form_Wallet
     {
         return $this->getFactory()->getModelSystemConfigWalletType()->toSelectArray();
     }
+
+    /**
+     * Retrieve the payment config method id from Quote.
+     * If it matches payment method, return it, otherwise 0
+     * @return int|mixed
+     */
+    public function getPaymentMethodConfigId()
+    {
+        $preselectedConfigId = $this->getInfoData('payone_config_payment_method_id');
+
+        $preselectPossible = false;
+        foreach ($this->getTypes() as $type) {
+            if ($type['config_id'] == $preselectedConfigId) {
+                $preselectPossible = true;
+            }
+        }
+        if ($preselectPossible) {
+            return $preselectedConfigId;
+        }
+        else {
+            return 0;
+        }
+    }
 }

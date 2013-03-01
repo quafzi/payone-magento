@@ -51,6 +51,7 @@ class Payone_Core_Block_Adminhtml_System_Config_Payment extends Mage_Adminhtml_B
                 $this->_addNewMethodButton($key, $name);
             }
         }
+        $this->setTemplate('payone/core/system/config/payment/grid/container.phtml');
     }
 
     /**

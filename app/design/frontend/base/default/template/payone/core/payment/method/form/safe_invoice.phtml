@@ -23,7 +23,7 @@
 
 /** @var $this Payone_Core_Block_Payment_Method_Form_SafeInvoice */
 $code = $this->getMethodCode();
-$paymentConfigId = $this->getPaymentConfig()->getId();
+$paymentConfigId = $this->getPaymentMethodConfigId();
 ?>
 <fieldset class="form-list">
     <ul id="payment_form_<?php echo $code ?>" style="display:none">

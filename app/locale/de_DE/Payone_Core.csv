@@ -36,6 +36,7 @@
 "Maximum 81 digits. Placeholders: {{order_increment_id}}","Maximal 81 Zeichen. Platzhalter: {{order_increment_id}}"
 "Maximum 3 lines à 27 digits. Placeholders: {{order_increment_id}}","Maximal 3 Zeilen à 27 Zeichen. Platzhalter: {{order_increment_id}}"
 
+"-- Please Select --","-- Bitte auswählen --"
 "Sort order","Reihenfolge"
 "New Advance Payment","Vorkasse"
 "Add Advance Payment","Vorkasse hinzufügen"

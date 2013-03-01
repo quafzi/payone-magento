@@ -112,6 +112,7 @@ var arrayRow<?php echo $_htmlId ?> = {
         {
             var option = options[index];
 
+            if(templateData.<?php echo $columnName?> != undefined){
             // check each task code in the array, set the option if valid:
             for(var index_inner = 0; index_inner <  templateData.<?php echo $columnName?>.length; index_inner++)
             {
@@ -119,6 +120,7 @@ var arrayRow<?php echo $_htmlId ?> = {
                 {
                     option.selected = true
                 }
+            }
             }
         }
         <?php endforeach;?>

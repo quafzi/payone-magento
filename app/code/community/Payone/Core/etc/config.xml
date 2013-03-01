@@ -376,6 +376,15 @@
                     </payone_core_observer_protocol_api>
                 </observers>
             </payone_core_service_payment>
+            <admin_system_config_changed_section_payone_protect>
+                <observers>
+                    <payone_core_observer_config_protect>
+                        <type>singleton</type>
+                        <class>payone_core/observer_config_protect</class>
+                        <method>checkAllStatuses</method>
+                    </payone_core_observer_config_protect>
+                </observers>
+            </admin_system_config_changed_section_payone_protect>
         </events>
     </global>
 
@@ -536,15 +545,15 @@
                 <max_execution_time>35</max_execution_time>
             </transactionstatus_execute>
             <status_mapping>
-                <creditcard>a:1:{s:23:"_payone_status_mapping1";a:2:{s:8:"txaction";a:1:{i:0;s:9:"appointed";}s:6:"status";a:1:{i:0;s:10:"processing";}}}</creditcard>
-                <invoice>a:1:{s:23:"_payone_status_mapping2";a:2:{s:8:"txaction";a:1:{i:0;s:9:"appointed";}s:6:"status";a:1:{i:0;s:10:"processing";}}}</invoice>
-                <debit_payment>a:1:{s:23:"_payone_status_mapping3";a:2:{s:8:"txaction";a:1:{i:0;s:9:"appointed";}s:6:"status";a:1:{i:0;s:10:"processing";}}}</debit_payment>
-                <financing>a:1:{s:23:"_payone_status_mapping2";a:2:{s:8:"txaction";a:1:{i:0;s:9:"appointed";}s:6:"status";a:1:{i:0;s:10:"processing";}}}</financing>
-                <safe_invoice>a:1:{s:23:"_payone_status_mapping2";a:2:{s:8:"txaction";a:1:{i:0;s:9:"appointed";}s:6:"status";a:1:{i:0;s:10:"processing";}}}</safe_invoice>
-                <advance_payment>a:2:{s:23:"_payone_status_mapping4";a:2:{s:8:"txaction";a:1:{i:0;s:9:"appointed";}s:6:"status";a:1:{i:0;s:7:"pending";}}s:23:"_payone_status_mapping5";a:2:{s:8:"txaction";a:1:{i:0;s:4:"paid";}s:6:"status";a:1:{i:0;s:10:"processing";}}}</advance_payment>
-                <online_bank_transfer>a:1:{s:23:"_payone_status_mapping6";a:2:{s:8:"txaction";a:1:{i:0;s:9:"appointed";}s:6:"status";a:1:{i:0;s:10:"processing";}}}</online_bank_transfer>
-                <cash_on_delivery>a:1:{s:23:"_payone_status_mapping7";a:2:{s:8:"txaction";a:1:{i:0;s:9:"appointed";}s:6:"status";a:1:{i:0;s:10:"processing";}}}</cash_on_delivery>
-                <wallet>a:1:{s:23:"_payone_status_mapping8";a:2:{s:8:"txaction";a:1:{i:0;s:9:"appointed";}s:6:"status";a:1:{i:0;s:10:"processing";}}}</wallet>
+                <creditcard>a:1:{s:18:"_1343137391927_927";a:2:{s:8:"txaction";a:1:{i:0;s:9:"appointed";}s:12:"state_status";a:1:{i:0;s:21:"processing|processing";}}}</creditcard>
+                <invoice>a:1:{s:18:"_1338893611948_948";a:2:{s:8:"txaction";a:1:{i:0;s:9:"appointed";}s:12:"state_status";a:1:{i:0;s:21:"processing|processing";}}}</invoice>
+                <debit_payment>a:1:{s:18:"_1338893616379_379";a:2:{s:8:"txaction";a:1:{i:0;s:9:"appointed";}s:12:"state_status";a:1:{i:0;s:21:"processing|processing";}}}</debit_payment>
+                <financing>a:1:{s:23:"_payone_status_mapping2";a:2:{s:8:"txaction";a:1:{i:0;s:9:"appointed";}s:12:"state_status";a:1:{i:0;s:21:"processing|processing";}}}</financing>
+                <safe_invoice>a:1:{s:23:"_payone_status_mapping3";a:2:{s:8:"txaction";a:1:{i:0;s:9:"appointed";}s:12:"state_status";a:1:{i:0;s:21:"processing|processing";}}}</safe_invoice>
+                <advance_payment>a:2:{s:18:"_1338893618715_715";a:2:{s:8:"txaction";a:1:{i:0;s:9:"appointed";}s:12:"state_status";a:1:{i:0;s:11:"new|pending";}}s:18:"_1355483828815_815";a:2:{s:8:"txaction";a:1:{i:0;s:4:"paid";}s:12:"state_status";a:1:{i:0;s:21:"processing|processing";}}}</advance_payment>
+                <online_bank_transfer>a:1:{s:18:"_1343118466182_182";a:2:{s:8:"txaction";a:1:{i:0;s:9:"appointed";}s:12:"state_status";a:1:{i:0;s:21:"processing|processing";}}}</online_bank_transfer>
+                <cash_on_delivery>a:1:{s:18:"_1338893625332_332";a:2:{s:8:"txaction";a:1:{i:0;s:9:"appointed";}s:12:"state_status";a:1:{i:0;s:21:"processing|processing";}}}</cash_on_delivery>
+                <wallet>a:1:{s:18:"_1343137411652_652";a:2:{s:8:"txaction";a:1:{i:0;s:9:"appointed";}s:12:"state_status";a:1:{i:0;s:21:"processing|processing";}}}</wallet>
             </status_mapping>
         </payone_general>
         <payone_protect>

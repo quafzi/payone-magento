@@ -57,10 +57,16 @@ class Payone_Core_Model_Handler_Verification_AddressCheck
                 // Do nothing, best case, resume with personStatus mapping.
             }
             elseif ($response->isCorrectable()) {
-
-                if ($this->getConfig()->getConfirmAddressCorrection()) {
+                $correctedAddress = $this->prepareAddressCorrectionDataForCustomer($response);
+                if($correctedAddress['city'] == $address->getCity()
+                   && $correctedAddress['postcode'] == $address->getPostcode()
+                   && $correctedAddress['street'] == $address->getStreetFull())
+                {
+                    // PAYONE Api supports name correction, but it is not desired here, handle as a correct address.
+                    $this->handleCorrectAddress();
+                }
+                elseif ($this->getConfig()->getConfirmAddressCorrection()) {
                     // Address correction must be confirmed by customer, hand it up to controller/frontend
-                    $correctedAddress = $this->prepareAddressCorrectionDataForCustomer($response);
                     $errors->setData('payone_address_corrected', $correctedAddress);
                 }
                 else {

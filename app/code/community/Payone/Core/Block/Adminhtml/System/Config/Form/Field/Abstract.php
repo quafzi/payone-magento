@@ -55,7 +55,7 @@ class Payone_Core_Block_Adminhtml_System_Config_Form_Field_Abstract
      */
     public function render(Varien_Data_Form_Element_Abstract $element)
     {
-        $hint = (array) $element->getFieldConfig()->hint;
+        $hint = (array)$element->getFieldConfig()->hint;
         if (!count($hint)) {
             return parent::render($element);
         }
@@ -79,11 +79,11 @@ class Payone_Core_Block_Adminhtml_System_Config_Form_Field_Abstract
     /**
      * @param $columnName string
      * @param $selectType string
-     * @param $options array
+     * @param $values array
      * @return string
      * @throws Exception
      */
-    public function prepareCellTemplate($columnName, $selectType, $options)
+    public function prepareCellTemplate($columnName, $selectType, $values)
     {
         if (empty($this->_columns[$columnName])) {
             throw new Exception('Wrong column name specified.');
@@ -98,24 +98,51 @@ class Payone_Core_Block_Adminhtml_System_Config_Form_Field_Abstract
         elseif ($selectType === self::PAYONE_CORE_FIELD_SELECT) {
             $definition = '" class="select"';
         }
-        else
+        else {
             throw new Exception('Unknown Type for Select');
-
-        $rendered = '<select name="' . $inputName . $definition . (isset($column['style']) ? ' style="' . $column['style'] . '"' : '').' >';
-
-        foreach ($options as $item) {
-            $value = $item['value'];
-            if(is_array($value))
-            {
-                $value = array_pop($value);
-                $value = $value['value'];
-            }
-            $rendered .= '<option value="' . $value . '">' . $item['label'] . '</option>';
         }
 
-        $rendered .= '</select>';
+        $html = '<select name="' . $inputName . $definition . (isset($column['style']) ? ' style="' . $column['style'] . '"' : '') . ' >';
+        foreach ($values as $key => $option) {
+            if (!is_array($option)) {
+                $html .= $this->_optionToHtml(array(
+                        'value' => $key,
+                        'label' => $option)
+                );
+            }
+            elseif (is_array($option['value'])) {
+                $html .= '<optgroup label="' . $option['label'] . '">';
+                foreach ($option['value'] as $groupItem) {
+                    $html .= $this->_optionToHtml($groupItem);
+                }
+                $html .= '</optgroup>';
+            }
+            else {
+                $html .= $this->_optionToHtml($option);
+            }
+        }
 
-        return $rendered;
+        $html .= '</select>';
+
+        return $html;
+    }
+
+    protected function _optionToHtml($option)
+    {
+        if (is_array($option['value'])) {
+            $html = '<optgroup label="' . $option['label'] . '">';
+            foreach ($option['value'] as $groupItem) {
+                $html .= $this->_optionToHtml($groupItem);
+            }
+            $html .= '</optgroup>';
+        }
+        else {
+            $html = '<option value="' .($option['value']) . '"';
+//            $html .= isset($option['title']) ? 'title="' . ($option['title']) . '"' : '';
+//            $html .= isset($option['style']) ? 'style="' . $option['style'] . '"' : '';
+            $html .= '>' . ($option['label']) . '</option>';
+        }
+        return $html;
     }
 
     /**

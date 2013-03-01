@@ -52,7 +52,7 @@ class Payone_Core_Model_Service_Config_XmlGenerate
 
         $stores = $this->getStores();
         foreach ($stores as $store) {
-            /** @var $store Mage_Core_Model_Store  */
+            /** @var $store Mage_Core_Model_Store */
             /** @var $config Payone_Core_Model_Config */
             $this->store = $store;
             $config = $serviceConfig->execute($store->getStoreId());
@@ -160,7 +160,7 @@ class Payone_Core_Model_Service_Config_XmlGenerate
         $statusMapping = $general->getStatusMapping();
         $paymentCreditcard = $general->getPaymentCreditcard();
 
-        /** @var $globalConfig Payone_Settings_Data_ConfigFile_Shop_Global  */
+        /** @var $globalConfig Payone_Settings_Data_ConfigFile_Shop_Global */
         $globalConfig = $this->generateSettingsBySection('shop_global', $global);
         $statusMappingConfig = new Payone_Settings_Data_ConfigFile_Global_StatusMapping();
         foreach ($statusMapping->toArray() as $keyClearingType => $mapping) {
@@ -171,7 +171,13 @@ class Payone_Core_Model_Service_Config_XmlGenerate
                 foreach ($mapping as $key => $value) {
                     $singleMap = array();
                     $singleMap['from'] = $key;
-                    $singleMap['to'] = $value;
+
+                    $mapTo = $value;
+                    if (is_array($value)) {
+                        $mapTo = implode('|', $value);
+                    }
+                    $singleMap['to'] = $mapTo;
+
                     array_push($data, $singleMap);
                 }
                 $statusMappingConfig->addStatusMapping($keyClearingType, $data);
@@ -354,8 +360,9 @@ class Payone_Core_Model_Service_Config_XmlGenerate
      */
     protected function getPaymentMethodClass($key)
     {
-        if($key === 'safe_invoice')
-            $key = 'financing'; // safe_invoice is a sub-paymentmethod of financing in SDK.
+        if ($key === 'safe_invoice') {
+            $key = 'financing';
+        } // safe_invoice is a sub-paymentmethod of financing in SDK.
         $key = uc_words($key, '');
         $classname = self::PAYMENT_METHOD_CLASS_PREFIX . $key;
         $classInstance = new $classname();

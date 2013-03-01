@@ -43,7 +43,7 @@ class Payone_Core_Block_Adminhtml_System_Config_Form_Field_StatusMapping
             'style' => 'width:150px',
         ));
 
-        $this->addColumn('status', array(
+        $this->addColumn('state_status', array(
             'label' => Mage::helper('payone_core')->__('Magento-Status'),
             'style' => 'width:120px;',
         ));
@@ -59,22 +59,22 @@ class Payone_Core_Block_Adminhtml_System_Config_Form_Field_StatusMapping
      */
     protected function _renderCellTemplate($columnName)
     {
-        $selectType = Payone_Core_Block_Adminhtml_System_Config_Form_Field_Abstract::PAYONE_CORE_FIELD_SELECT;
-
-        if ($columnName == 'txaction')
-        {
+        $selectType = '';
+        $options = array();
+        if ($columnName == 'txaction') {
+            $selectType = Payone_Core_Block_Adminhtml_System_Config_Form_Field_Abstract::PAYONE_CORE_FIELD_SELECT;
             $modelConfigCode = $this->getFactory()->getModelSystemConfigTransactionStatus();
+            $options = $modelConfigCode->toOptionArray();
         }
-        elseif ($columnName == 'status')
-        {
-            $modelConfigCode = $this->getFactory()->getModelSystemConfigOrderStatus();
+        elseif ($columnName == 'state_status') {
+            $selectType = Payone_Core_Block_Adminhtml_System_Config_Form_Field_Abstract::PAYONE_CORE_FIELD_SELECT;
+            $statuses = new Payone_Core_Model_System_Config_OrderStatus();
+            $options = $statuses->toOptionGroupArray();
         }
 
-        $options = $modelConfigCode->toOptionArray();
+        $html = $this->prepareCellTemplate($columnName, $selectType, $options);
 
-        $rendered = $this->prepareCellTemplate($columnName, $selectType, $options);
-
-        return $rendered;
+        return $html;
     }
 
 }

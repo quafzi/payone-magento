@@ -32,73 +32,39 @@
  */
 class Payone_Core_Model_System_Config_Backend_Protect extends Mage_Core_Model_Config_Data
 {
+    /** @var Payone_Core_Model_Factory */
+    protected $factory = null;
+
     protected function _beforeSave()
     {
         $addressCheckEnabled = $this->getData('groups/address_check/fields/enabled/value');
         $creditratingEnabled = $this->getData('groups/creditrating/fields/enabled/value');
 
-        if ($addressCheckEnabled == 1 or $creditratingEnabled == 1) {
-            $protectValue = 1;
-        }
-        else {
-            $protectValue = 0;
-        }
-
-        $path = 'payone_protect/general/enabled';
-
-        /**
-         * @var $protect Mage_Core_Model_Config_Data
-         */
-        $protect = Mage::getModel('core/config_data');
-        $protect->setScope($this->getScope());
-        $protect->setScopeId($this->getScopeId());
-
-        $protect->setPath($path);
-
-        /** We must check wheter there is a DB entry for the unique constraint 'config_scope'
-         *  in Magento versions < 1.6 (in newer versions this check is done by Magento)
-         *
-         * @see Mage_Core_Model_Resource_Config_Data::_checkUnique() since Magento 1.6.0.0
-         */
-        if(version_compare($this->helper()->getMagentoVersion(), '1.6','<')) {
-            $protect = $this->checkConfigUnique($protect);
-        }
-
-        $protect->setValue($protectValue);
-
-        $protect->save();
+        $serviceProtectCheck = $this->getFactory()->getServiceConfigProtectCheck();
+        $serviceProtectCheck->setScopeId($this->getScopeId());
+        $serviceProtectCheck->execute($addressCheckEnabled, $creditratingEnabled);
 
         parent::_beforeSave();
     }
 
-
     /**
-     * @param Mage_Core_Model_Config_Data $object
-     * @return Mage_Core_Model_Config_Data
+     *
+     * @return Payone_Core_Model_Factory
      */
-    protected function checkConfigUnique(Mage_Core_Model_Config_Data $object)
+    public function getFactory()
     {
-        /** @var $collection Mage_Core_Model_Mysql4_Config_Data_Collection | Mage_Core_Model_Resource_Config_Data_Collection */
-        $collection = Mage::getModel('core/config_data')->getCollection();
-        $collection->addFieldToFilter('scope', $object->getScope());
-        $collection->addFieldToFilter('scope_id', $object->getScopeId());
-        $collection->addFieldToFilter('path', $object->getPath());
-        $collection->load();
-
-        if($collection->count() > 0) {
-            /** @var $config Mage_Core_Model_Config_Data */
-            $config = $collection->getFirstItem();
-            $object->setId($config->getId());
+        if ($this->factory === null) {
+            $this->factory = new Payone_Core_Model_Factory();
         }
-
-        return $object;
+        return $this->factory;
     }
 
     /**
-     * @return Payone_Core_Helper_Data
+     *
+     * @param Payone_Core_Model_Factory $factory
      */
-    protected function helper()
+    public function setFactory(Payone_Core_Model_Factory $factory)
     {
-        return Mage::helper('payone_core');
+        $this->factory = $factory;
     }
 }

@@ -72,6 +72,13 @@ class Payone_Core_Adminhtml_Configuration_Wizard_PageController
         // $actionName = $this->getRequest()->getActionName(); // @comment we could use ActionName from Request
         $this->initConfig($actionName);
 
+        $configPage = Mage::registry('payone_wizard_config_page');
+
+        Mage::getSingleton('adminhtml/config_data')
+            ->setSection($configPage->getData('codes/section'))
+            ->setWebsite($configPage->getData('codes/website'))
+            ->setStore($configPage->getData('codes/store'));
+
         $this->loadLayout('payone_core_adminhtml_configuration_wizard_page_edit');
         $this->renderLayout();
     }
@@ -131,6 +138,7 @@ class Payone_Core_Adminhtml_Configuration_Wizard_PageController
             // website and store codes can be used in event implementation, so set them as well
             $params = array('website' => $website, 'store' => $store);
             Mage::dispatchEvent("admin_system_config_changed_section_{$section}", $params);
+            Mage::dispatchEvent("admin_system_config_changed_section_{$section}_{$pageCode}", $params);
 
             $session->addSuccess(Mage::helper('payone_core')->__('The configuration has been saved.'));
         }

@@ -58,7 +58,7 @@ PAYONE.Service.CreditCardCheck = function (handler, form, config) {
      * @param element
      */
     this.displayCheckCvc = function (element) {
-        config = JSON.parse($('payone_creditcard_config_cvc').value);
+        config = $('payone_creditcard_config_cvc').value.evalJSON();
         ccKey = element.value;
         var cvcDiv = $("payone_creditcard_cc_cid_div");
         if (cvcDiv != undefined && cvcDiv != null) {
@@ -155,7 +155,7 @@ PAYONE.Service.CreditCardCheck = function (handler, form, config) {
     this.getConfig = function () {
         if (this.config == '' || this.config == undefined) {
             configJson = $('payone_creditcard_config').value;
-            this.config = JSON.parse(configJson);
+            this.config = configJson.evalJSON();
         }
         return this.config;
     };

@@ -92,16 +92,36 @@ class Payone_Core_Model_Config_General_StatusMapping extends Payone_Core_Model_C
         }
 
         foreach ($raw as $key => $data) {
-            $txaction = $orderStatus = '';
+            $txaction = $orderStatus = null;
             if (array_key_exists('txaction', $data)) {
                 $txaction = array_shift($data['txaction']);
             }
-            if (array_key_exists('status', $data)) {
-                $orderStatus = array_shift($data['status']);
+
+            // State_Status Mapping @since 3.1.0
+            if (array_key_exists('state_status', $data)) {
+                $orderStateStatus = array_shift($data['state_status']);
+                $orderStateStatusArray = explode('|', $orderStateStatus);
+                if (count($orderStateStatusArray) !== 2) {
+                    continue;
+                }
+                $orderStatus = array(
+                    'state' => $orderStateStatusArray[0],
+                    'status' => $orderStateStatusArray[1]
+                );
             }
-            if ($txaction == '' and $orderStatus == '') {
+            // Fallback to old Configs < 3.1.0
+            elseif (array_key_exists('status', $data)) {
+                $orderStatusCode = array_shift($data['status']);
+                $orderStatus = array(
+                    'state' => '',
+                    'status' => $orderStatusCode
+                );
+            }
+
+            if ($txaction === null and $orderStatus === null) {
                 continue;
             }
+
             $return[$txaction] = $orderStatus;
         }
         return $return;

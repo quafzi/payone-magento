@@ -155,6 +155,7 @@ class Payone_Core_Block_Payment_Method_Form_Abstract
 
             $systemTypes = $this->getSystemConfigMethodTypes();
 
+            /** @var $config Payone_Core_Model_Config_Payment_Method */
             foreach ($this->getPaymentConfigs() as $key => $config) {
                 $feeConfig = $config->getFeeConfigForQuote($quote);
 
@@ -173,7 +174,6 @@ class Payone_Core_Block_Payment_Method_Form_Abstract
                     continue;
                 }
 
-                /** @var $config Payone_Core_Model_Config_Payment_Method */
                 foreach ($configTypes as $keyType => $typeCode) {
                     $configTypeKey = $configId . '_' . $typeCode; // key to correctly identify this config and type
                     $return[$configTypeKey]['code'] = $typeCode;

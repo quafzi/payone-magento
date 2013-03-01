@@ -927,6 +927,18 @@ class Payone_Core_Model_Factory
     }
 
     /**
+     * @return Payone_Core_Model_Service_Config_ProtectCheck
+     */
+    public function getServiceConfigProtectCheck()
+    {
+        /** @var $service Payone_Core_Model_Service_Config_ProtectCheck */
+        $service = Mage::getModel('payone_core/service_config_protectCheck');
+        $service->setFactory($this);
+
+        return $service;
+    }
+
+    /**
      * @return Payone_Core_Model_Service_Protocol_Api_Export
      */
     public function getServiceProtocolApiExport()
@@ -1444,5 +1456,15 @@ class Payone_Core_Model_Factory
     public function getModelVarienHttpClient()
     {
         return new Varien_Http_Client();
+    }
+
+    /**
+     * @return Mage_Core_Model_Config_Data
+     */
+    public function getModelCoreConfigData()
+    {
+        /** @var $configData Mage_Core_Model_Config_Data */
+        $configData = Mage::getModel('core/config_data');
+        return $configData;
     }
 }

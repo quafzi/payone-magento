@@ -70,14 +70,21 @@ abstract class Payone_Core_Model_Payment_Method_Abstract
      */
     public function isAvailable($quote = null)
     {
-        if ($quote === null) {
-            $configPayment = $this->getConfigPayment(null);
-            return $configPayment->isAvailable($this->getMethodType());
+        if (is_null($quote)) {
+            // No quote given, availability check is basic (e.g. method is enabled, not marked as deleted)
+            $configPayment = $this->getConfigPayment();
         }
+        else {
+            // Quote is given, availability check is detailed (includes store, country settings, min/max quote totals, etc.)
+            $configPayment = $this->helperConfig()->getConfigPaymentByQuote($quote);
+        }
+        $isAvailable = $configPayment->isAvailable($this->getMethodType(), $quote);
 
-        $configPayment = $this->helperConfig()->getConfigPaymentByQuote($quote);
-        return $configPayment->isAvailable($this->getMethodType(), $quote);
+        return $this->dispatchPaymentMethodIsActive($isAvailable, $quote);
+
+
     }
+
 
     /**
      * To check billing country is allowed for the payment method
@@ -328,6 +335,40 @@ abstract class Payone_Core_Model_Payment_Method_Abstract
             $data = parent::getConfigData($field, $storeId);
         }
         return $data;
+    }
+
+    /**
+     * Trigger Magento Standard Event, to allow changing of isAvailable() result
+     *
+     * @param bool $isAvailable
+     * @param Mage_Sales_Model_Quote $quote
+     * @return bool
+     */
+    protected function dispatchPaymentMethodIsActive($isAvailable, $quote)
+    {
+        $checkResult = new StdClass;
+        $checkResult->isAvailable = $isAvailable;
+
+        $this->dispatchEvent('payment_method_is_active', array(
+            'result' => $checkResult,
+            'method_instance' => $this,
+            'quote' => $quote,
+        ));
+
+        return $checkResult->isAvailable;
+    }
+
+    /**
+     * Wrapper for Mage::dispatchEvent()
+     *
+     * @param $name
+     * @param array $data
+     *
+     * @return Mage_Core_Model_App
+     */
+    protected function dispatchEvent($name, array $data = array())
+    {
+        return Mage::dispatchEvent($name, $data);
     }
 
     /**

@@ -53,11 +53,18 @@ class Payone_Core_Model_Payment_Method_SafeInvoice
     /** @var Payone_Core_Model_Config_Payment_Method_Interface[] */
     protected $matchingConfigs = array();
 
+    /**
+     * @override to further restrict availability of SafeInvoice by rules
+     *
+     * @param null|Mage_Sales_Model_Quote $quote
+     * @return bool
+     */
     public function isAvailable($quote = null)
     {
         if (!empty($quote) &&
-            count($this->getAllConfigsByQuote($quote)) < 1) {
-            return false;
+                count($this->getAllConfigsByQuote($quote)) < 1
+        ) {
+            return $this->dispatchPaymentMethodIsActive(false, $quote);
         }
 
         return parent::isAvailable($quote);
@@ -72,8 +79,9 @@ class Payone_Core_Model_Payment_Method_SafeInvoice
     {
         $status = $payment->getOrder()->getPayoneTransactionStatus();
 
-        if(empty($status) or $status == 'REDIRECT')
+        if (empty($status) or $status == 'REDIRECT') {
             return $this; // Don´t send cancel to PAYONE on orders without TxStatus
+        }
 
         // Capture0, to notify Magento that the order is complete (invoiced/cancelled all items)
         $this->helperRegistry()->registerPaymentCancel($this->getInfoInstance());

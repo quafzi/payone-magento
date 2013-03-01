@@ -24,7 +24,7 @@
 /** @var $this Payone_Core_Block_Payment_Method_Form_OnlineBankTransfer */
 $code = $this->getMethodCode();
 $country = $this->getCountry();
-$paymentConfigId = $this->getInfoData('payone_config_payment_method_id');
+$paymentConfigId = $this->getPaymentMethodConfigId();
 $paymentType = $this->getInfoData('payone_onlinebanktransfer_type');
 
 $maxLengthAccountNumber = 10;
