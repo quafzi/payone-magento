@@ -784,6 +784,8 @@ class Payone_Core_Model_Factory
         $service->setServiceTransaction($this->getServiceTransactionUpdate());
         $service->setServiceOrderStatus($this->getServiceSalesOrderStatus());
         $service->setServiceOrderComment($this->getServiceSalesOrderComment());
+        $service->setServiceStoreClearingParams($this->getServiceTransactionStatusStoreClearingParameters());
+
 
         return $service;
     }

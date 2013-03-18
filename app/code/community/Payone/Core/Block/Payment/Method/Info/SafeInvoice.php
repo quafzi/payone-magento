@@ -150,7 +150,7 @@ class Payone_Core_Block_Payment_Method_Info_SafeInvoice
      */
     public function getPayoneClearingLegalnote()
     {
-        return $this->getInfo()->getPayoneClearingBankName();
+        return $this->getInfo()->getPayoneClearingLegalnote();
     }
 
 

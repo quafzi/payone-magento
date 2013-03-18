@@ -315,11 +315,6 @@
                         <class>payone_core/observer_transactionStatus_orderConfirmation</class>
                         <method>onAppointed</method>
                     </payone_core_observer_orderConfirmation>
-                    <payone_core_observer_transactionstatus_clearingparameters>
-                        <type>singleton</type>
-                        <class>payone_core/observer_transactionStatus_storeClearingParameters</class>
-                        <method>onAppointed</method>
-                    </payone_core_observer_transactionstatus_clearingparameters>
                 </observers>
             </payone_core_transactionstatus_appointed>
             <payone_core_transactionstatus_paid>

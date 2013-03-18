@@ -20,7 +20,6 @@
  * @license         <http://www.gnu.org/licenses/> GNU General Public License (GPL 3)
  * @link            http://www.noovias.com
  */
-
 /** @var $this Payone_Core_Block_Payment_Method_Info_SafeInvoice */
 ?>
 <?php echo $this->escapeHtml($this->getMethodTitle()) ?>
@@ -31,6 +30,19 @@
 <?php if ($this->getLastTransId() == ''): ?>
 	<?php echo $this->__('Payment has not been processed yet.') ?>
 <?php else: ?>
-    <?php echo $this->__('Payone Transaction ID: %s', $this->escapeHtml($this->getLastTransId())) ?>
+    <?php echo $this->__('Payone Transaction ID: %s', $this->escapeHtml($this->getLastTransId())) ?><br/>
+    <?php echo $this->__('Accountholder: %s', $this->escapeHtml($this->getPayoneClearingBankAccountholder())) ?><br/>
+    <?php echo $this->__('Country: %s', $this->escapeHtml($this->getPayoneClearingBankCountry())) ?><br/>
+    <?php echo $this->__('Accountnumber: %s', $this->escapeHtml($this->getPayoneClearingBankAccount())) ?><br/>
+    <?php echo $this->__('Bank code: %s', $this->escapeHtml($this->getPayoneClearingBankCode())) ?><br/>
+    <?php echo $this->__('IBAN: %s', $this->escapeHtml($this->getPayoneClearingBankIban())) ?><br/>
+    <?php echo $this->__('BIC: %s', $this->escapeHtml($this->getPayoneClearingBankBic())) ?><br/>
+    <?php echo $this->__('City: %s', $this->escapeHtml($this->getPayoneClearingBankCity())) ?><br/>
+    <?php echo $this->__('Bank: %s', $this->escapeHtml($this->getPayoneClearingBankName())) ?><br/>
+    <?php echo $this->__('Payment Reference: %s', $this->escapeHtml($this->getPayoneClearingReference())) ?><br/>
+    <?php echo $this->__('Legal note: %s', $this->escapeHtml($this->getPayoneClearingLegalnote())) ?><br/>
+    <?php echo $this->__('Instruction note: %s', $this->escapeHtml($this->getPayoneClearingInstructionnote())) ?><br/>
+    <?php echo $this->__('Due date: %s', $this->escapeHtml($this->getPayoneClearingDuedate())) ?><br/>
+
 <?php endif; ?>
 <br/>

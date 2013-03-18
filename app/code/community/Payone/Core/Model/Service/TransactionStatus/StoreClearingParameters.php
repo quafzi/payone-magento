@@ -32,15 +32,23 @@
  */
 class Payone_Core_Model_Service_TransactionStatus_StoreClearingParameters
     extends Payone_Core_Model_Service_Abstract
-{  /**
+{
+    /**
      * @param Payone_Core_Model_Domain_Protocol_TransactionStatus $transactionStatus
+     * @param Mage_Sales_Model_Order $order
+     * @return void
      */
-    public function execute(Payone_Core_Model_Domain_Protocol_TransactionStatus $transactionStatus)
+    public function execute(Payone_Core_Model_Domain_Protocol_TransactionStatus $transactionStatus, Mage_Sales_Model_Order $order = null)
     {
-        // Map clearing params:
-        $order = $this->getFactory()->getModelSalesOrder();
-        $order->load($transactionStatus->getOrderId());
 
+        if(!$transactionStatus->isAppointed())
+            return;
+
+        if(is_null($order))
+        {
+            $order = $this->getFactory()->getModelSalesOrder();
+            $order->load($transactionStatus->getOrderId());
+        }
         $payment = $order->getPayment();
         $methodInstance = $payment->getMethodInstance();
 
@@ -48,6 +56,7 @@ class Payone_Core_Model_Service_TransactionStatus_StoreClearingParameters
         if (!($methodInstance instanceof Payone_Core_Model_Payment_Method_SafeInvoice)) {
             return;
         }
+
 
         $config = $this->helperConfig()->getConfigPaymentMethodByOrder($order);
 
