@@ -85,7 +85,6 @@ abstract class Payone_Core_Model_Payment_Method_Abstract
 
     }
 
-
     /**
      * To check billing country is allowed for the payment method
      * Is used during Magento Onepage Checkout
@@ -121,6 +120,25 @@ abstract class Payone_Core_Model_Payment_Method_Abstract
         $configPayment = $this->getConfigPayment($storeId);
         $canUse = $configPayment->canUseForCountry($this->getMethodType(), $country);
         return $canUse;
+    }
+
+    /**
+     * @param Varien_Object $payment
+     * @return Mage_Payment_Model_Method_Abstract
+     */
+    public function cancel(Varien_Object $payment)
+    {
+        $status = $payment->getOrder()->getPayoneTransactionStatus();
+
+        if (empty($status) or $status == 'REDIRECT') {
+            return $this; // Don´t send cancel to PAYONE on orders without TxStatus
+        }
+
+        // Capture0, to notify PAYONE that the order is complete (invoiced/cancelled all items)
+        $this->helperRegistry()->registerPaymentCancel($this->getInfoInstance());
+        $this->capture($payment, 0.0000);
+
+        return $this;
     }
 
     /**
@@ -424,6 +442,14 @@ abstract class Payone_Core_Model_Payment_Method_Abstract
     protected function helper()
     {
         return $this->getFactory()->helper();
+    }
+
+    /**
+     * @return Payone_Core_Helper_Registry
+     */
+    protected function helperRegistry()
+    {
+        return $this->getFactory()->helperRegistry();
     }
 
     /**

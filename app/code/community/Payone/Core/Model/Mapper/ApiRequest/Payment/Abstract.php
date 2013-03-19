@@ -106,7 +106,7 @@ abstract class Payone_Core_Model_Mapper_ApiRequest_Payment_Abstract
         $params['pr'] = $order->getShippingInclTax();
         $params['va'] = $this->getShippingTaxRate();
 
-        if($this->getPaymentMethod()->mustTransmitInvoicingItemTypes()) {
+        if ($this->getPaymentMethod()->mustTransmitInvoicingItemTypes()) {
             $params['it'] = Payone_Api_Enum_InvoicingItemType::SHIPMENT;
         }
 
@@ -139,12 +139,12 @@ abstract class Payone_Core_Model_Mapper_ApiRequest_Payment_Abstract
 
             if ($this->getPaymentMethod()->mustTransmitInvoicingItemTypes()) {
                 $params['it'] = Payone_Api_Enum_InvoicingItemType::VOUCHER;
-            }
-            $item = new Payone_Api_Request_Parameter_Invoicing_Item();
-            $item->init($params);
-
-            return $item;
         }
+        $item = new Payone_Api_Request_Parameter_Invoicing_Item();
+        $item->init($params);
+
+        return $item;
+    }
 
     /**
      * @param Mage_Sales_Model_Order_Creditmemo $creditmemo
@@ -434,6 +434,18 @@ abstract class Payone_Core_Model_Mapper_ApiRequest_Payment_Abstract
     }
 
     /**
+     * @param $storeId
+     * @return Payone_Core_Model_Config_General
+     */
+    protected function getConfigGeneral($storeId = null)
+    {
+        if (is_null($storeId)) {
+            $storeId = $this->getStoreId();
+        }
+        return $this->helperConfig()->getConfigGeneral($storeId);
+    }
+
+    /**
      * @param Mage_Sales_Model_Order $order
      */
     public function setOrder(Mage_Sales_Model_Order $order)
@@ -488,7 +500,7 @@ abstract class Payone_Core_Model_Mapper_ApiRequest_Payment_Abstract
     {
         return $this->getFactory()->helperConfig();
     }
-    
+
     /**
      * @return Payone_Core_Helper_Registry
      */

@@ -60,6 +60,10 @@ class Payone_Core_Model_Config_General_Global extends Payone_Core_Model_Config_A
      * @var string
      */
     protected $request_type = '';
+    /**
+     * @var int
+     */
+    protected $transmit_ip = 1;
 
     /**
      * initialize config with specificcounty as array
@@ -202,5 +206,21 @@ class Payone_Core_Model_Config_General_Global extends Payone_Core_Model_Config_A
     public function getSpecificcountryAsString()
     {
         return implode(',', $this->specificcountry);
+    }
+
+    /**
+     * @param int $transmit_ip
+     */
+    public function setTransmitIp($transmit_ip)
+    {
+        $this->transmit_ip = $transmit_ip;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTransmitIp()
+    {
+        return $this->transmit_ip;
     }
 }

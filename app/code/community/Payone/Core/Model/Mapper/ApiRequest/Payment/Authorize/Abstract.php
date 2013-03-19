@@ -101,7 +101,6 @@ abstract class Payone_Core_Model_Mapper_ApiRequest_Payment_Authorize_Abstract
     }
 
 
-
     /**
      * @param Payone_Api_Request_Authorization_Abstract $request
      */
@@ -165,10 +164,14 @@ abstract class Payone_Core_Model_Mapper_ApiRequest_Payment_Authorize_Abstract
         $personalData->setLanguage($language);
         $personalData->setVatid($order->getCustomerTaxvat());
 
-        // Multiple Ips can be included, we only send the last one.
-        $remoteIps = explode(',', $order->getRemoteIp());
-        $lastRemoteIp = array_pop($remoteIps);
-        $personalData->setIp($lastRemoteIp);
+        $global = $this->getConfigGeneral()->getGlobal();
+        // Send Ip when enabled
+        if ($global->getTransmitIp()) {
+            // Multiple Ips can be included, we only send the last one.
+            $remoteIps = explode(',', $order->getRemoteIp());
+            $lastRemoteIp = array_pop($remoteIps);
+            $personalData->setIp($lastRemoteIp);
+        }
 
         // US and CA always need state and shipping_state paramters
         if ($billingCountry == 'US' or $billingCountry == 'CA') {
@@ -186,11 +189,14 @@ abstract class Payone_Core_Model_Mapper_ApiRequest_Payment_Authorize_Abstract
         $helper = $this->helper();
         $paymentMethod = $this->getPaymentMethod();
         $info = $paymentMethod->getInfoInstance();
-        if($paymentMethod instanceof Payone_Core_Model_Payment_Method_SafeInvoice
-           and $info->getPayoneSafeInvoiceType() === Payone_Api_Enum_FinancingType::BSV)
-            $address = $this->getOrder()->getBillingAddress(); // Always use same address for BillSAFE
-        else
+        if ($paymentMethod instanceof Payone_Core_Model_Payment_Method_SafeInvoice
+                and $info->getPayoneSafeInvoiceType() === Payone_Api_Enum_FinancingType::BSV
+        ) {
+            $address = $this->getOrder()->getBillingAddress();
+        } // Always use same address for BillSAFE
+        else {
             $address = $this->getOrder()->getShippingAddress();
+        }
 
         $deliveryData = new Payone_Api_Request_Parameter_Authorization_DeliveryData();
 
@@ -229,7 +235,7 @@ abstract class Payone_Core_Model_Mapper_ApiRequest_Payment_Authorize_Abstract
         foreach ($order->getItemsCollection() as $key => $itemData) {
             /** @var $itemData Mage_Sales_Model_Order_Item */
             if ($itemData->isDummy()) {
-                continue;// Do not map dummy items
+                continue; // Do not map dummy items
             }
 
             $number = $itemData->getQtyToInvoice();
@@ -415,8 +421,7 @@ abstract class Payone_Core_Model_Mapper_ApiRequest_Payment_Authorize_Abstract
      */
     protected function getNarrativeText($type)
     {
-        $storeId = $this->getPaymentMethod()->getStore();
-        $general = $this->helperConfig()->getConfigGeneral($storeId);
+        $general = $this->getConfigGeneral();
         $parameterNarrativeText = $general->getParameterNarrativeText();
 
         $narrativeText = '';

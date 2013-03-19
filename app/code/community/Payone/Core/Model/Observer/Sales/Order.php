@@ -74,11 +74,6 @@ class Payone_Core_Model_Observer_Sales_Order
 
         $methodInstance = $payment->getMethodInstance();
 
-        if($methodInstance instanceof Payone_Core_Model_Payment_Method_Financing
-        || $methodInstance instanceof Payone_Core_Model_Payment_Method_SafeInvoice)
-        {
-
-            $methodInstance->cancel($payment);
-        }
+        $methodInstance->cancel($payment);
     }
 }

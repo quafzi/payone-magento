@@ -70,26 +70,6 @@ class Payone_Core_Model_Payment_Method_SafeInvoice
         return parent::isAvailable($quote);
     }
 
-
-    /**
-     * @param Varien_Object $payment
-     * @return Mage_Payment_Model_Method_Abstract
-     */
-    public function cancel(Varien_Object $payment)
-    {
-        $status = $payment->getOrder()->getPayoneTransactionStatus();
-
-        if (empty($status) or $status == 'REDIRECT') {
-            return $this; // Don´t send cancel to PAYONE on orders without TxStatus
-        }
-
-        // Capture0, to notify Magento that the order is complete (invoiced/cancelled all items)
-        $this->helperRegistry()->registerPaymentCancel($this->getInfoInstance());
-        $this->capture($payment, 0.0000);
-
-        return $this;
-    }
-
     /**
      * @api
      *
@@ -154,13 +134,5 @@ class Payone_Core_Model_Payment_Method_SafeInvoice
         }
 
         return true;
-    }
-
-    /**
-     * @return Payone_Core_Helper_Registry
-     */
-    protected function helperRegistry()
-    {
-        return $this->getFactory()->helperRegistry();
     }
 }

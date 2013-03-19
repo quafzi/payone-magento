@@ -102,25 +102,29 @@ class Payone_Core_Model_Mapper_ApiRequest_Payment_Capture
 
         $paymentMethod = $this->getPaymentMethod();
 
-        // Some payment methods can not use settleaccount auto:
+        // settleaccount possibilities depend on payment method:
         if ($paymentMethod instanceof Payone_Core_Model_Payment_Method_AdvancePayment
-        or $paymentMethod instanceof Payone_Core_Model_Payment_Method_Invoice)
+        or $paymentMethod instanceof Payone_Core_Model_Payment_Method_OnlineBankTransfer)
         {
-            // Check if the invoice completes the order
-            if ($this->isInvoiceLast()) {
+            $payment = $paymentMethod->getInfoInstance();
+            // Advancepayment and OnlineBankTransfer use NO/AUTO
+            if ($this->isInvoiceLast() || $this->helperRegistry()->isPaymentCancelRegistered($payment)) {
+                // Invoice completes the order
                 $business->setSettleaccount(Payone_Api_Enum_Settleaccount::AUTO);
             }
             else {
+                // partial payment
                 $business->setSettleaccount(Payone_Api_Enum_Settleaccount::NO);
             }
         }
-        else if ($paymentMethod instanceof Payone_Core_Model_Payment_Method_SafeInvoice)
+        elseif ($paymentMethod instanceof Payone_Core_Model_Payment_Method_SafeInvoice)
         {
             // BillSAFE always settles account:
             $business->setSettleaccount(Payone_Api_Enum_Settleaccount::YES);
         }
         else
         {
+            // all other can always use AUTO, regardless of complete or partial capture
             $business->setSettleaccount(Payone_Api_Enum_Settleaccount::AUTO);
         }
         return $business;
@@ -192,7 +196,9 @@ class Payone_Core_Model_Mapper_ApiRequest_Payment_Capture
         }
 
         // Capture mode:
-        if ($this->getPaymentMethod() instanceof Payone_Core_Model_Payment_Method_SafeInvoice) {
+        $payment = $this->getPaymentMethod()->getInfoInstance();
+        if ($this->getPaymentMethod() instanceof Payone_Core_Model_Payment_Method_SafeInvoice
+        or $this->helperRegistry()->isPaymentCancelRegistered($payment)) {
             $invoicing->setCapturemode($this->mapCaptureMode());
         }
 

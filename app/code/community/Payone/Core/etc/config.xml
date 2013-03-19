@@ -533,6 +533,9 @@
             </template_cash_on_delivery>
         </payone_payment>
         <payone_general>
+            <global>
+                <transmit_ip>1</transmit_ip>
+            </global>
             <parameter_invoice>
                 <pdf_download_enabled>0</pdf_download_enabled>
             </parameter_invoice>
