@@ -30,7 +30,7 @@ $installer->startSetup();
 // German Description
 $title = 'PAYONE Payment Extension 3.0 Installation';
 $description = 'Die PAYONE Payment Extension 3.0 Installation wurde erfolgreich beendet.<br>';
-$description .= 'Bitte starten sie den Konfigurationsassistenten um die Konfiguration abzuschließen. (PAYONE > Konfigurationsassistent)<br>';
+$description .= 'Bitte starten Sie den Konfigurationsassistenten, um die Konfiguration abzuschließen. (PAYONE > Konfigurationsassistent)<br>';
 $description .= 'Stellen Sie weiterhin sicher, dass die Cronjobs für ihr System korrekt eingerichtet sind.<br>';
 $description .= '<br><hr><br>';
 

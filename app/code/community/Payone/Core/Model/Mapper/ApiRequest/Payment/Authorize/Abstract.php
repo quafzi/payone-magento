@@ -167,10 +167,19 @@ abstract class Payone_Core_Model_Mapper_ApiRequest_Payment_Authorize_Abstract
         $global = $this->getConfigGeneral()->getGlobal();
         // Send Ip when enabled
         if ($global->getTransmitIp()) {
-            // Multiple Ips can be included, we only send the last one.
-            $remoteIps = explode(',', $order->getRemoteIp());
-            $lastRemoteIp = array_pop($remoteIps);
-            $personalData->setIp($lastRemoteIp);
+            if ($global->getProxyMode()) {
+                // Use X-Forwarded-For when in Proxy-Mode
+                $remoteIp = $order->getXForwardedFor();
+            }
+            else {
+                $remoteIp = $order->getRemoteIp();
+            }
+
+            // Multiple Ips could be included, we only send the last one.
+            $remoteIps = explode(',', $remoteIp);
+            $ip = array_pop($remoteIps);
+
+            $personalData->setIp($ip);
         }
 
         // US and CA always need state and shipping_state paramters

@@ -535,6 +535,7 @@
         <payone_general>
             <global>
                 <transmit_ip>1</transmit_ip>
+                <proxy_mode>0</proxy_mode>
             </global>
             <parameter_invoice>
                 <pdf_download_enabled>0</pdf_download_enabled>

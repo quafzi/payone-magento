@@ -38,7 +38,7 @@ if ($helper->isCronEnabled() === false) {
     $wikiUrl = 'http://www.magentocommerce.com/wiki/1_-_installation_and_configuration/how_to_setup_a_cron_job';
 
     // German Description
-    $description = 'Um den Betrieb der PAYONE Extension zu gewährleisten richten Sie bitte Cronjobs für ihr System ein. Weitere Informationen finden sie unter:<br>';
+    $description = 'Um den Betrieb der PAYONE Extension zu gewährleisten, richten Sie bitte Cronjobs für ihr System ein. Weitere Informationen finden Sie unter:<br>';
     $description .= $wikiUrl;
     $description .= '<br><hr><br>';
 

@@ -64,6 +64,10 @@ class Payone_Core_Model_Config_General_Global extends Payone_Core_Model_Config_A
      * @var int
      */
     protected $transmit_ip = 1;
+    /**
+     * @var int
+     */
+    protected $proxy_mode = 0;
 
     /**
      * initialize config with specificcounty as array
@@ -222,5 +226,21 @@ class Payone_Core_Model_Config_General_Global extends Payone_Core_Model_Config_A
     public function getTransmitIp()
     {
         return $this->transmit_ip;
+    }
+
+    /**
+     * @param int $proxy_mode
+     */
+    public function setProxyMode($proxy_mode)
+    {
+        $this->proxy_mode = $proxy_mode;
+    }
+
+    /**
+     * @return int
+     */
+    public function getProxyMode()
+    {
+        return $this->proxy_mode;
     }
 }
