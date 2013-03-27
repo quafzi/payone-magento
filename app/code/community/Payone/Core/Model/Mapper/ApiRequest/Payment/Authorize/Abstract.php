@@ -142,7 +142,7 @@ abstract class Payone_Core_Model_Mapper_ApiRequest_Payment_Authorize_Abstract
         $customer = $order->getCustomer();
 
         $personalData = new Payone_Api_Request_Parameter_Authorization_PersonalData();
-        $personalData->setCustomerid($customer->getIncrementId());
+        $personalData->setCustomerid($customer->getId());
         $personalData->setTitle($billingAddress->getPrefix());
         $personalData->setFirstname($billingAddress->getFirstname());
         $personalData->setLastname($billingAddress->getLastname());
