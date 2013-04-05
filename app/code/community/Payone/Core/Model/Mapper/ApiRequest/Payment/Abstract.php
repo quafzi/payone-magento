@@ -120,25 +120,25 @@ abstract class Payone_Core_Model_Mapper_ApiRequest_Payment_Abstract
      * @param float $discountAmount
      * @return Payone_Api_Request_Parameter_Invoicing_Item
      */
-        protected function mapDiscountAsItem($discountAmount)
-        {
-            $configMiscDiscount = $this->getConfigMisc()->getDiscount();
-            $sku = $configMiscDiscount->getSku();
-            $description = $configMiscDiscount->getDescription();
-                    if (empty($sku)) {
-                        $sku = $this->helper()->__(self::DEFAULT_DISCOUNT_SKU);
-                    }
-                    if (empty($description)) {
-                        $description = $this->helper()->__(self::DEFAULT_DISCOUNT_SKU);
-                    }
+    protected function mapDiscountAsItem($discountAmount)
+    {
+        $configMiscDiscount = $this->getConfigMisc()->getDiscount();
+        $sku = $configMiscDiscount->getSku();
+        $description = $configMiscDiscount->getDescription();
+        if (empty($sku)) {
+            $sku = $this->helper()->__(self::DEFAULT_DISCOUNT_SKU);
+        }
+        if (empty($description)) {
+            $description = $this->helper()->__(self::DEFAULT_DISCOUNT_SKU);
+        }
 
-            $params['id'] = $sku;
-            $params['de'] = $description;
-            $params['no'] = 1;
-            $params['pr'] = $discountAmount;
+        $params['id'] = $sku;
+        $params['de'] = $description;
+        $params['no'] = 1;
+        $params['pr'] = $discountAmount;
 
-            if ($this->getPaymentMethod()->mustTransmitInvoicingItemTypes()) {
-                $params['it'] = Payone_Api_Enum_InvoicingItemType::VOUCHER;
+        if ($this->getPaymentMethod()->mustTransmitInvoicingItemTypes()) {
+            $params['it'] = Payone_Api_Enum_InvoicingItemType::VOUCHER;
         }
         $item = new Payone_Api_Request_Parameter_Invoicing_Item();
         $item->init($params);
@@ -166,8 +166,7 @@ abstract class Payone_Core_Model_Mapper_ApiRequest_Payment_Abstract
         $params['de'] = $order->getShippingDescription();
         $params['no'] = 1;
         $params['pr'] = $creditmemo->getShippingInclTax();
-        if($this->getPaymentMethod()->mustTransmitInvoicingItemTypes())
-        {
+        if ($this->getPaymentMethod()->mustTransmitInvoicingItemTypes()) {
             $params['it'] = Payone_Api_Enum_InvoicingItemType::SHIPMENT;
         }
 
@@ -199,8 +198,7 @@ abstract class Payone_Core_Model_Mapper_ApiRequest_Payment_Abstract
         $params['de'] = $name;
         $params['no'] = 1;
         $params['pr'] = $creditmemo->getAdjustmentPositive();
-        if($this->getPaymentMethod()->mustTransmitInvoicingItemTypes())
-        {
+        if ($this->getPaymentMethod()->mustTransmitInvoicingItemTypes()) {
             $params['it'] = Payone_Api_Enum_InvoicingItemType::VOUCHER;
         }
 
@@ -233,8 +231,7 @@ abstract class Payone_Core_Model_Mapper_ApiRequest_Payment_Abstract
         $params['de'] = $name;
         $params['no'] = 1;
         $params['pr'] = $creditmemo->getAdjustmentNegative() * (-1);
-        if($this->getPaymentMethod()->mustTransmitInvoicingItemTypes())
-        {
+        if ($this->getPaymentMethod()->mustTransmitInvoicingItemTypes()) {
             $params['it'] = Payone_Api_Enum_InvoicingItemType::GOODS;
         }
 
@@ -358,6 +355,7 @@ abstract class Payone_Core_Model_Mapper_ApiRequest_Payment_Abstract
 
         return false;
     }
+
     /**
      * @param Mage_Sales_Model_Abstract $object
      * @return string

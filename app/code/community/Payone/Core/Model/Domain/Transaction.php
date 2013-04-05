@@ -63,7 +63,7 @@
  * @method setBalance($balance)
  * @method float getBalance()
  * @method setCustomerid($customerid)
- * @method int getCustomerid()
+ * @method string getCustomerid()
  * @method setUserid($userid)
  * @method int getUserid()
  * @method setReminderlevel($level)
