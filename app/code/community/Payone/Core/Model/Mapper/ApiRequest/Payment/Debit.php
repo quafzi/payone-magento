@@ -179,6 +179,12 @@ class Payone_Core_Model_Mapper_ApiRequest_Payment_Debit
             if ($creditmemo->getAdjustmentNegative() > 0) {
                 $invoicing->addItem($this->mapAdjustmentNegativeAsItemByCreditmemo($creditmemo));
             }
+
+            // Add Discount as a position
+            $discountAmount = $creditmemo->getDiscountAmount();
+            if ($discountAmount > 0) {
+                $invoicing->addItem($this->mapDiscountAsItem(-1 * $discountAmount));
+            }
         }
         return $invoicing;
     }
