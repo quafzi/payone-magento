@@ -35,7 +35,7 @@ $displayCvc = null;
                 </label>
                 <br/>
                 <input type="text" id="<?php echo $code ?>_cc_owner" name="payment[cc_owner]"
-                       value="<?php echo $this->getBillingName(); ?>"
+                       value="<?php echo trim($this->getBillingName()); ?>"
                        title="<?php echo $this->__('Name on Card') ?>"
                        class="required-entry input-text no-submit"/>
             </div>
