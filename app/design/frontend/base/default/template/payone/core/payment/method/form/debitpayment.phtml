@@ -42,7 +42,7 @@ if ($this->getCountry() == 'AT') {
                 <br/>
                 <input type="text" id="<?php echo $code ?>_owner" name="payment[payone_account_owner]"
                        title="<?php echo $this->__('Account holder') ?>" class="required-entry input-text"
-                       value="<?php echo $owner; ?>"/>
+                       value="<?php echo trim($owner); ?>"/>
             </div>
         </li>
         <li>
