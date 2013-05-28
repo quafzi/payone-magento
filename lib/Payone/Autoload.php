@@ -31,6 +31,11 @@
  */
 class Payone_Autoload
 {
+    /**
+     * all classes for which the autoloader feels responsible must start with this prefix
+     */
+    const CLASS_PREFIX = 'Payone_';
+
     public function __construct()
     {
         $this->register();
@@ -43,7 +48,9 @@ class Payone_Autoload
 
     public function loadClass($class)
     {
-        $classFile = str_replace(' ', DIRECTORY_SEPARATOR, ucwords(str_replace('_', ' ', $class))) . '.php';
-        require_once($classFile);
+        if (substr($class, 0, strlen(self::CLASS_PREFIX)) === self::CLASS_PREFIX) {
+            $classFile = str_replace(' ', DIRECTORY_SEPARATOR, ucwords(str_replace('_', ' ', $class))) . '.php';
+            require_once($classFile);
+        }
     }
 }

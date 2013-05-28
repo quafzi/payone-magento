@@ -48,6 +48,8 @@ class Payone_Core_Model_Mapper_ApiRequest_Verification_AddressCheck
         $configGlobal = $this->getConfigGlobal();
         $config = $this->getConfig();
 
+        // @todo move addressCheckType detection to method
+        // @todo add option to configure used Adresschecktype externaly
         if ($address->getAddressType() === 'billing') {
             $request->setAddresschecktype($config->getCheckBilling());
         }

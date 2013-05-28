@@ -75,13 +75,12 @@ class Payone_Core_Checkout_Onepage_PaymentController extends Payone_Core_Control
     public function errorAction()
     {
         try {
-            $this->checkoutCancel(false);
+            $this->checkoutCancel(true);
         } catch (Exception $e) {
             $this->handleException($e);
         }
         // Redirect customer to cart
         $this->_redirect('checkout/cart');
-
     }
 
     /**

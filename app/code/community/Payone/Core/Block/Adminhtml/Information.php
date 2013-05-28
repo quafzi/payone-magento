@@ -38,7 +38,7 @@ class Payone_Core_Block_Adminhtml_Information extends Payone_Core_Block_Adminhtm
      */
     public function getPayoneUrl()
     {
-        $url = $this->escapeUrl('http://embedded.payone.de/extensions/magento');
+        $url = $this->escapeUrl('http://www.payone.de/embedded-sites/magento/information/');
         return $url;
     }
 }
