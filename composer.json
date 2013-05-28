@@ -1,0 +1,25 @@
+{
+    "name": "payone/magento",
+    "license": "GPL-3.0+",
+    "description": "Payone Magento Extension",
+    "keywords": ["payment", "Magento", "Payone"],
+    "homepage": "http://www.payone.de",
+    "authors": [
+        {
+            "name": "Noovias",
+            "email": "info@noovias.com"
+        }
+    ],
+    "require": {
+        "magento-hackathon/magento-composer-installer": "*"
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "http://packages.firegento.com"
+        }
+    ],
+    "extra": {
+        "magento-root-dir": "htdocs"
+    }
+}
