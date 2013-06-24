@@ -109,7 +109,16 @@ abstract class Payone_Core_Model_Mapper_ApiRequest_Payment_Authorize_Abstract
         $order = $this->getOrder();
         $paymentMethod = $this->getPaymentMethod();
 
-        $request->setRequest($this->configPayment->getRequestType());
+        $requestType = $this->configPayment->getRequestType();
+        // Always use PREAUTHORIZATION for Financing of type "Commerz Finanz"
+        if ($paymentMethod instanceof Payone_Core_Model_Payment_Method_Financing) {
+            $financingType = $paymentMethod->getInfoInstance()->getPayoneFinancingType();
+            if ($financingType == Payone_Api_Enum_FinancingType::CFR) {
+                $requestType = Payone_Api_Enum_RequestType::PREAUTHORIZATION;
+            }
+        }
+
+        $request->setRequest($requestType);
         $request->setAid($this->configPayment->getAid());
         $request->setClearingtype($this->mapClearingType($paymentMethod));
         $request->setCurrency($order->getOrderCurrencyCode());

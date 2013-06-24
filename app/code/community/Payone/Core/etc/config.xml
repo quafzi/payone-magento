@@ -24,7 +24,7 @@
 <config>
     <modules>
         <Payone_Core>
-            <version>3.1.4</version>
+            <version>3.1.5</version>
         </Payone_Core>
     </modules>
 
@@ -305,16 +305,16 @@
             </payone_core_transactionstatus_all>
             <payone_core_transactionstatus_appointed>
                 <observers>
-                    <payone_core_observer_invoiceCreate>
-                        <type>singleton</type>
-                        <class>payone_core/observer_transactionStatus_invoiceCreate</class>
-                        <method>onAppointed</method>
-                    </payone_core_observer_invoiceCreate>
                     <payone_core_observer_orderConfirmation>
                         <type>singleton</type>
                         <class>payone_core/observer_transactionStatus_orderConfirmation</class>
                         <method>onAppointed</method>
                     </payone_core_observer_orderConfirmation>
+                    <payone_core_observer_invoiceCreate>
+                        <type>singleton</type>
+                        <class>payone_core/observer_transactionStatus_invoiceCreate</class>
+                        <method>onAppointed</method>
+                    </payone_core_observer_invoiceCreate>
                 </observers>
             </payone_core_transactionstatus_appointed>
             <payone_core_transactionstatus_paid>

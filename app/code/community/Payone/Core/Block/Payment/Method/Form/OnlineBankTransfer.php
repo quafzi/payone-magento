@@ -83,7 +83,7 @@ class Payone_Core_Block_Payment_Method_Form_OnlineBankTransfer
     public function isAvailableBankGroup()
     {
         $country = $this->getCountry();
-        return $country == 'AT';
+        return $country == 'AT' || $country == 'NL';
     }
 
     public function getBlockHtmlBankGroup()
