@@ -46,8 +46,7 @@ if ($country == 'AT') {
                     foreach ($this->getTypes() as $key => $type):
                         $typeConfigId = $type['config_id'];
                         $selected = '';
-                        if($typeConfigId == $paymentConfigId && $paymentType == $type['code'])
-                        {
+                        if ($typeConfigId == $paymentConfigId && $paymentType == $type['code']) {
                             $paymentConfigId = $typeConfigId;
                             $selected = 'selected="selected"';
                         }
@@ -55,16 +54,16 @@ if ($country == 'AT') {
                         <option value="<?php echo $key ?>"<?php echo $selected; ?>>
                             <?php echo $type['name']; ?><span><?php echo $type['fee']; ?></span>
                         </option>
-                        <?php endforeach; ?>
+                    <?php endforeach; ?>
                 </select>
 
-                <input type="hidden" id="<?php echo $code ?>_obt_type" name="payment[payone_onlinebanktransfer_type]" value="<?php echo $paymentType; ?>" class=""/>
+                <input type="hidden" id="<?php echo $code ?>_obt_type" name="payment[payone_onlinebanktransfer_type]"
+                       value="<?php echo $paymentType; ?>" class=""/>
                 <input type="hidden" name="payment[payone_config_payment_method_id]"
                        id="<?php echo $code ?>_config_id" value="<?php echo $paymentConfigId; ?>"/>
             </div>
         </li>
-        <?php if ($this->isAvailableAccountNumber()): ?>
-        <li id="account_number_wrap">
+        <li id="account_number_wrap" style="display:none;">
             <div class="input-box">
                 <label for="<?php echo $code ?>_account_number">
                     <?php echo $this->__('Account number') ?>&nbsp;<span class="required">*</span>
@@ -75,9 +74,7 @@ if ($country == 'AT') {
                        maxlength="<?php echo $maxLengthAccountNumber; ?>"/>
             </div>
         </li>
-        <?php endif;?>
-        <?php if ($this->isAvailableBankCode()): ?>
-        <li id="bank_code_wrap">
+        <li id="bank_code_wrap" style="display:none;">
             <div class="input-box">
                 <label for="<?php echo $code ?>_bank_code">
                     <?php echo $this->__('Bank code') ?>&nbsp;<span class="required">*</span>
@@ -87,9 +84,6 @@ if ($country == 'AT') {
                        value="" maxlength="10"/>
             </div>
         </li>
-        <?php endif;?>
-        <?php if ($this->isAvailableBankGroup()): ?>
         <?php echo $this->getBlockHtmlBankGroup(); ?>
-        <?php endif;?>
     </ul>
 </fieldset>

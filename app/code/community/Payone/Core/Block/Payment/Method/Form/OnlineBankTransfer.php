@@ -59,40 +59,12 @@ class Payone_Core_Block_Payment_Method_Form_OnlineBankTransfer
         return $this->getFactory()->getModelSystemConfigOnlinebanktransferType()->toSelectArray();
     }
 
-    /**
-     * @return bool
-     */
-    public function isAvailableAccountNumber()
-    {
-        $country = $this->getCountry();
-        return $country == 'DE' || $country == 'AT' || $country == 'NL';
-    }
-
-    /**
-     * @return bool
-     */
-    public function isAvailableBankCode()
-    {
-        $country = $this->getCountry();
-        return $country == 'DE' || $country == 'AT';
-    }
-
-    /**
-     * @return bool
-     */
-    public function isAvailableBankGroup()
-    {
-        $country = $this->getCountry();
-        return $country == 'AT' || $country == 'NL';
-    }
-
     public function getBlockHtmlBankGroup()
     {
         /** @var $block Mage_Core_Block_Template */
         $block = $this->getLayout()->createBlock('core/template');
         $block->setTemplate('payone/core/payment/method/form/onlinebanktransfer/bankgroup.phtml');
         $block->setMethodCode($this->getMethodCode());
-        $block->setCountry($this->getCountry());
         $html = $block->toHtml();
         return $html;
     }
