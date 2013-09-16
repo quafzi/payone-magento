@@ -24,6 +24,9 @@
  * @param element
  */
 function payoneSwitchOnlineBankTransfer(element) {
+    if(element == undefined){
+        return;
+    }
     var ElementValue = element.value;
     var ElementValueSplit = ElementValue.split('_');
     var typeId = ElementValueSplit[0];
