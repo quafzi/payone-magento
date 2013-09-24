@@ -72,7 +72,14 @@ class Payone_Core_Model_Factory
         return Mage::helper('payone_core/config');
     }
 
-    
+    /**
+     * @return Payone_Core_Helper_Score
+     */
+    public function helperScore()
+    {
+        return Mage::helper('payone_core/score');
+    }
+
     /**
      *
      * @return Payone_Core_Helper_Registry
