@@ -38,7 +38,7 @@ if ($country == 'AT') {
             <div class="input-box">
                 <label for="<?php echo $code; ?>_account_number">
                     <?php echo $this->__('Online bank transfer type'); ?>&nbsp;<span class="required">*</span>
-                </label><br/>
+                </label><br class="clear"/>
                 <select id="<?php echo $code ?>_obt_type_select" name="<?php echo $code ?>_obt_type_select"
                         class="required-entry" onchange="payoneSwitchOnlineBankTransfer(this);">
                     <option value=""><?php echo $this->__('--Please Select--') ?></option>
@@ -67,7 +67,7 @@ if ($country == 'AT') {
             <div class="input-box">
                 <label for="<?php echo $code ?>_account_number">
                     <?php echo $this->__('Account number') ?>&nbsp;<span class="required">*</span>
-                </label><br/>
+                </label><br class="clear"/>
                 <input type="text" id="<?php echo $code ?>_account_number" name="payment[payone_account_number]"
                        title="<?php echo $this->__('Account number') ?>"
                        class="validate-digits required-entry input-text" value="" autocomplete="off"
@@ -78,7 +78,7 @@ if ($country == 'AT') {
             <div class="input-box">
                 <label for="<?php echo $code ?>_bank_code">
                     <?php echo $this->__('Bank code') ?>&nbsp;<span class="required">*</span>
-                </label><br/>
+                </label><br class="clear"/>
                 <input type="text" id="<?php echo $code ?>_bank_code" name="payment[payone_bank_code]"
                        title="<?php echo $this->__('Bank code') ?>" class="validate-digits required-entry input-text"
                        value="" maxlength="10"/>

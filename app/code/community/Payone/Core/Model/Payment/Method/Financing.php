@@ -33,7 +33,6 @@
 class Payone_Core_Model_Payment_Method_Financing
     extends Payone_Core_Model_Payment_Method_Abstract
 {
-    protected $_canUseForMultishipping = true;
     protected $_canRefund = false;
     protected $_canRefundInvoicePartial = false;
     protected $_canUseInternal = false;

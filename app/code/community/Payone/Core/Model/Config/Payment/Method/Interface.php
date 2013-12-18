@@ -214,6 +214,16 @@ interface Payone_Core_Model_Config_Payment_Method_Interface
     public function getKey();
 
     /**
+     * @param array $klarna_config
+     */
+    public function setKlarnaConfig($klarna_config);
+
+    /**
+     * @return array
+     */
+    public function getKlarnaConfig();
+
+    /**
      * @param int $mid
      */
     public function setMid($mid);

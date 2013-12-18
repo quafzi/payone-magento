@@ -68,6 +68,9 @@
 "Add Safe Invoice","Sicheren Rechnungskauf hinzufügen"
 "Edit Safe Invoice","Sicheren Rechnungskauf bearbeiten"
 "Type","Art"
+"Store-ID","Store-ID"
+"Add Store-ID","Store-ID hinzufügen"
+"Required when using Klarna","Pflicht bei Verwendung von Klarna"
 "Scope","Geltungsbereich"
 "Countries","Länder"
 "Fee","Gebühr"
@@ -395,6 +398,7 @@
 
 "CFR","Commerz Finanz"
 "BSV","BillSAFE"
+"KLV","Klarna"
 "INFOSCORE_HARD","Infoscore (Harte Merkmale)"
 "INFOSCORE_ALL","Infoscore (Alle Merkmale)"
 "INFOSCORE_ALL_BONI","Infoscore (Alle Merkmale + Boniscore)"
@@ -473,3 +477,8 @@
 "VSETTLEMENT","Abrechnung (vsettlement)"
 "TRANSFER","Umbuchung (transfer)"
 "INVOICE","Rechnungsbeleg (invoice)"
+
+"Date of birth (DD MM YYYY)","Geburtsdatum (TT MM JJJJ)"
+"Gender","Geschlecht"
+"House number extension (billing address)","Adresszusatz (Rechnungsadresse)"
+"House number extension (shipping address)","Adresszusatz (Lieferadresse)"

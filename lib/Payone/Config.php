@@ -80,6 +80,9 @@ class Payone_Config
     /** @var Payone_TransactionStatus_Config */
     protected $transactionStatusConfig = null;
 
+    /** @var Payone_SessionStatus_Config */
+    protected $sessionStatusConfig = null;
+
     /**
      * @constructor
      *
@@ -96,6 +99,10 @@ class Payone_Config
             {
                 $this->transactionStatusConfig = new Payone_TransactionStatus_Config();
             }
+            if($this->getSessionStatusConfig() === null)
+            {
+                $this->sessionStatusConfig = new Payone_SessionStatus_Config();
+            }
             $this->config = $this->getDefaultConfigData();
         }
         else {
@@ -103,6 +110,8 @@ class Payone_Config
                 $this->setApiConfig($data['api']);
             if(array_key_exists('transaction_status',$data))
                 $this->setTransactionStatusConfig($data['transaction_status']);
+            if(array_key_exists('session_status',$data))
+                $this->setSessionStatusConfig($data['session_status']);
             $this->config = $data;
         }
     }
@@ -133,7 +142,8 @@ class Payone_Config
     {
         $configData = array(
             'api' => $this->getApiConfig(),
-            'transaction_status' => $this->getTransactionStatusConfig()
+            'transaction_status' => $this->getTransactionStatusConfig(),
+            'session_status' => $this->getSessionStatusConfig()
         );
 
         return $configData;
@@ -236,4 +246,19 @@ class Payone_Config
         return $this->transactionStatusConfig;
     }
 
+    /**
+     * @param Payone_SessionStatus_Config $sessionStatusConfig
+     */
+    public function setSessionStatusConfig($sessionStatusConfig)
+    {
+        $this->sessionStatusConfig = $sessionStatusConfig;
+    }
+
+    /**
+     * @return Payone_SessionStatus_Config
+     */
+    public function getSessionStatusConfig()
+    {
+        return $this->sessionStatusConfig;
+    }
 }

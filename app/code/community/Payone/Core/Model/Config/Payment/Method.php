@@ -117,6 +117,11 @@ class Payone_Core_Model_Config_Payment_Method
      */
     protected $types = array();
     /**
+     * @var array
+     */
+    protected $klarna_config = array();
+
+    /**
      * @var int
      */
     protected $check_cvc = 0;
@@ -424,6 +429,22 @@ class Payone_Core_Model_Config_Payment_Method
     public function getKey()
     {
         return $this->key;
+    }
+
+    /**
+     * @param array $klarna_config
+     */
+    public function setKlarnaConfig($klarna_config)
+    {
+        $this->klarna_config = $klarna_config;
+    }
+
+    /**
+     * @return array
+     */
+    public function getKlarnaConfig()
+    {
+        return $this->klarna_config;
     }
 
     /**

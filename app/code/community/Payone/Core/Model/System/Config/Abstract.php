@@ -33,6 +33,8 @@
 abstract class Payone_Core_Model_System_Config_Abstract
 {
     protected $dataArray;
+    /** @var Payone_Core_Model_Factory */
+    protected $factory = null;
 
     /**
      * @abstract
@@ -70,6 +72,25 @@ abstract class Payone_Core_Model_System_Config_Abstract
     protected function helper()
     {
         return Mage::helper('payone_core');
+    }
+
+    /**
+     * @param \Payone_Core_Model_Factory $factory
+     */
+    public function setFactory(Payone_Core_Model_Factory $factory)
+    {
+        $this->factory = $factory;
+    }
+
+    /**
+     * @return \Payone_Core_Model_Factory
+     */
+    public function getFactory()
+    {
+        if ($this->factory === null) {
+            $this->factory = new Payone_Core_Model_Factory();
+        }
+        return $this->factory;
     }
 
 }

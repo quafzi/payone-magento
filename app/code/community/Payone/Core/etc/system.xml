@@ -714,6 +714,16 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </types>
+                        <klarna_config translate="label">
+                            <label>Klarna Store-IDs</label>
+                            <comment>Required when using Klarna</comment>
+                            <frontend_model>payone_core/adminhtml_system_config_form_field_klarnaStoreId</frontend_model>
+                            <backend_model>adminhtml/system_config_backend_serialized_array</backend_model>
+                            <sort_order>250</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </klarna_config>
                     </fields>
                 </template_safe_invoice>
                 <template_financing translate="label" module="payone_core">

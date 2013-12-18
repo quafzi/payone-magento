@@ -70,6 +70,26 @@ class Payone_Api_Request_Parameter_Authorization_DeliveryData
      * @var string
      */
     protected $shipping_country = NULL;
+    /**
+     * @var string
+     */
+    protected $shipping_addressaddition = NULL;
+
+    /**
+     * @param string $shipping_addressaddition
+     */
+    public function setShippingAddressaddition($shipping_addressaddition)
+    {
+        $this->shipping_addressaddition = $shipping_addressaddition;
+    }
+
+    /**
+     * @return string
+     */
+    public function getShippingAddressaddition()
+    {
+        return $this->shipping_addressaddition;
+    }
 
     /**
      * @param string $shipping_city

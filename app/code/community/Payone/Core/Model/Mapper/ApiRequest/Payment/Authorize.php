@@ -33,6 +33,8 @@
 class Payone_Core_Model_Mapper_ApiRequest_Payment_Authorize
     extends Payone_Core_Model_Mapper_ApiRequest_Payment_Authorize_Abstract
 {
+    const EVENT_TYPE = 'authorize';
+
     /**
      * @param Payone_Api_Request_Authorization_Abstract $request
      */
@@ -46,5 +48,13 @@ class Payone_Core_Model_Mapper_ApiRequest_Payment_Authorize
     protected function getRequest()
     {
         return $this->getFactory()->getRequestPaymentAuthorization();
+    }
+
+    /**
+     * @return string
+     */
+    public function getEventType()
+    {
+        return self::EVENT_TYPE;
     }
 }
