@@ -59,6 +59,14 @@ class Payone_Protocol_Config_Filter
         ),
         'Payone_Api_Request_3dsCheck' => array(
             'cardpan' => 'mask_value'
+        ),
+        'Payone_Api_Request_CreateAccess' => array(
+            'payment/cardpan' => 'mask_value',
+            'payment/bankaccount' => 'mask_value'
+        ),
+        'Payone_Api_Request_Vauthorization' => array(
+            'payment/cardpan' => 'mask_value',
+            'payment/bankaccount' => 'mask_value'
         )
     );
 

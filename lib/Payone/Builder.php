@@ -35,6 +35,7 @@ class Payone_Builder
     const KEY_PROTOCOL = 'protocol';
     const KEY_SETTINGS = 'settings';
     const KEY_TRANSACTIONSTATUS = 'transaction_status';
+    const KEY_SESSIONSTATUS = 'session_status';
 
     /** @var array */
     protected $factories = array();
@@ -57,6 +58,7 @@ class Payone_Builder
         $this->factories[self::KEY_PROTOCOL] = new Payone_Protocol_Factory();
         $this->factories[self::KEY_SETTINGS] = new Payone_Settings_Factory();
         $this->factories[self::KEY_TRANSACTIONSTATUS] = new Payone_TransactionStatus_Factory($config->getTransactionStatusConfig());
+        $this->factories[self::KEY_SESSIONSTATUS] = new Payone_SessionStatus_Factory($config->getSessionStatusConfig());
 
     }
 
@@ -212,6 +214,34 @@ class Payone_Builder
                 /** @var $validator Payone_TransactionStatus_Validator_Ip */
                 $validator->setValidIps($validIps);
                 $validator->setConfig($this->getConfig()->getTransactionStatusConfig());
+            }
+        }
+
+        return $service;
+    }
+
+    /**
+     * @api
+     * @param $key
+     * @param array $validIps
+     * @return Payone_SessionStatus_Service_HandleRequest
+     */
+    public function buildServiceSessionStatusHandleRequest($key, array $validIps)
+    {
+        /** @var $service Payone_SessionStatus_Service_HandleRequest */
+        $service = $this->buildService(self::KEY_SESSIONSTATUS . '/handlerequest');
+        $validators = $service->getValidators();
+
+        foreach ($validators as $validator) {
+            if ($validator instanceof Payone_SessionStatus_Validator_DefaultParameters) {
+                /** @var $validator Payone_SessionStatus_Validator_DefaultParameters */
+                $validator->setKey($key);
+            }
+            elseif($validator instanceof Payone_SessionStatus_Validator_Ip)
+            {
+                /** @var $validator Payone_SessionStatus_Validator_Ip */
+                $validator->setValidIps($validIps);
+                $validator->setConfig($this->getConfig()->getSessionStatusConfig());
             }
         }
 

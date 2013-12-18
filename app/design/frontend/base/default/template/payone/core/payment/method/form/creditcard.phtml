@@ -33,7 +33,7 @@ $displayCvc = null;
                 <label for="<?php echo $code ?>_cc_owner"><?php echo $this->__('Name on Card') ?>
                     <span class="required">*</span>
                 </label>
-                <br/>
+                <br class="clear"/>
                 <input type="text" id="<?php echo $code ?>_cc_owner" name="payment[cc_owner]"
                        value="<?php echo $this->getBillingName(); ?>"
                        title="<?php echo $this->__('Name on Card') ?>"
@@ -45,7 +45,7 @@ $displayCvc = null;
             <div class="input-box">
                 <label for="<?php echo $code; ?>_cc_type"><?php echo $this->__('Credit Card Type'); ?>
                     <span class="required">*</span>
-                </label><br/>
+                </label><br class="clear"/>
                 <select id="<?php echo $code ?>_cc_type_select" name="<?php echo $code ?>_cc_type_select"
                         onchange="payone.displayCheckCvc(this);" class="no-submit required-entry">
                     <option value=""><?php echo $this->__('--Please Select--') ?></option>
@@ -69,7 +69,7 @@ $displayCvc = null;
             <div class="input-box">
                 <label for="<?php echo $code; ?>_cc_number">
                     <?php echo $this->__('Credit Card Number'); ?>&nbsp;<span class="required">*</span>
-                </label><br/>
+                </label><br class="clear"/>
                 <input type="text" id="<?php echo $code; ?>_cc_number" value=""
                        name="payment[cc_number]" title="<?php echo $this->__('Credit Card Number'); ?>"
                        class="input-text validate-cc-number validate-payone-cc-type no-submit"/>
@@ -80,7 +80,7 @@ $displayCvc = null;
             <div class="input-box">
                 <label for="<?php echo $code ?>_expiration">
                     <?php echo $this->__('Expiration Date') ?>&nbsp;<span class="required">*</span>
-                </label><br/>
+                </label><br class="clear"/>
 
                 <div class="v-fix">
                     <select id="<?php echo $code ?>_cc_expiration_month" name="payment[cc_exp_month]"
@@ -109,7 +109,7 @@ $displayCvc = null;
                  style="<?php echo $displayCvc == '0' ? 'display: none; ' : '';?>">
                 <label for="<?php echo $code ?>_cc_cid">
                     <?php echo $this->__('Card Verification Number') ?>&nbsp;<span class="required">*</span>
-                </label><br/>
+                </label><br class="clear"/>
                 <input type="text" title="<?php echo $this->__('Card Verification Number') ?>"
                        class="required-entry input-text no-submit" id="<?php echo $code ?>_cc_cid"
                        name="payment[cc_cid]" style="width:3em;" value="" autocomplete="off" maxlength="4"/>

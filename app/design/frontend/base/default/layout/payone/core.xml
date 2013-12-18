@@ -28,7 +28,9 @@
             <action method="addJs"><script>payone/core/creditcard.js</script></action>
             <action method="addJs"><script>payone/core/financing.js</script></action>
             <action method="addJs"><script>payone/core/onlinebanktransfer.js</script></action>
+            <action method="addJs"><script>payone/core/safe_invoice.js</script></action>
             <action method="addJs"><script>payone/core/wallet.js</script></action>
+            <action method="addJs"><script>payone/core/klarna.js</script></action>
             <action method="addJs" ifconfig="payone_protect/general/enabled">
                 <script>payone/core/addresscheck.js</script>
             </action>
@@ -38,6 +40,9 @@
             <block type="core/template" name="payone_core_clientapi" template="payone/core/client_api.phtml" />
             <block type="core/template" name="payone_core_protect" template="payone/core/checkout/protect.phtml" />
             <block type="core/template" name="payone_core_payment" template="payone/core/checkout/onepage/init.phtml" />
+            <!-- add Klarna external JS: -->
+            <block type="core/template" name="payone_core_klarna_scripts"
+                   template="payone/core/payment/method/form/safe_invoice/klarna/scripts.phtml" />
         </reference>
 
         <reference name="checkout.payment.methods">

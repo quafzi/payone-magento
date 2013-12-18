@@ -43,4 +43,7 @@ class Payone_Api_Enum_RequestType
     const BANKACCOUNTCHECK = 'bankaccountcheck';
     const CREDITCARDCHECK = 'creditcardcheck';
     const GETINVOICE = 'getinvoice';
+    const CREATEACCESS = 'createaccess';
+    const UPDATEACCESS = 'updateaccess';
+    const VAUTHORIZATION = 'vauthorization';
 }

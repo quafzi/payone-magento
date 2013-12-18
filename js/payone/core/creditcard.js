@@ -283,7 +283,7 @@ PAYONE.Validation.CreditCard = function (config) {
         var year = $('payone_creditcard_cc_expiration_year').value;
         var validityCc = new Date(year, v, 1); // Start of next month
 
-        return validityCc > this.options.get('config').allowed_validity;
+        return validityCc.getTime() > this.options.get('config').allowed_validity * 1000; // milliseconds vs. seconds
     };
 
     /**

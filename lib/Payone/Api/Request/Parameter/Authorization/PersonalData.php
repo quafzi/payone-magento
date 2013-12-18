@@ -76,6 +76,15 @@ class Payone_Api_Request_Parameter_Authorization_PersonalData
     protected $language = null;
     protected $vatid = null;
     protected $ip = null;
+    /**
+     * Enum Gender
+     * @var string
+     */
+    protected $gender = null;
+    /**
+     * @var string
+     */
+    protected $personalid = null;
 
     public function setAddressaddition($addressaddition)
     {
@@ -175,6 +184,22 @@ class Payone_Api_Request_Parameter_Authorization_PersonalData
         return $this->firstname;
     }
 
+    /**
+     * @param string $gender
+     */
+    public function setGender($gender)
+    {
+        $this->gender = $gender;
+    }
+
+    /**
+     * @return string
+     */
+    public function getGender()
+    {
+        return $this->gender;
+    }
+
     public function setIp($ip)
     {
         $this->ip = $ip;
@@ -209,6 +234,22 @@ class Payone_Api_Request_Parameter_Authorization_PersonalData
     public function getLastname()
     {
         return $this->lastname;
+    }
+
+    /**
+     * @param string $personalid
+     */
+    public function setPersonalid($personalid)
+    {
+        $this->personalid = $personalid;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPersonalid()
+    {
+        return $this->personalid;
     }
 
     public function setSalutation($salutation)

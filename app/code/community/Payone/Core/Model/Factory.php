@@ -1062,6 +1062,17 @@ class Payone_Core_Model_Factory
     }
 
     /**
+     * @return Mage_Customer_Model_Entity_Customer
+     */
+    public function getSingletonCustomerResource()
+    {
+        /** @var Mage_Customer_Model_Entity_Customer $resource */
+        $resource = Mage::getResourceSingleton('customer/customer');
+
+        return $resource;
+    }
+
+    /**
      * @return Mage_Customer_Model_Address
      */
     public function getModelCustomerAddress()
@@ -1433,6 +1444,14 @@ class Payone_Core_Model_Factory
     public function getModelSystemConfigMethodType()
     {
         return Mage::getSingleton('payone_core/system_config_methodType');
+    }
+
+    /**
+     * @return Payone_Core_Model_System_Config_KlarnaCountry
+     */
+    public function getModelSystemConfigKlarnaCountry()
+    {
+        return Mage::getSingleton('payone_core/system_config_klarnaCountry');
     }
 
     /**

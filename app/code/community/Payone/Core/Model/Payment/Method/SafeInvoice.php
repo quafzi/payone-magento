@@ -33,7 +33,6 @@
 class Payone_Core_Model_Payment_Method_SafeInvoice
     extends Payone_Core_Model_Payment_Method_Abstract
 {
-    protected $_canUseForMultishipping = true;
     protected $_canRefund = true;
     protected $_canRefundInvoicePartial = true;
     protected $_canSettleAccountAuto = false;

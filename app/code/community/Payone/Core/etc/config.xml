@@ -24,7 +24,7 @@
 <config>
     <modules>
         <Payone_Core>
-            <version>3.1.6</version>
+            <version>3.1.7</version>
         </Payone_Core>
     </modules>
 
@@ -185,6 +185,30 @@
                     <!-- Creditcard: Pseudo Card PAN-->
                     <to_order_payment>*</to_order_payment>
                 </payone_pseudocardpan>
+                <payone_customer_dob>
+                    <!-- Safe Invoice Klarna: Customer Date Of Birth -->
+                    <to_order_payment>*</to_order_payment>
+                </payone_customer_dob>
+                <payone_customer_gender>
+                    <!-- Safe Invoice Klarna: Customer Gender -->
+                    <to_order_payment>*</to_order_payment>
+                </payone_customer_gender>
+                <payone_customer_personalid>
+                    <!-- Safe Invoice Klarna: Customer Personalid -->
+                    <to_order_payment>*</to_order_payment>
+                </payone_customer_personalid>
+                <payone_billing_addressaddition>
+                    <!-- Safe Invoice Klarna: Billing Address Addition -->
+                    <to_order_payment>*</to_order_payment>
+                </payone_billing_addressaddition>
+                <payone_shipping_addressaddition>
+                    <!-- Safe Invoice Klarna: Shipping Address Addition -->
+                    <to_order_payment>*</to_order_payment>
+                </payone_shipping_addressaddition>
+                <payone_customer_telephone>
+                    <!-- Safe Invoice Klarna: Customer Telephone -->
+                    <to_order_payment>*</to_order_payment>
+                </payone_customer_telephone>
             </sales_convert_quote_payment>
             <sales_convert_quote_address>
                 <payone_addresscheck_score>

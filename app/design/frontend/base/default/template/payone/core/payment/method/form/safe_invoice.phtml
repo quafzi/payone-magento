@@ -31,7 +31,7 @@ $paymentConfigId = $this->getPaymentMethodConfigId();
             <div class="input-box">
                 <label for="<?php echo $code; ?>_sin_type">
                     <?php echo $this->__('Safe Invoice Type'); ?>&nbsp;<span class="required">*</span>
-                </label><br/>
+                </label><br class="clear"/>
 
                 <?php
                 $types = $this->getTypes();
@@ -68,6 +68,12 @@ $paymentConfigId = $this->getPaymentMethodConfigId();
                 <input type="hidden" name="payment[payone_config_payment_method_id]"
                        id="<?php echo $code ?>_config_id" value="<?php echo $paymentConfigId; ?>"/>
             </div>
+        </li>
+        <li>
+            <?php if ($this->showBlockHtmlKlarna()) :
+                echo $this->getBlockHtmlKlarna();
+                endif;
+            ?>
         </li>
     </ul>
 </fieldset>

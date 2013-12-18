@@ -203,6 +203,7 @@ class Payone_Settings_Service_XmlGenerate
             if ($valueClearingType instanceof Payone_Settings_Data_ConfigFile_PaymentMethod_Financing) {
                 /** @var $valueClearingType Payone_Settings_Data_ConfigFile_PaymentMethod_Financing */
                 $this->addChild($clearingTypeNode, $valueClearingType, 'financingtype');
+                $this->addKlarnaConfig($clearingTypeNode, $valueClearingType);
             }
             $this->addTypesOrGlobalInfo($clearingTypeNode, $valueClearingType);
 
@@ -402,6 +403,25 @@ class Payone_Settings_Service_XmlGenerate
         }
     }
 
+    /**
+     * @param DOMElement $clearingTypeNode
+     * @param Payone_Settings_Data_ConfigFile_PaymentMethod_Financing $valueClearingType
+     */
+    public function addKlarnaConfig(DOMElement $clearingTypeNode, Payone_Settings_Data_ConfigFile_PaymentMethod_Financing $valueClearingType)
+    {
+        $klarnaConfig = $valueClearingType->getKlarnaConfig();
+        if (!empty($klarnaConfig)) {
+            $klarnaConfigNode = $this->appendElement($clearingTypeNode, 'klarna_config');
+            foreach ($klarnaConfig as $valueKlarnaConfig) {
+                if (array_key_exists('value', $valueKlarnaConfig) && array_key_exists('attribute', $valueKlarnaConfig)) {
+                    $klarnaNode = $this->appendElement($klarnaConfigNode, 'klarna_store_id', $valueKlarnaConfig['value']);
+                    foreach ($valueKlarnaConfig['attribute'] as $keyKlarna => $valueKlarna) {
+                        $klarnaNode->setAttribute($keyKlarna, $valueKlarna);
+                    }
+                }
+            }
+        }
+    }
 
     /**
      * @param DOMElement $parent

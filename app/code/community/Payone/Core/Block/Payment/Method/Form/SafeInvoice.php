@@ -81,4 +81,39 @@ class Payone_Core_Block_Payment_Method_Form_SafeInvoice
             return 0;
         }
     }
+
+    /**
+     * @return string
+     */
+    public function getBlockHtmlKlarna()
+    {
+        /** @var Payone_Core_Block_Payment_Method_Form_SafeInvoice_Klarna $block */
+        $block = $this->getLayout()->createBlock('payone_core/payment_method_form_safeInvoice_klarna');
+        $block->setQuote($this->getQuote());
+        $block->setPaymentMethodConfig($this->getPaymentConfig());
+        $html = $block->toHtml();
+        return $html;
+    }
+
+    /**
+     * @return bool
+     */
+    public function showBlockHtmlKlarna()
+    {
+        $types = $this->getTypes();
+
+        if (count($types) == 1) {
+            $type = array_pop($types);
+            if ($type['code'] == Payone_Api_Enum_FinancingType::KLV) {
+                return true;
+            }
+        } elseif (count($types) > 1) {
+            foreach ($types as $type) {
+                if ($type['code'] == Payone_Api_Enum_FinancingType::KLV) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }

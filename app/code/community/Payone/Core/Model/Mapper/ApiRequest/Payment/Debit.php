@@ -33,6 +33,8 @@
 class Payone_Core_Model_Mapper_ApiRequest_Payment_Debit
     extends Payone_Core_Model_Mapper_ApiRequest_Payment_Abstract
 {
+    const EVENT_TYPE = 'debit';
+
     /** @var Mage_Sales_Model_Order_Creditmemo */
     protected $creditmemo = null;
 
@@ -67,6 +69,8 @@ class Payone_Core_Model_Mapper_ApiRequest_Payment_Debit
             $request->setInvoicing($invoicing);
         }
 
+        $this->dispatchEvent($this->getEventName(), array('request' => $request, 'creditmemo' => $this->getCreditmemo()));
+        $this->dispatchEvent($this->getEventPrefix() . '_all', array('request' => $request));
         return $request;
     }
 
@@ -101,7 +105,9 @@ class Payone_Core_Model_Mapper_ApiRequest_Payment_Debit
         $paymentMethod = $this->getPaymentMethod();
 
         // Some payment methods can not use settleaccount auto:
-        if ($paymentMethod instanceof Payone_Core_Model_Payment_Method_SafeInvoice) {
+        if ($paymentMethod instanceof Payone_Core_Model_Payment_Method_SafeInvoice
+                and $paymentMethod->getInfoInstance()->getPayoneSafeInvoiceType() == Payone_Api_Enum_FinancingType::BSV
+        ) {
             // BillSAFE always settles account:
             $business->setSettleaccount(Payone_Api_Enum_Settleaccount::YES);
         }
@@ -197,7 +203,7 @@ class Payone_Core_Model_Mapper_ApiRequest_Payment_Debit
         if ($this->creditmemo === null) {
             // we need to check registry because Magento won't give the creditmemo instance to PaymentMethodInstance
             $creditmemo = $this->helperRegistry()
-                    ->registry('current_creditmemo');
+                               ->registry('current_creditmemo');
 
             $this->creditmemo = $creditmemo;
         }
@@ -212,4 +218,11 @@ class Payone_Core_Model_Mapper_ApiRequest_Payment_Debit
         $this->creditmemo = $creditmemo;
     }
 
+    /**
+     * @return string
+     */
+    public function getEventType()
+    {
+        return self::EVENT_TYPE;
+    }
 }
