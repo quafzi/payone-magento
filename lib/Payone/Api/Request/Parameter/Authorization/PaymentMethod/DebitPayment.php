@@ -49,6 +49,18 @@ class Payone_Api_Request_Parameter_Authorization_PaymentMethod_DebitPayment
      * @var string
      */
     protected $bankaccountholder = NULL;
+    /**
+     * @var string
+     */
+    protected $iban = NULL;
+    /**
+     * @var string
+     */
+    protected $bic = NULL;
+    /**
+     * @var string
+     */
+    protected $mandate_identification = NULL;
 
     /**
      * @param string $bankaccount
@@ -112,5 +124,53 @@ class Payone_Api_Request_Parameter_Authorization_PaymentMethod_DebitPayment
     public function getBankcountry()
     {
         return $this->bankcountry;
+    }
+
+    /**
+     * @param string $iban
+     */
+    public function setIban($iban)
+    {
+        $this->iban = $iban;
+    }
+
+    /**
+     * @return string
+     */
+    public function getIban()
+    {
+        return $this->iban;
+    }
+
+    /**
+     * @param string $bic
+     */
+    public function setBic($bic)
+    {
+        $this->bic = $bic;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBic()
+    {
+        return $this->bic;
+    }
+
+    /**
+     * @param string $mandateIdentification
+     */
+    public function setMandateIdentification($mandateIdentification)
+    {
+        $this->mandate_identification = $mandateIdentification;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMandateIdentification()
+    {
+        return $this->mandate_identification;
     }
 }

@@ -46,12 +46,39 @@ class Payone_Core_Checkout_OnepageController extends Mage_Checkout_OnepageContro
         if ($this->_expireAjax()) {
             return;
         }
-        try {
-            if (!$this->getRequest()->isPost()) {
-                $this->_ajaxRedirectResponse();
-                return;
-            }
 
+        if (!$this->getRequest()->isPost()) {
+            $this->_ajaxRedirectResponse();
+            return;
+        }
+
+        try { // trigger event for debit payment checks
+            $this->dispatchEventDebitPayment();
+        }
+        catch (Mage_Core_Exception $e) {
+            $result['error'] = $e->getMessage();
+        }
+        catch (Exception $e) {
+            Mage::logException($e);
+            $result['error'] = $this->__('Unable to set Payment Method.');
+        }
+
+        if (isset($result['error'])) {
+            $this->getResponse()->setBody(
+                 Mage::helper('core')->jsonEncode($result)
+            );
+            return;
+        }
+
+        $helperConfig = $this->helperConfig();
+
+        if ($helperConfig->getStoreConfig('payone_protect/general/enabled') != 1) {
+            $this->_forward('savePayment', 'onepage', 'checkout');
+            return;
+        }
+
+        // the following event will only be triggered if one of PAYONE PROTECT components is enabled
+        try {
             // Dispatch Event
             $settings = $this->dispatchEvent();
 
@@ -88,8 +115,28 @@ class Payone_Core_Checkout_OnepageController extends Mage_Checkout_OnepageContro
         }
 
         $this->getResponse()->setBody(
-            Mage::helper('core')->jsonEncode($result)
+             Mage::helper('core')->jsonEncode($result)
         );
+    }
+
+    /**
+     *
+     */
+    protected function dispatchEventDebitPayment()
+    {
+        $paymentData = $this->getRequest()->getPost('payment', array());
+        $selectedMethod = $paymentData['method'];
+        if ($selectedMethod != Payone_Core_Model_System_Config_PaymentMethodCode::DEBITPAYMENT) {
+            return;
+        }
+        $parameters = array(
+            'quote' => $this->getOnepage()->getQuote(),
+            'payment_data' => $paymentData,
+            'full_action_name' => $this->getFullActionName('/'),
+        );
+
+        // Dispatch Event
+        Mage::dispatchEvent($this->eventPrefix . '_debit_payment_checks', $parameters);
     }
 
     /**
@@ -120,4 +167,11 @@ class Payone_Core_Checkout_OnepageController extends Mage_Checkout_OnepageContro
         return $settings;
     }
 
+    /**
+     * @return Payone_Core_Helper_Config
+     */
+    protected function helperConfig()
+    {
+        return Mage::helper('payone_core/config');
+    }
 }

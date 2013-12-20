@@ -52,6 +52,16 @@ class Payone_Core_Block_Payment_Method_Form_OnlineBankTransfer
     }
 
     /**
+     * Returns currency
+     * @return string
+     */
+    public function getCurrency()
+    {
+        $quote = $this->getQuote();
+        return $quote->getQuoteCurrencyCode();
+    }
+
+    /**
      * @return array
      */
     protected function getSystemConfigMethodTypes()

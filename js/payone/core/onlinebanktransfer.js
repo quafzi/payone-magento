@@ -21,10 +21,13 @@
  */
 
 /**
+ *
  * @param element
+ * @param country
+ * @param currency
  */
-function payoneSwitchOnlineBankTransfer(element) {
-    if(element == undefined){
+function payoneSwitchOnlineBankTransfer(element, country, currency) {
+    if (element == undefined) {
         return;
     }
     var ElementValue = element.value;
@@ -37,20 +40,33 @@ function payoneSwitchOnlineBankTransfer(element) {
 
     var accountNumberWrap = $('account_number_wrap');
     var bankCodeWrap = $('bank_code_wrap');
+    var sepaIbanWrap = $('sepa_iban_wrap');
+    var sepaBicWrap = $('sepa_bic_wrap');
     var bankGroupWrapAt = $('bank_group_wrap_at');
     var bankGroupWrapNl = $('bank_group_wrap_nl');
 
     var accountNumberInput = $('payone_online_bank_transfer_account_number');
     var bankCodeInput = $('payone_online_bank_transfer_bank_code');
+    var sepaIbanInput = $('payone_online_bank_transfer_sepa_iban');
+    var sepaBicInput = $('payone_online_bank_transfer_sepa_bic');
     var bankGroupSelectAt = $('payone_online_bank_transfer_bank_group_at');
     var bankGroupSelectNl = $('payone_online_bank_transfer_bank_group_nl');
 
     if (ElementValue == '' || typeCode == 'PFF' || typeCode == 'PFC') {
         disableAll();
-    } else if (typeCode == 'PNT' || typeCode == 'GPY') {
+    } else if (typeCode == 'PNT') {
         disableAll();
-        enableAccountNumber();
-        enableBankCode()
+        if (country == 'CH' && currency == 'CHF') {
+            enableAccountNumber();
+            enableBankCode();
+        } else {
+            enableSepaIban();
+            enableSepaBic();
+        }
+    } else if (typeCode == 'GPY') {
+        disableAll();
+        enableSepaIban();
+        enableSepaBic();
     } else if (typeCode == 'EPS') {
         disableAll();
         enableBankGroupAt();
@@ -64,6 +80,10 @@ function payoneSwitchOnlineBankTransfer(element) {
         accountNumberInput.setAttribute("disabled", "disabled");
         bankCodeWrap.hide();
         bankCodeInput.setAttribute("disabled", "disabled");
+        sepaIbanWrap.hide();
+        sepaIbanInput.setAttribute("disabled", "disabled");
+        sepaBicWrap.hide();
+        sepaBicInput.setAttribute("disabled", "disabled");
         bankGroupWrapAt.hide();
         bankGroupSelectAt.setAttribute("disabled", "disabled");
         bankGroupWrapNl.hide();
@@ -80,6 +100,16 @@ function payoneSwitchOnlineBankTransfer(element) {
         bankCodeInput.removeAttribute("disabled");
     }
 
+    function enableSepaIban() {
+        sepaIbanWrap.show();
+        sepaIbanInput.removeAttribute("disabled");
+    }
+
+    function enableSepaBic() {
+        sepaBicWrap.show();
+        sepaBicInput.removeAttribute("disabled");
+    }
+
     function enableBankGroupAt() {
         bankGroupWrapAt.show();
         bankGroupSelectAt.removeAttribute("disabled");
@@ -90,25 +120,3 @@ function payoneSwitchOnlineBankTransfer(element) {
         bankGroupSelectNl.removeAttribute("disabled");
     }
 }
-
-Event.observe(document, "dom:loaded", function () {
-    payoneSwitchOnlineBankTransfer($('payone_online_bank_transfer_obt_type_select'));
-});
-Event.observe(document, "dom:ready", function () {
-    payoneSwitchOnlineBankTransfer($('payone_online_bank_transfer_obt_type_select'));
-});
-
-// we need to call the switch method after refreshing payment section via ajax
-// unfortunately there is no specific property to identify the needed ajax request
-Ajax.Responders.register({
-    onComplete: function(transport, element) {
-        var typeSelect = $('payone_online_bank_transfer_obt_type_select');
-        if (typeSelect == undefined) {
-            return;
-        }
-        var url = element.request.url;
-        if (url.indexOf('checkout/onepage/saveShippingMethod') !== -1 || url.indexOf('checkout/onepage/progress') !== 1) {
-            payoneSwitchOnlineBankTransfer(typeSelect);
-        }
-    }
-});

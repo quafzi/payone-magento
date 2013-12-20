@@ -56,6 +56,14 @@ class Payone_Api_Request_Parameter_Authorization_PaymentMethod_OnlineBankTransfe
     /**
      * @var string
      */
+    protected $iban = NULL;
+    /**
+     * @var string
+     */
+    protected $bic = NULL;
+    /**
+     * @var string
+     */
     protected $successurl = NULL;
     /**
      * @var string
@@ -144,6 +152,38 @@ class Payone_Api_Request_Parameter_Authorization_PaymentMethod_OnlineBankTransfe
     public function getBankgrouptype()
     {
         return $this->bankgrouptype;
+    }
+
+    /**
+     * @param string $iban
+     */
+    public function setIban($iban)
+    {
+        $this->iban = $iban;
+    }
+
+    /**
+     * @return string
+     */
+    public function getIban()
+    {
+        return $this->iban;
+    }
+
+    /**
+     * @param string $bic
+     */
+    public function setBic($bic)
+    {
+        $this->bic = $bic;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBic()
+    {
+        return $this->bic;
     }
 
     /**

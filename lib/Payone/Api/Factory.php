@@ -283,6 +283,15 @@ class Payone_Api_Factory
     }
 
     /**
+     * @return Payone_Api_Mapper_Response_GetFile
+     */
+    protected function buildMapperResponseGetFile()
+    {
+        $mapper = new Payone_Api_Mapper_Response_GetFile();
+        return $mapper;
+    }
+
+    /**
      * @return Payone_Api_Mapper_Response_Vauthorization
      */
     public function buildMapperResponseVauthorize()
@@ -306,6 +315,15 @@ class Payone_Api_Factory
     public function buildMapperResponseUpdateAccess()
     {
         $mapper = new Payone_Api_Mapper_Response_UpdateAccess();
+        return $mapper;
+    }
+
+    /**
+     * @return Payone_Api_Mapper_Response_ManageMandate
+     */
+    public function buildMapperResponseManageMandate()
+    {
+        $mapper = new Payone_Api_Mapper_Response_ManageMandate();
         return $mapper;
     }
 
@@ -453,6 +471,32 @@ class Payone_Api_Factory
         $service = new Payone_Api_Service_Management_GetInvoice();
         $service->setAdapter($this->buildHttpClient());
         $service->setMapperResponse($this->buildMapperResponseGetInvoice());
+        $service->setValidator($this->buildValidatorDefault());
+        return $service;
+
+    }
+
+    /**
+     * @return Payone_Api_Service_Management_GetFile
+     */
+    public function buildServiceManagementGetFile()
+    {
+        $service = new Payone_Api_Service_Management_GetFile();
+        $service->setAdapter($this->buildHttpClient());
+        $service->setMapperResponse($this->buildMapperResponseGetFile());
+        $service->setValidator($this->buildValidatorDefault());
+        return $service;
+
+    }
+
+    /**
+     * @return Payone_Api_Service_Management_ManageMandate
+     */
+    public function buildServiceManagementManageMandate()
+    {
+        $service = new Payone_Api_Service_Management_ManageMandate();
+        $service->setAdapter($this->buildHttpClient());
+        $service->setMapperResponse($this->buildMapperResponseManageMandate());
         $service->setValidator($this->buildValidatorDefault());
         return $service;
 

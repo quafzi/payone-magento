@@ -434,18 +434,24 @@ abstract class Payone_Core_Model_Mapper_ApiRequest_Payment_Authorize_Abstract
             $isRedirect = true;
         }
         elseif ($paymentMethod instanceof Payone_Core_Model_Payment_Method_OnlineBankTransfer) {
-            $country = $this->getOrder()->getBillingAddress()->getCountry();
             $payoneOnlinebanktransferType = $info->getPayoneOnlinebanktransferType();
+            $iban = $info->getPayoneSepaIban();
+            $bic = $info->getPayoneSepaBic();
 
             $payment = new Payone_Api_Request_Parameter_Authorization_PaymentMethod_OnlineBankTransfer();
-            $payment->setBankcountry($country);
             $payment->setOnlinebanktransfertype($payoneOnlinebanktransferType);
 
             switch ($payoneOnlinebanktransferType) {
                 case Payone_Api_Enum_OnlinebanktransferType::INSTANT_MONEY_TRANSFER:
                 case Payone_Api_Enum_OnlinebanktransferType::GIROPAY:
-                    $payment->setBankaccount($info->getPayoneAccountNumber());
-                    $payment->setBankcode($info->getPayoneBankCode());
+                    $payment->setBankcountry($info->getPayoneSepaBankCountry());
+                    if (!empty($iban) and !empty($bic)) {
+                        $payment->setIban(strtoupper($iban));
+                        $payment->setBic(strtoupper($bic)); // ensure bic and iban are sent uppercase
+                    } else {
+                        $payment->setBankaccount($info->getPayoneAccountNumber());
+                        $payment->setBankcode($info->getPayoneBankCode());
+                    }
                     break;
                 case Payone_Api_Enum_OnlinebanktransferType::IDEAL:
                 case Payone_Api_Enum_OnlinebanktransferType::EPS_ONLINE_BANK_TRANSFER:
@@ -485,13 +491,28 @@ abstract class Payone_Core_Model_Mapper_ApiRequest_Payment_Authorize_Abstract
             $isRedirect = true;
         }
         elseif ($paymentMethod instanceof Payone_Core_Model_Payment_Method_DebitPayment) {
-            $country = $this->getOrder()->getBillingAddress()->getCountry();
-
             $payment = new Payone_Api_Request_Parameter_Authorization_PaymentMethod_DebitPayment();
-            $payment->setBankcountry($country);
-            $payment->setBankaccount($info->getPayoneAccountNumber());
+            $payment->setBankcountry($info->getPayoneSepaBankCountry());
+            $iban = $info->getPayoneSepaIban();
+            $bic = $info->getPayoneSepaBic();
+            if (!empty($iban) and !empty($bic)) {
+                $payment->setIban(strtoupper($iban));
+                $payment->setBic(strtoupper($bic)); // ensure bic and iban are sent uppercase
+            } else {
+                $payment->setBankaccount($info->getPayoneAccountNumber());
+                $payment->setBankcode($info->getPayoneBankCode());
+            }
             $payment->setBankaccountholder($info->getPayoneAccountOwner());
-            $payment->setBankcode($info->getPayoneBankCode());
+            // for frontend orders set mandate identification if data provided in checkout session:
+            if (!$this->getIsAdmin()) {
+                $checkoutSession = $this->getFactory()->getSingletonCheckoutSession();
+                $mandateStatus = $checkoutSession->getPayoneSepaMandateStatus();
+                $mandateIdentification = $checkoutSession->getPayoneSepaMandateIdentification();
+                if ($mandateStatus == Payone_Core_Model_Service_Management_ManageMandate::STATUS_PENDING
+                    and !empty($mandateIdentification)) {
+                    $payment->setMandateIdentification($mandateIdentification);
+                }
+            }
         }
 
         if ($isRedirect === true) {

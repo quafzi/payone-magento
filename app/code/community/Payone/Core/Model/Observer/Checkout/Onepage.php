@@ -57,10 +57,6 @@ class Payone_Core_Model_Observer_Checkout_Onepage extends Payone_Core_Model_Obse
         /** @var $selectedMethod string */
         $selectedMethod = $observer->getEvent()->getSelectedMethod();
 
-        if ($selectedMethod === 'payone_debit_payment') {
-            $this->performBankaccountCheck();
-        }
-
         // Check creditrating config:
         $configProtect = $this->helperConfig()->getConfigProtect($quote->getStoreId());
         $configCreditrating = $configProtect->getCreditrating();
@@ -123,41 +119,6 @@ class Payone_Core_Model_Observer_Checkout_Onepage extends Payone_Core_Model_Obse
             return false;
         }
         return true;
-    }
-
-    /**
-     * @throws Payone_Core_Exception_PaymentMethodConfigNotFound|Mage_Core_Exception
-     */
-    protected function performBankaccountCheck()
-    {
-        $paymentData = $this->getPaymentData();
-        $quote = $this->getQuote();
-
-
-        // Determine if check must/can be performed:
-        if (!array_key_exists('payone_config_payment_method_id', $paymentData)) {
-            throw new Payone_Core_Exception_PaymentMethodConfigNotFound();
-        }
-        $paymentMethodConfigId = $paymentData['payone_config_payment_method_id'];
-        if (empty($paymentMethodConfigId)) {
-            throw new Payone_Core_Exception_PaymentMethodConfigNotFound();
-        }
-
-        $config = $this->helperConfig()->getConfigPaymentMethodById($paymentMethodConfigId, $quote->getStoreId());
-        if (!$config->isBankAccountCheckEnabled()) {
-            return; // Check disabled, abort.
-        }
-
-        // Gather data:
-        $bankAccountNumber = array_key_exists('payone_account_number', $paymentData) ? $paymentData['payone_account_number'] : '';
-        $bankCode = array_key_exists('payone_bank_code', $paymentData) ? $paymentData['payone_bank_code'] : '';
-        $bankCountry = $this->getQuote()->getBillingAddress()->getCountry();
-
-
-        // Perform check:
-        $serviceBankaccountCheck = $this->getFactory()
-            ->getServiceVerificationBankAccountCheck($paymentMethodConfigId, $this->getQuote()->getStoreId());
-        $serviceBankaccountCheck->execute($bankAccountNumber, $bankCode, $bankCountry);
     }
 
     /**

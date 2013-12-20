@@ -145,6 +145,26 @@ class Payone_Builder
     /**
      * @api
      *
+     * @return Payone_Api_Service_Management_GetFile
+     */
+    public function buildServiceManagementGetFile()
+    {
+        return $this->buildService(self::KEY_API . '/management/getFile');
+    }
+
+    /**
+     * @api
+     *
+     * @return Payone_Api_Service_Management_ManageMandate
+     */
+    public function buildServiceManagementManageMandate()
+    {
+        return $this->buildService(self::KEY_API . '/management/manageMandate');
+    }
+
+    /**
+     * @api
+     *
      * @return Payone_Api_Service_Verification_AddressCheck
      */
     public function buildServiceVerificationAddressCheck()

@@ -25,14 +25,25 @@
 ?>
 <?php echo $this->escapeHtml($this->getMethodTitle()) ?>
 <br/>
-<?php if($this->getInfo()): ?>
-<?php echo $this->__('Account holder: %s', $this->escapeHtml($this->getPayoneAccountOwner())) ?><br/>
-<?php echo $this->__('Account number: %s', $this->escapeHtml($this->getPayoneAccountNumber())) ?><br/>
-<?php echo $this->__('Bank code: %s', $this->escapeHtml($this->getPayoneBankCode())) ?><br/>
+<?php if ($this->getPayoneSepaIban()): ?>
+    <?php $iban = $this->getPayoneSepaIban();
+    echo $this->__('IBAN: %s', $this->escapeHtml(substr($iban, 0, 2) . " " . chunk_split(substr($iban, 2), 4, ' '))) ?><br/>
+<?php endif; ?>
+<?php if ($this->getPayoneSepaBic()): ?>
+    <?php echo $this->__('BIC: %s', $this->escapeHtml($this->getPayoneSepaBic())) ?><br/>
+<?php endif; ?>
+<?php if ($this->getPayoneAccountOwner()): ?>
+    <?php echo $this->__('Account holder: %s', $this->escapeHtml($this->getPayoneAccountOwner())) ?><br/>
+<?php endif; ?>
+<?php if ($this->getPayoneAccountNumber()): ?>
+    <?php echo $this->__('Account number: %s', $this->escapeHtml($this->getPayoneAccountNumber())) ?><br/>
+<?php endif; ?>
+<?php if ($this->getPayoneBankCode()): ?>
+    <?php echo $this->__('Bank code: %s', $this->escapeHtml($this->getPayoneBankCode())) ?><br/>
 <?php endif; ?>
 <?php if ($this->getLastTransId() == ''): ?>
-	<?php echo $this->__('Payment has not been processed yet.') ?>
+    <?php echo $this->__('Payment has not been processed yet.') ?>
 <?php else: ?>
-	<?php echo $this->__('Payone Transaction ID: %s', $this->escapeHtml($this->getLastTransId())) ?>
+    <?php echo $this->__('Payone Transaction ID: %s', $this->escapeHtml($this->getLastTransId())) ?>
 <?php endif; ?>
 <br/>
