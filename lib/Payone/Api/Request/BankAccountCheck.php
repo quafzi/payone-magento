@@ -45,15 +45,31 @@ class Payone_Api_Request_BankAccountCheck extends Payone_Api_Request_Abstract
     /**
      * @var string
      */
-    protected $bankaccount = NULL;
+    protected $bankcountry = NULL;
     /**
      * @var string
+     */
+    protected $bankaccount = NULL;
+    /**
+     * @var int
      */
     protected $bankcode = NULL;
     /**
+     * @var int
+     */
+    protected $bankbranchcode = NULL;
+    /**
+     * @var int
+     */
+    protected $bankcheckdigit = NULL;
+    /**
      * @var string
      */
-    protected $bankcountry = NULL;
+    protected $iban = NULL;
+    /**
+     * @var string
+     */
+    protected $bic = NULL;
     /**
      * @var string
      */
@@ -76,6 +92,22 @@ class Payone_Api_Request_BankAccountCheck extends Payone_Api_Request_Abstract
     }
 
     /**
+     * @param string $checktype
+     */
+    public function setChecktype($checktype)
+    {
+        $this->checktype = $checktype;
+    }
+
+    /**
+     * @return string
+     */
+    public function getChecktype()
+    {
+        return $this->checktype;
+    }
+
+    /**
      * @param string $bankaccount
      */
     public function setBankaccount($bankaccount)
@@ -92,7 +124,39 @@ class Payone_Api_Request_BankAccountCheck extends Payone_Api_Request_Abstract
     }
 
     /**
-     * @param string $bankcode
+     * @param int $bankbranchcode
+     */
+    public function setBankbranchcode($bankbranchcode)
+    {
+        $this->bankbranchcode = $bankbranchcode;
+    }
+
+    /**
+     * @return int
+     */
+    public function getBankbranchcode()
+    {
+        return $this->bankbranchcode;
+    }
+
+    /**
+     * @param int $bankcheckdigit
+     */
+    public function setBankcheckdigit($bankcheckdigit)
+    {
+        $this->bankcheckdigit = $bankcheckdigit;
+    }
+
+    /**
+     * @return int
+     */
+    public function getBankcheckdigit()
+    {
+        return $this->bankcheckdigit;
+    }
+
+    /**
+     * @param int $bankcode
      */
     public function setBankcode($bankcode)
     {
@@ -100,7 +164,7 @@ class Payone_Api_Request_BankAccountCheck extends Payone_Api_Request_Abstract
     }
 
     /**
-     * @return string
+     * @return int
      */
     public function getBankcode()
     {
@@ -124,19 +188,35 @@ class Payone_Api_Request_BankAccountCheck extends Payone_Api_Request_Abstract
     }
 
     /**
-     * @param string $checktype
+     * @param string $iban
      */
-    public function setChecktype($checktype)
+    public function setIban($iban)
     {
-        $this->checktype = $checktype;
+        $this->iban = $iban;
     }
 
     /**
      * @return string
      */
-    public function getChecktype()
+    public function getIban()
     {
-        return $this->checktype;
+        return $this->iban;
+    }
+
+    /**
+     * @param string $bic
+     */
+    public function setBic($bic)
+    {
+        $this->bic = $bic;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBic()
+    {
+        return $this->bic;
     }
 
     /**

@@ -70,6 +70,13 @@
  * @method int getCheckCvc()
  * @method setCheckBankAccount($checkBankaccount)
  * @method int getCheckBankAccount()
+ * @method setSepaCountry($sepaCountry)
+ * @method setSepaDeShowBankData($sepaDeShowBankData)
+ * @method int getSepaDeShowBankData()
+ * @method setSepaMandateEnabled($sepaMandateEnabled)
+ * @method int getSepaMandateEnabled()
+ * @method setSepaMandateDownloadEnabled($sepaMandateDownloadEnabled)
+ * @method int getSepaMandateDownloadEnabled()
  * @method setMinOrderTotal($minOrderTotal)
  * @method float getMinOrderTotal()
  * @method setMaxOrderTotal($maxOrderTotal)
@@ -577,6 +584,7 @@ class Payone_Core_Model_Domain_Config_PaymentMethod
         $this->unserializeData('klarna_config');
         $this->explodeData('types');
         $this->explodeData('specificcountry');
+        $this->explodeData('sepa_country');
     }
 
 
@@ -598,6 +606,9 @@ class Payone_Core_Model_Domain_Config_PaymentMethod
 
         // prepare specificcountry
         $this->implodeData('specificcountry');
+
+        // prepare sepa_country
+        $this->implodeData('sepa_country');
 
         // prepare fee_config
         $this->serializeData('fee_config');
@@ -686,6 +697,15 @@ class Payone_Core_Model_Domain_Config_PaymentMethod
     {
         $this->explodeData('specificcountry');
         return $this->getData('specificcountry');
+    }
+
+    /**
+     * @return array
+     */
+    public function getSepaCountry()
+    {
+        $this->explodeData('sepa_country');
+        return $this->getData('sepa_country');
     }
 
     /**

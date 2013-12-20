@@ -46,13 +46,15 @@ class Payone_Core_Model_Service_Verification_BankAccountCheck
      * @param $bankaccount
      * @param $bankcode
      * @param $bankcountry
+     * @param $iban
+     * @param $bic
      *
      * @return void
      * @throws Mage_Core_Exception
      */
-    public function execute($bankaccount, $bankcode, $bankcountry)
+    public function execute($bankaccount, $bankcode, $bankcountry, $iban = '', $bic = '')
     {
-        $request = $this->getMapper()->map($bankaccount, $bankcode, $bankcountry);
+        $request = $this->getMapper()->map($bankaccount, $bankcode, $bankcountry, $iban, $bic);
 
         $response = $this->getServiceApiBankAccountCheck()->check($request);
 
@@ -80,11 +82,13 @@ class Payone_Core_Model_Service_Verification_BankAccountCheck
         $bankaccount = $payment->getPayoneAccountNumber();
         $bankcode = $payment->getPayoneBankCode();
         $bankcountry = $payment->getPayoneBankCountry();
+        $iban = $payment->getPayoneSepaIban();
+        $bic = $payment->getPayoneSepaBic();
         if (empty($bankcountry)) {
             $bankcountry = $payment->getQuote()->getBillingAddress()->getCountry();
         }
 
-        $this->execute($bankaccount, $bankcode, $bankcountry);
+        $this->execute($bankaccount, $bankcode, $bankcountry, $iban, $bic);
     }
 
     /**

@@ -45,5 +45,7 @@ class Payone_Api_Enum_RequestType
     const GETINVOICE = 'getinvoice';
     const CREATEACCESS = 'createaccess';
     const UPDATEACCESS = 'updateaccess';
+    const MANAGEMANDATE = 'managemandate';
+    const GETFILE = 'getfile';
     const VAUTHORIZATION = 'vauthorization';
 }

@@ -78,6 +78,10 @@ abstract class Payone_Api_Response_Authorization_Abstract
      */
     protected $clearing_bankname = NULL;
 
+    /**
+     * @var string
+     */
+    protected $mandate_identification = NULL;
 
 
     /**
@@ -254,5 +258,21 @@ abstract class Payone_Api_Response_Authorization_Abstract
     public function getUserid()
     {
         return $this->userid;
+    }
+
+    /**
+     * @param string $mandateIdentification
+     */
+    public function setMandateIdentification($mandateIdentification)
+    {
+        $this->mandate_identification = $mandateIdentification;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMandateIdentification()
+    {
+        return $this->mandate_identification;
     }
 }

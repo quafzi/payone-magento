@@ -42,10 +42,12 @@ class Payone_Core_Model_Mapper_ApiRequest_Verification_BankAccountCheck
      * @param string $bankaccount
      * @param string $bankcode
      * @param string $bankcountry
+     * @param string $iban
+     * @param string $bic
      *
      * @return Payone_Api_Request_BankAccountCheck
      */
-    public function map($bankaccount, $bankcode, $bankcountry)
+    public function map($bankaccount, $bankcode, $bankcountry, $iban = '', $bic = '')
     {
         $request = $this->getFactory()->getRequestVerificationBankAccountCheck();
         $helper = $this->helper();
@@ -71,7 +73,10 @@ class Payone_Core_Model_Mapper_ApiRequest_Verification_BankAccountCheck
         $request->setBankaccount($bankaccount);
         $request->setBankcode($bankcode);
         $request->setBankcountry($bankcountry);
-
+        if (!empty($iban) and !empty($bic)) {
+            $request->setIban(strtoupper($iban));
+            $request->setBic(strtoupper($bic));  // ensure bic and iban are sent uppercase
+        }
 
 
         return $request;

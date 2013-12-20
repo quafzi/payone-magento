@@ -94,6 +94,9 @@
         <reference name="head">
             <action method="addJs"><script>payone/core/client_api.js</script></action>
             <action method="addJs"><script>payone/core/creditcard.js</script></action>
+            <action method="addJs"><script>payone/core/debitpayment.js</script></action>
+            <action method="addJs"><script>payone/core/sepa_input.js</script></action>
+            <action method="addJs"><script>payone/core/sepa_validation.js</script></action>
         </reference>
         <reference name="js">
             <block type="adminhtml/template" name="payone_core_clientapi"
