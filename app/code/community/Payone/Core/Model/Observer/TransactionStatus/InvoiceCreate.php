@@ -83,28 +83,32 @@ class Payone_Core_Model_Observer_TransactionStatus_InvoiceCreate
         $configMethod = $this->getConfigPaymentMethodById();
         // Advance Payment create Invoice if request-type is authorization
         if ($configMethod->isRequestAuthorization()) {
-            if ($this->method instanceof Payone_Core_Model_Payment_Method_AdvancePayment) {
-                // Create Invoice
+            $isAdvancePayment = $this->method instanceof Payone_Core_Model_Payment_Method_AdvancePayment;
+
+            if ($isAdvancePayment) {
                 $invoice = $this->getServiceInvoiceCreate()->createByOrder($this->order);
-                $invoice->pay();
-                $this->sendInvoiceEmail($invoice);
             }
             else {
                 // Load Invoice which has been created in 'onAppointed'
                 $invoice = $this->getInvoiceForOrder();
-                if ($invoice) {
-                    $invoice->pay();
+            }
 
-                    // Save invoice and it´s order as a transaction:
-                    try {
-                        $transaction = $this->getFactory()->getModelResourceTransaction();
-                        $transaction->addObject($invoice);
-                        $transaction->addObject($invoice->getOrder());
-                        $transaction->save();
-                    }
-                    catch (Mage_Core_Exception $e) {
-                        throw new Payone_Core_Exception_InvoiceSave($e->getMessage());
-                    }
+            if ($invoice) {
+                $invoice->pay();
+
+                if ($isAdvancePayment) {
+                    $this->sendInvoiceEmail($invoice);
+                }
+
+                // Save invoice and it´s order as a transaction:
+                try {
+                    $transaction = $this->getFactory()->getModelResourceTransaction();
+                    $transaction->addObject($invoice);
+                    $transaction->addObject($invoice->getOrder());
+                    $transaction->save();
+                }
+                catch (Mage_Core_Exception $e) {
+                    throw new Payone_Core_Exception_InvoiceSave($e->getMessage());
                 }
             }
         }
@@ -180,8 +184,7 @@ class Payone_Core_Model_Observer_TransactionStatus_InvoiceCreate
         $id = $this->payment->getPayoneConfigPaymentMethodId();
         $configPaymentMethod = $this->config->getPayment()->getMethodById($id);
 
-        if(empty($configPaymentMethod) )
-        {
+        if (empty($configPaymentMethod)) {
             $message = 'Payment method configuration with id "' . $id . '" not found.';
             throw new Payone_Core_Exception_PaymentMethodConfigNotFound($message);
         }

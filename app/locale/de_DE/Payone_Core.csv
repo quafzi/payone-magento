@@ -68,6 +68,9 @@
 "Add Safe Invoice","Sicheren Rechnungskauf hinzufügen"
 "Edit Safe Invoice","Sicheren Rechnungskauf bearbeiten"
 "Type","Art"
+"Store-ID","Store-ID"
+"Add Store-ID","Store-ID hinzufügen"
+"Required when using Klarna","Pflicht bei Verwendung von Klarna"
 "Scope","Geltungsbereich"
 "Countries","Länder"
 "Fee","Gebühr"
@@ -75,6 +78,14 @@
 "Creditcard-Type","Kartentyp"
 "Check Card Validation Code","Prüfe Kartenprüfnummer"
 "Validate bank code","Prüfe Bankverbindung"
+"List of supported SEPA countries","Liste der unterstützten Kontoländer"
+"Show additional account number/bank code number","Zusätzlich Kontonummer/Bankleitzahl anzeigen"
+"Only for German accounts","Nur bei Deutschen Konten"
+"Mandate enabled","Mandatserteilung aktivieren"
+"Pay request 'managemandate', includes bankaccountcheck. No query of the POS block list is possible","Der Kostenpflichtiger Request 'managemandate', beinhaltet einen bankaccountcheck. Keine Abfrage der POS-Sperrliste ist möglich"
+"Mandate download enabled","Download Mandat als PDF"
+"Can be selected only if the product in PAYONE was posted 'SEPA-Mandate as PDF'", "Diese Option kann nur ausgewählt werden, wenn bei PAYONE das Produkt 'SEPA-Mandate als PDF' gebucht wurde"
+"Your mandate as PDF","Ihr Mandat als PDF"
 "Bank code validation type", "Art der Bankverbindungsprüfung"
 "Banktransfer-Type","Überweisungsart"
 "Requires PAYONE API access.","Benötigt PAYONE API-Zugang"
@@ -204,6 +215,8 @@
 "Account holder","Kontoinhaber"
 "Account number","Kontonummer"
 "Bank code","Bankleitzahl"
+"Bank country","Land der Bank"
+"I want to grant the mandate (transmitted electronically)","Ich möchte das Mandat erteilen (elektronische Übermittlung)"
 
 "PAYONE successfully processed the payment-request.","Die Zahlungsanfrage wurde von PAYONE erfolgreich bearbeitet"
 "PAYONE successfully processed and confirmed the payment-request.","Die Zahlungsanfrage wurde von PAYONE erfolgreich bearbeitet und bestätigt."
@@ -322,6 +335,11 @@
 "Account holder: %s","Kontoinhaber: %s"
 "Account number: xxx%s","Kontonummer: xxx%s"
 "Bank code: %s","Bankleitzahl: %s"
+"or enter your bank account data (only for German accounts):","oder bezahlen Sie wie gewohnt mit Ihren bakannten Kontodaten (nur für Deutsche Kontoverbindungen):"
+
+"Bank code must contain 8 digits","Bankleitzahl muss 8 Ziffern enthalten"
+"IBAN should contain only letters and digits","IBAN sollte nur Buchstaben und Ziffern enthalten"
+"BIC can contain only 8-11 characters (letters and digits)","BIC kann nur aus 8-11 Zeichen bestehen (Buchstaben und Ziffern)"
 
 "Online bank transfer type","Typ"
 
@@ -360,6 +378,8 @@
 "BANKACCOUNTCHECK","Bankdatenprüfung (bankaccountcheck)"
 "CREDITCARDCHECK","Kreditkartenprüfung (creditcardcheck)"
 "GETINVOICE","Rechnungsdownload (getinvoice)"
+"MANAGEMANDATE","Mandatserteilung (managemandate)"
+"GETFILE","Download Mandat als PDF (getfile)"
 
 "INSTANT_MONEY_TRANSFER","Sofort-Überweisung"
 "GIROPAY","giropay"
@@ -395,6 +415,7 @@
 
 "CFR","Commerz Finanz"
 "BSV","BillSAFE"
+"KLV","Klarna"
 "INFOSCORE_HARD","Infoscore (Harte Merkmale)"
 "INFOSCORE_ALL","Infoscore (Alle Merkmale)"
 "INFOSCORE_ALL_BONI","Infoscore (Alle Merkmale + Boniscore)"
@@ -473,3 +494,8 @@
 "VSETTLEMENT","Abrechnung (vsettlement)"
 "TRANSFER","Umbuchung (transfer)"
 "INVOICE","Rechnungsbeleg (invoice)"
+
+"Date of birth (DD MM YYYY)","Geburtsdatum (TT MM JJJJ)"
+"Gender","Geschlecht"
+"House number extension (billing address)","Adresszusatz (Rechnungsadresse)"
+"House number extension (shipping address)","Adresszusatz (Lieferadresse)"

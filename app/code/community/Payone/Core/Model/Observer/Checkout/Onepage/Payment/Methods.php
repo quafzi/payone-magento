@@ -56,31 +56,44 @@ class Payone_Core_Model_Observer_Checkout_Onepage_Payment_Methods
             return;
         }
 
-        $config = $this->helperConfig()->getConfigProtect($quote->getStoreId())->getCreditrating();
-        if (!$config->getEnabled()) {
+        $configProtect = $this->helperConfig()->getConfigProtect($quote->getStoreId());
+        $configCreditrating = $configProtect->getCreditrating();
+        $configAddresscheck = $configProtect->getAddressCheck();
+        if (!$configCreditrating->getEnabled() && !$configAddresscheck->getEnabled()) {
             return;
         }
 
-        // After Payment Select Checks will be run when action is verifyPayment
-        if ($config->isIntegrationEventAfterPayment()) {
-            // @comment we should never come into this observer using after_payment:
-            // methods are determined using onepage_verify_payment event
+        $scores = array();
+        if($configAddresscheck->getEnabled())
+        {
+            // get worst address-score and add to score array
+            $worstAddressScore = $this->helperScore()->detectWorstAddressScoreByQuote($quote);
+            array_push($scores,$worstAddressScore);
+        }
+
+        // check if config is enabled and event is before payment
+        if($configCreditrating->getEnabled() && $configCreditrating->isIntegrationEventBeforePayment())
+        {
+            // get score for creditrating and add to score array
+            $service = $this->getFactory()->getServiceVerificationCreditrating($configCreditrating);
+            $worstCreditratingScore = $service->execute($quote);
+            array_push($scores,$worstCreditratingScore);
+        }
+
+        // compare scores, select worst
+        $worstScore = $this->helperScore()->detectWorstScore($scores);
+        // evaluate score, load allowed payment methods
+        $allowedPaymentMethods = $this->helperScore()->evaluate($worstScore,$quote->getStoreId());
+
+        // Check not necessary
+        if ($allowedPaymentMethods === true) {
+            $this->setSettingsHavetoFilterMethods(false);
             return;
         }
 
-        if ($config->isIntegrationEventBeforePayment()) {
-            $service = $this->getFactory()->getServiceVerificationCreditrating($config);
-            $allowedMethods = $service->execute($quote);
+        $this->setSettingsHavetoFilterMethods(true);
+        $this->getSettingsAllowedMethods()->addData($allowedPaymentMethods);
 
-            // Check not necessary
-            if ($allowedMethods === true) {
-                $this->setSettingsHavetoFilterMethods(false);
-                return;
-            }
-
-            $this->setSettingsHavetoFilterMethods(true);
-            $this->getSettingsAllowedMethods()->addData($allowedMethods);
-        }
     }
 
     /**

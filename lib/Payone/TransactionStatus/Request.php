@@ -196,7 +196,34 @@ class Payone_TransactionStatus_Request extends Payone_TransactionStatus_Request_
 
     /** @var string */
     protected $clearing_instructionnote = NULL;
-    
+
+    /**
+     * @var string
+     */
+    protected $iban = NULL;
+    /**
+     * @var string
+     */
+    protected $bic = NULL;
+    /**
+     * @var string
+     */
+    protected $mandate_identification = NULL;
+    /**
+     * @var string
+     */
+    protected $creditor_identifier = NULL;
+    /**
+     * Format YYYYMMDD
+     * @var int
+     */
+    protected $clearing_date = NULL;
+    /**
+     * @var float
+     */
+    protected $clearing_amount = NULL;
+
+
     /**
      * @param int $accessid
      */
@@ -787,5 +814,101 @@ class Payone_TransactionStatus_Request extends Payone_TransactionStatus_Request_
     public function getClearingReference()
     {
         return $this->clearing_reference;
+    }
+
+    /**
+     * @param string $iban
+     */
+    public function setIban($iban)
+    {
+        $this->iban = $iban;
+    }
+
+    /**
+     * @return string
+     */
+    public function getIban()
+    {
+        return $this->iban;
+    }
+
+    /**
+     * @param string $bic
+     */
+    public function setBic($bic)
+    {
+        $this->bic = $bic;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBic()
+    {
+        return $this->bic;
+    }
+
+    /**
+     * @param string $mandateIdentification
+     */
+    public function setMandateIdentification($mandateIdentification)
+    {
+        $this->mandate_identification = $mandateIdentification;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMandateIdentification()
+    {
+        return $this->mandate_identification;
+    }
+
+    /**
+     * @param string $creditorIdentifier
+     */
+    public function setCreditorIdentifier($creditorIdentifier)
+    {
+        $this->creditor_identifier = $creditorIdentifier;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCreditorIdentifier()
+    {
+        return $this->creditor_identifier;
+    }
+
+    /**
+     * @param int $clearingDate
+     */
+    public function setClearingDate($clearingDate)
+    {
+        $this->clearing_date = $clearingDate;
+    }
+
+    /**
+     * @return int
+     */
+    public function getClearingDate()
+    {
+        return $this->clearing_date;
+    }
+
+    /**
+     * @param float $clearingAmount
+     */
+    public function setClearingAmount($clearingAmount)
+    {
+        $this->clearing_amount = $clearingAmount;
+    }
+
+    /**
+     * @return float
+     */
+    public function getClearingAmount()
+    {
+        return $this->clearing_amount;
     }
 }

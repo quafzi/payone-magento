@@ -76,7 +76,8 @@ class Payone_Core_Model_Service_Verification_Creditrating
         $savedProtectScore = $this->getSavedScore($address, $config->getResultLifetimeInSeconds());
         if ($savedProtectScore) {
             // Valid, saved score exists, we can skip the API request:
-            return $handler->handleProtectScore($savedProtectScore);
+            $address->setPayoneProtectScore($savedProtectScore);
+            return $savedProtectScore;
         }
 
         $request = $this->getMapper()->mapFromAddress($address);

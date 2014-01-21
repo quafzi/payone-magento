@@ -24,13 +24,9 @@
 /** @var $this Payone_Core_Block_Payment_Method_Form_OnlineBankTransfer */
 $code = $this->getMethodCode();
 $country = $this->getCountry();
+$currency = $this->getCurrency();
 $paymentConfigId = $this->getPaymentMethodConfigId();
 $paymentType = $this->getInfoData('payone_onlinebanktransfer_type');
-
-$maxLengthAccountNumber = 10;
-if ($country == 'AT') {
-    $maxLengthAccountNumber = 11;
-}
 ?>
 <fieldset class="form-list">
     <ul id="payment_form_<?php echo $code; ?>" style="display:none">
@@ -38,16 +34,15 @@ if ($country == 'AT') {
             <div class="input-box">
                 <label for="<?php echo $code; ?>_account_number">
                     <?php echo $this->__('Online bank transfer type'); ?>&nbsp;<span class="required">*</span>
-                </label><br/>
+                </label><br class="clear"/>
                 <select id="<?php echo $code ?>_obt_type_select" name="<?php echo $code ?>_obt_type_select"
-                        class="required-entry" onchange="payoneSwitchOnlineBankTransfer(this);">
+                        class="required-entry" onchange="payoneSwitchOnlineBankTransfer(this, '<?php echo $country ?>', '<?php echo $currency ?>');">
                     <option value=""><?php echo $this->__('--Please Select--') ?></option>
                     <?php
                     foreach ($this->getTypes() as $key => $type):
                         $typeConfigId = $type['config_id'];
                         $selected = '';
-                        if($typeConfigId == $paymentConfigId && $paymentType == $type['code'])
-                        {
+                        if ($typeConfigId == $paymentConfigId && $paymentType == $type['code']) {
                             $paymentConfigId = $typeConfigId;
                             $selected = 'selected="selected"';
                         }
@@ -55,41 +50,92 @@ if ($country == 'AT') {
                         <option value="<?php echo $key ?>"<?php echo $selected; ?>>
                             <?php echo $type['name']; ?><span><?php echo $type['fee']; ?></span>
                         </option>
-                        <?php endforeach; ?>
+                    <?php endforeach; ?>
                 </select>
 
-                <input type="hidden" id="<?php echo $code ?>_obt_type" name="payment[payone_onlinebanktransfer_type]" value="<?php echo $paymentType; ?>" class=""/>
+                <input type="hidden" id="<?php echo $code ?>_obt_type" name="payment[payone_onlinebanktransfer_type]"
+                       value="<?php echo $paymentType; ?>" class=""/>
                 <input type="hidden" name="payment[payone_config_payment_method_id]"
                        id="<?php echo $code ?>_config_id" value="<?php echo $paymentConfigId; ?>"/>
             </div>
         </li>
-        <?php if ($this->isAvailableAccountNumber()): ?>
-        <li id="account_number_wrap">
+        <li id="sepa_iban_wrap" style="display:none;">
+            <div class="input-box">
+                <label for="<?php echo $code ?>_sepa_iban">
+                    <?php echo $this->__('IBAN') ?>&nbsp;<span class="required">*</span>
+                </label><br class="clear"/>
+                <input type="text" id="<?php echo $code ?>_sepa_iban" name="payment[payone_sepa_iban]"
+                       title="<?php echo $this->__('IBAN') ?>"
+                       class="validate-sepa-iban required-entry input-text" value=""
+                       autocomplete="off" maxlength="34"
+                       onchange="inputToUpperCase(this);"
+                       oninput="inputToUpperCase(this);"/>
+            </div>
+        </li>
+        <li id="sepa_bic_wrap" style="display:none;">
+            <div class="input-box">
+                <label for="<?php echo $code ?>_sepa_bic">
+                    <?php echo $this->__('BIC') ?>&nbsp;<span class="required">*</span>
+                </label><br class="clear"/>
+                <input type="text" id="<?php echo $code ?>_sepa_bic" name="payment[payone_sepa_bic]"
+                       title="<?php echo $this->__('BIC') ?>"
+                       class="validate-sepa-bic required-entry input-text" value=""
+                       autocomplete="off" maxlength="11"
+                       onchange="inputToUpperCase(this);"
+                       oninput="inputToUpperCase(this);"/>
+            </div>
+        </li>
+        <li id="account_number_wrap" style="display:none;">
             <div class="input-box">
                 <label for="<?php echo $code ?>_account_number">
                     <?php echo $this->__('Account number') ?>&nbsp;<span class="required">*</span>
-                </label><br/>
+                </label><br class="clear"/>
                 <input type="text" id="<?php echo $code ?>_account_number" name="payment[payone_account_number]"
                        title="<?php echo $this->__('Account number') ?>"
                        class="validate-digits required-entry input-text" value="" autocomplete="off"
-                       maxlength="<?php echo $maxLengthAccountNumber; ?>"/>
+                       maxlength="10"/>
             </div>
         </li>
-        <?php endif;?>
-        <?php if ($this->isAvailableBankCode()): ?>
-        <li id="bank_code_wrap">
+        <li id="bank_code_wrap" style="display:none;">
             <div class="input-box">
                 <label for="<?php echo $code ?>_bank_code">
                     <?php echo $this->__('Bank code') ?>&nbsp;<span class="required">*</span>
-                </label><br/>
+                </label><br class="clear"/>
                 <input type="text" id="<?php echo $code ?>_bank_code" name="payment[payone_bank_code]"
-                       title="<?php echo $this->__('Bank code') ?>" class="validate-digits required-entry input-text"
-                       value="" maxlength="10"/>
+                       title="<?php echo $this->__('Bank code') ?>"
+                       class="validate-bank-code validate-digits required-entry input-text"
+                       value="" maxlength="8"/>
             </div>
         </li>
-        <?php endif;?>
-        <?php if ($this->isAvailableBankGroup()): ?>
         <?php echo $this->getBlockHtmlBankGroup(); ?>
-        <?php endif;?>
     </ul>
 </fieldset>
+
+<script type="text/javascript">
+    var country = '<?php echo $country ?>';
+    var currency = '<?php echo $currency ?>';
+    var code = '<?php echo $code ?>';
+    payoneSwitchOnlineBankTransfer($(code + '_obt_type_select'), country, currency);
+
+    Event.observe(document, "dom:loaded", function () {
+        payoneSwitchOnlineBankTransfer($(code + '_obt_type_select'), country, currency);
+    });
+    Event.observe(document, "dom:ready", function () {
+        payoneSwitchOnlineBankTransfer($(code + '_obt_type_select'), country, currency);
+    });
+
+    // we need to call the switch method after refreshing payment section via ajax
+    // unfortunately there is no specific property to identify the needed ajax request
+    Ajax.Responders.register({
+        onComplete: function(transport, element) {
+            var typeSelect = $(code + '_obt_type_select');
+            if (typeSelect == undefined) {
+                return;
+            }
+            var url = element.request.url;
+            if (url.indexOf('checkout/onepage/saveShippingMethod') !== -1 || url.indexOf('checkout/onepage/progress') !== 1) {
+                payoneSwitchOnlineBankTransfer(typeSelect, country, currency);
+            }
+        }
+    });
+</script>

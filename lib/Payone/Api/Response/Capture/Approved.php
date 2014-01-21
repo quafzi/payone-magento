@@ -87,6 +87,24 @@ class Payone_Api_Response_Capture_Approved extends Payone_Api_Response_Abstract
 
     /** @var string */
     protected $clearing_instructionnote = NULL;
+
+    /**
+     * @var string
+     */
+    protected $mandate_identification = NULL;
+    /**
+     * @var string
+     */
+    protected $creditor_identifier = NULL;
+    /**
+     * @var int
+     */
+    protected $clearing_date = NULL;
+    /**
+     * @var int
+     */
+    protected $clearing_amount = NULL;
+
     /**
      * @param string $clearing_bankaccount
      */
@@ -309,5 +327,69 @@ class Payone_Api_Response_Capture_Approved extends Payone_Api_Response_Abstract
     public function getClearingReference()
     {
         return $this->clearing_reference;
+    }
+
+    /**
+     * @param string $mandateIdentification
+     */
+    public function setMandateIdentification($mandateIdentification)
+    {
+        $this->mandate_identification = $mandateIdentification;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMandateIdentification()
+    {
+        return $this->mandate_identification;
+    }
+
+    /**
+     * @param string $creditorIdentifier
+     */
+    public function setCreditorIdentifier($creditorIdentifier)
+    {
+        $this->creditor_identifier = $creditorIdentifier;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCreditorIdentifier()
+    {
+        return $this->creditor_identifier;
+    }
+
+    /**
+     * @param int $clearingDate
+     */
+    public function setClearingDate($clearingDate)
+    {
+        $this->clearing_date = $clearingDate;
+    }
+
+    /**
+     * @return int
+     */
+    public function getClearingDate()
+    {
+        return $this->clearing_date;
+    }
+
+    /**
+     * @param int $clearingAmount
+     */
+    public function setClearingAmount($clearingAmount)
+    {
+        $this->clearing_amount = $clearingAmount;
+    }
+
+    /**
+     * @return int
+     */
+    public function getClearingAmount()
+    {
+        return $this->clearing_amount;
     }
 }

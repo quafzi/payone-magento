@@ -28,16 +28,25 @@
             <action method="addJs"><script>payone/core/creditcard.js</script></action>
             <action method="addJs"><script>payone/core/financing.js</script></action>
             <action method="addJs"><script>payone/core/onlinebanktransfer.js</script></action>
+            <action method="addJs"><script>payone/core/safe_invoice.js</script></action>
             <action method="addJs"><script>payone/core/wallet.js</script></action>
+            <action method="addJs"><script>payone/core/debitpayment.js</script></action>
+            <action method="addJs"><script>payone/core/sepa_input.js</script></action>
+            <action method="addJs"><script>payone/core/sepa_validation.js</script></action>
+            <action method="addJs"><script>payone/core/klarna.js</script></action>
             <action method="addJs" ifconfig="payone_protect/general/enabled">
                 <script>payone/core/addresscheck.js</script>
             </action>
+            <action method="addCss"><name>payone/core/mandate.css</name></action>
         </reference>
 
         <reference name="head">
             <block type="core/template" name="payone_core_clientapi" template="payone/core/client_api.phtml" />
             <block type="core/template" name="payone_core_protect" template="payone/core/checkout/protect.phtml" />
             <block type="core/template" name="payone_core_payment" template="payone/core/checkout/onepage/init.phtml" />
+            <!-- add Klarna external JS: -->
+            <block type="core/template" name="payone_core_klarna_scripts"
+                   template="payone/core/payment/method/form/safe_invoice/klarna/scripts.phtml" />
         </reference>
 
         <reference name="checkout.payment.methods">
@@ -48,4 +57,20 @@
             </block>
         </reference>
     </checkout_onepage_index>
+
+    <checkout_onepage_review>
+        <reference name="checkout.onepage.review.info.items.after">
+            <block type="payone_core/checkout_onepage_review_sepaMandate"
+                   template="payone/core/checkout/onepage/review/sepamandate.phtml"
+                   name="payone_core_checkout_onepage_review_sepamandate" />
+        </reference>
+    </checkout_onepage_review>
+
+    <checkout_onepage_success>
+        <reference name="content">
+            <block type="payone_core/checkout_onepage_success_sepaMandatePdfLink"
+                   template="payone/core/checkout/onepage/success/sepamandatepdflink.phtml"
+                   after="checkout.success" />
+        </reference>
+    </checkout_onepage_success>
 </layout>

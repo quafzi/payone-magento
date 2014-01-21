@@ -42,6 +42,8 @@ class Payone_Core_Model_System_Config_FinancingType extends Payone_Core_Model_Sy
         $types = $settings->getTypes();
         if(array_key_exists(Payone_Api_Enum_FinancingType::BSV, $types))
             unset($types[Payone_Api_Enum_FinancingType::BSV]); // BSV has a separate Payment method.
+        if(array_key_exists(Payone_Api_Enum_FinancingType::KLV, $types))
+            unset($types[Payone_Api_Enum_FinancingType::KLV]); // KLV has a separate Payment method.
         return $types;
     }
 }

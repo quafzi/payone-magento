@@ -43,21 +43,19 @@ class Payone_Core_Model_Handler_Verification_Creditrating
      * Handle Creditrating by Payone API response:
      *
      * @param Payone_Api_Response_Interface $response
-     * @return array|bool will return true if all methods are available
+     * @return string|bool will return true if all methods are available
      * @throws Exception|Mage_Payment_Exception
      */
     public function handle(Payone_Api_Response_Interface $response)
     {
         $address = $this->getAddress();
-        $scoreAddressCheck = $address->getPayoneAddresscheckScore();
 
-        $allowedMethods = array();
+        $creditRatingScore = array();
         if ($response instanceof Payone_Api_Response_Consumerscore_Valid) {
             /** @var $response Payone_Api_Response_Consumerscore_Valid */
-            $scoreProtect = $this->getProtectScore($scoreAddressCheck, $response->getScore());
+            $creditRatingScore = $response->getScore();
 
-            $allowedMethods = $this->handleProtectScore($scoreProtect);
-
+            $address->setPayoneProtectScore($creditRatingScore);
             $address->setPayoneProtectDate(now());
             $address->setPayoneProtectHash($this->helper()->createAddressHash($address));
 
@@ -65,8 +63,9 @@ class Payone_Core_Model_Handler_Verification_Creditrating
         }
         elseif ($response instanceof Payone_Api_Response_Consumerscore_Invalid) {
             /** @var $response Payone_Api_Response_Consumerscore_Invalid*/
-            $allowedMethods = $this->handleProtectScore(Payone_Api_Enum_ConsumerscoreScore::RED);
+            $creditRatingScore = Payone_Api_Enum_ConsumerscoreScore::RED;
 
+            $address->setPayoneProtectScore($creditRatingScore);
             $address->setPayoneProtectDate(now());
             $address->setPayoneProtectHash($this->helper()->createAddressHash($address));
 
@@ -75,9 +74,11 @@ class Payone_Core_Model_Handler_Verification_Creditrating
         elseif ($response instanceof Payone_Api_Response_Error) {
             /** @var $response Payone_Api_Response_Error */
 
-            $allowedMethods = $this->handleError(null, $response);
+            $creditRatingScore = $this->handleError(null, $response);
         }
-        return $allowedMethods;
+        //address shoult be saved to prevent to much creditratings
+        $address->save();
+        return $creditRatingScore;
     }
 
     /**
@@ -134,65 +135,6 @@ class Payone_Core_Model_Handler_Verification_Creditrating
         $helperEmail->setStoreId($this->getConfigStore()->getStoreId());
         $helperEmail->sendEmailError($errorName, $errorMessage, $stackTrace, $additionalInfo);
         return true;
-    }
-
-
-    /**
-     * Handle Creditrating by Protect score (G)reen, (Y)ellow, (R)ed
-     *
-     * @param $scoreProtect
-     * @return array|bool will return true if all methods are available
-     */
-    public function handleProtectScore($scoreProtect)
-    {
-
-        $config = $this->getConfig();
-        $address = $this->getAddress();
-        $configuredMethods = array();
-        $allowedMethods = array();
-
-        if ($scoreProtect === Payone_Api_Enum_AddressCheckScore::RED) {
-            $configuredMethods = $config->getAllowPaymentMethodsRed();
-        }
-        elseif ($scoreProtect === Payone_Api_Enum_AddressCheckScore::YELLOW) {
-            $configuredMethods = $config->getAllowPaymentMethodsYellow();
-        }
-        elseif ($scoreProtect === Payone_Api_Enum_AddressCheckScore::GREEN) {
-            $configuredMethods = true;
-        }
-
-        $address->setPayoneProtectScore($scoreProtect);
-
-        if ($configuredMethods === true) {
-            return true;
-        }
-
-        foreach ($configuredMethods as $value) {
-            $allowedMethods[$value] = 1;
-        }
-
-        return $allowedMethods;
-    }
-
-    /**
-     * Compares addresscheck score and creditrating score, determine total score (worst result)
-     *
-     * @param $scoreAddressCheck
-     * @param $scoreCreditratingCheck
-     */
-    protected function getProtectScore($scoreAddressCheck, $scoreCreditratingCheck)
-    {
-        switch ($scoreAddressCheck) {
-            case Payone_Api_Enum_AddressCheckScore::YELLOW :
-                if ($scoreCreditratingCheck === Payone_Api_Enum_AddressCheckScore::GREEN) {
-                    return $scoreAddressCheck;
-                }
-                break;
-            case Payone_Api_Enum_AddressCheckScore::RED :
-                return $scoreAddressCheck; // score1 is worst or equal to score2.
-                break;
-        }
-        return $scoreCreditratingCheck;
     }
 
     /**

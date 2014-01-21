@@ -23,14 +23,13 @@
 ?>
 <?php
 $code = $this->getMethodCode();
-$country = $this->getCountry();
-if ($country == 'AT'): ?>
-<li id="bank_group_wrap" style="display: none;">
+?>
+<li id="bank_group_wrap_at" style="display: none;">
     <div class="input-box">
-        <label for="<?php echo $code ?>_bank_group">
+        <label for="<?php echo $code ?>_bank_group_at">
             <?php echo $this->__('Bank group') ?>&nbsp;<span class="required">*</span>
-        </label><br/>
-        <select name="payment[payone_bank_group]" id="<?php echo $code ?>_bank_group">
+        </label><br class="clear"/>
+        <select name="payment[payone_bank_group]" id="<?php echo $code ?>_bank_group_at">
             <option value="ARZ_OVB">Commercial credit cooperatives (Volksbank)</option>
             <option value="ARZ_BAF">Bank for doctors and independent professions</option>
             <option value="ARZ_NLH">Hypo state bank Lower Austria</option>
@@ -57,13 +56,11 @@ if ($country == 'AT'): ?>
         </select>
     </div>
 </li>
-<?php endif; ?>
-<?php if ($country == 'NL'): ?>
-<li id="bank_group_wrap_nl" style="display: block;">
+<li id="bank_group_wrap_nl" style="display: none;">
     <div class="input-box">
-        <label for="<?php echo $code ?>_bank_group"><?php echo $this->__('Bank group') ?> <span
-                class="required">*</span></label><br/>
-        <select name="payment[payone_bank_group]" id="<?php echo $code ?>_bank_group">
+        <label for="<?php echo $code ?>_bank_group_nl"><?php echo $this->__('Bank group') ?> <span
+                    class="required">*</span></label><br class="clear"/>
+        <select name="payment[payone_bank_group]" id="<?php echo $code ?>_bank_group_nl">
             <option value="ABN_AMRO_BANK">ABN AMRO</option>
             <option value="FORTIS_BANK">Fortis</option>
             <option value="FRIESLAND_BANK">Friesland Bank</option>
@@ -76,4 +73,3 @@ if ($country == 'AT'): ?>
         </select>
     </div>
 </li>
-<?php endif; ?>

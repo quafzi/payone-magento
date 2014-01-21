@@ -52,38 +52,21 @@ class Payone_Core_Block_Payment_Method_Form_OnlineBankTransfer
     }
 
     /**
+     * Returns currency
+     * @return string
+     */
+    public function getCurrency()
+    {
+        $quote = $this->getQuote();
+        return $quote->getQuoteCurrencyCode();
+    }
+
+    /**
      * @return array
      */
     protected function getSystemConfigMethodTypes()
     {
         return $this->getFactory()->getModelSystemConfigOnlinebanktransferType()->toSelectArray();
-    }
-
-    /**
-     * @return bool
-     */
-    public function isAvailableAccountNumber()
-    {
-        $country = $this->getCountry();
-        return $country == 'DE' || $country == 'AT' || $country == 'NL';
-    }
-
-    /**
-     * @return bool
-     */
-    public function isAvailableBankCode()
-    {
-        $country = $this->getCountry();
-        return $country == 'DE' || $country == 'AT';
-    }
-
-    /**
-     * @return bool
-     */
-    public function isAvailableBankGroup()
-    {
-        $country = $this->getCountry();
-        return $country == 'AT' || $country == 'NL';
     }
 
     public function getBlockHtmlBankGroup()
@@ -92,7 +75,6 @@ class Payone_Core_Block_Payment_Method_Form_OnlineBankTransfer
         $block = $this->getLayout()->createBlock('core/template');
         $block->setTemplate('payone/core/payment/method/form/onlinebanktransfer/bankgroup.phtml');
         $block->setMethodCode($this->getMethodCode());
-        $block->setCountry($this->getCountry());
         $html = $block->toHtml();
         return $html;
     }

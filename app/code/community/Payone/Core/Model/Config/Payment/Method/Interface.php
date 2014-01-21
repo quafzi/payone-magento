@@ -53,6 +53,16 @@ interface Payone_Core_Model_Config_Payment_Method_Interface
     public function isBankAccountCheckEnabled();
 
     /**
+     * @return bool
+     */
+    public function isSepaMandateEnabled();
+
+    /**
+     * @return bool
+     */
+    public function isSepaDeShowBankDataEnabled();
+
+    /**
      * @param string $country
      * @return bool
      */
@@ -119,6 +129,46 @@ interface Payone_Core_Model_Config_Payment_Method_Interface
      * @return string
      */
     public function getMessageResponseBlocked();
+
+    /**
+     * @param array $sepaCountry
+     */
+    public function setSepaCountry($sepaCountry);
+
+    /**
+     * @return array
+     */
+    public function getSepaCountry();
+
+    /**
+     * @param int $sepaDeShowBankData
+     */
+    public function setSepaDeShowBankData($sepaDeShowBankData);
+
+    /**
+     * @return int
+     */
+    public function getSepaDeShowBankData();
+
+    /**
+     * @param int $sepaMandateEnabled
+     */
+    public function setSepaMandateEnabled($sepaMandateEnabled);
+
+    /**
+     * @return int
+     */
+    public function getSepaMandateEnabled();
+
+    /**
+     * @param int $sepaMandateDownloadEnabled
+     */
+    public function setSepaMandateDownloadEnabled($sepaMandateDownloadEnabled);
+
+    /**
+     * @return int
+     */
+    public function getSepaMandateDownloadEnabled();
 
     /**
      * @param int $check_cvc
@@ -212,6 +262,16 @@ interface Payone_Core_Model_Config_Payment_Method_Interface
      * @return string
      */
     public function getKey();
+
+    /**
+     * @param array $klarna_config
+     */
+    public function setKlarnaConfig($klarna_config);
+
+    /**
+     * @return array
+     */
+    public function getKlarnaConfig();
 
     /**
      * @param int $mid

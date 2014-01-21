@@ -39,7 +39,7 @@ class Payone_Settings_Data_ConfigFile_PaymentMethod_Financing
 
     /** @var string */
     protected $financingType = '';
-
+    protected $klarna_config = array();
 
     /**
      * @return string
@@ -73,4 +73,27 @@ class Payone_Settings_Data_ConfigFile_PaymentMethod_Financing
         return $this->financingType;
     }
 
+    /**
+     * @param array $klarna_config
+     */
+    public function setKlarnaConfig($klarna_config)
+    {
+        $this->klarna_config = $klarna_config;
+    }
+
+    /**
+     * @return array
+     */
+    public function getKlarnaConfig()
+    {
+        return $this->klarna_config;
+    }
+
+    /**
+     * @param $value
+     */
+    public function addKlarnaConfig($value)
+    {
+        $this->klarna_config[] = $value;
+    }
 }

@@ -33,5 +33,64 @@
 class Payone_Api_Response_Authorization_Approved
     extends Payone_Api_Response_Authorization_Abstract
 {
+    /**
+     * @var string
+     */
+    protected $creditor_identifier = NULL;
+    /**
+     * @var int
+     */
+    protected $clearing_date = NULL;
+    /**
+     * @var int
+     */
+    protected $clearing_amount = NULL;
 
+    /**
+     * @param string $creditorIdentifier
+     */
+    public function setCreditorIdentifier($creditorIdentifier)
+    {
+        $this->creditor_identifier = $creditorIdentifier;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCreditorIdentifier()
+    {
+        return $this->creditor_identifier;
+    }
+
+    /**
+     * @param int $clearingDate
+     */
+    public function setClearingDate($clearingDate)
+    {
+        $this->clearing_date = $clearingDate;
+    }
+
+    /**
+     * @return int
+     */
+    public function getClearingDate()
+    {
+        return $this->clearing_date;
+    }
+
+    /**
+     * @param int $clearingAmount
+     */
+    public function setClearingAmount($clearingAmount)
+    {
+        $this->clearing_amount = $clearingAmount;
+    }
+
+    /**
+     * @return int
+     */
+    public function getClearingAmount()
+    {
+        return $this->clearing_amount;
+    }
 }

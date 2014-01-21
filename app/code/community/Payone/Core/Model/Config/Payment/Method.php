@@ -117,6 +117,11 @@ class Payone_Core_Model_Config_Payment_Method
      */
     protected $types = array();
     /**
+     * @var array
+     */
+    protected $klarna_config = array();
+
+    /**
      * @var int
      */
     protected $check_cvc = 0;
@@ -130,6 +135,23 @@ class Payone_Core_Model_Config_Payment_Method
 
     /** @var string */
     protected $message_response_blocked = '';
+
+    /**
+     * @var array
+     */
+    protected $sepa_country = array();
+    /**
+     * @var int
+     */
+    protected $sepa_de_show_bank_data = 0;
+    /**
+     * @var int
+     */
+    protected $sepa_mandate_enabled = 1;
+    /**
+     * @var int
+     */
+    protected $sepa_mandate_download_enabled = 1;
 
     /**
      * @var int
@@ -427,6 +449,22 @@ class Payone_Core_Model_Config_Payment_Method
     }
 
     /**
+     * @param array $klarna_config
+     */
+    public function setKlarnaConfig($klarna_config)
+    {
+        $this->klarna_config = $klarna_config;
+    }
+
+    /**
+     * @return array
+     */
+    public function getKlarnaConfig()
+    {
+        return $this->klarna_config;
+    }
+
+    /**
      * @param int $mid
      */
     public function setMid($mid)
@@ -710,6 +748,70 @@ class Payone_Core_Model_Config_Payment_Method
     }
 
     /**
+     * @param array $sepaCountry
+     */
+    public function setSepaCountry($sepaCountry)
+    {
+        $this->sepa_country = $sepaCountry;
+    }
+
+    /**
+     * @return array
+     */
+    public function getSepaCountry()
+    {
+        return $this->sepa_country;
+    }
+
+    /**
+     * @param int $sepaDeShowBankData
+     */
+    public function setSepaDeShowBankData($sepaDeShowBankData)
+    {
+        $this->sepa_de_show_bank_data = $sepaDeShowBankData;
+    }
+
+    /**
+     * @return int
+     */
+    public function getSepaDeShowBankData()
+    {
+        return $this->sepa_de_show_bank_data;
+    }
+
+    /**
+     * @param int $sepaMandateEnabled
+     */
+    public function setSepaMandateEnabled($sepaMandateEnabled)
+    {
+        $this->sepa_mandate_enabled = $sepaMandateEnabled;
+    }
+
+    /**
+     * @return int
+     */
+    public function getSepaMandateEnabled()
+    {
+        return $this->sepa_mandate_enabled;
+    }
+
+    /**
+     * @param int $sepaMandateDownloadEnabled
+     */
+    public function setSepaMandateDownloadEnabled($sepaMandateDownloadEnabled)
+    {
+        $this->sepa_mandate_download_enabled = $sepaMandateDownloadEnabled;
+    }
+
+    /**
+     * @return int
+     */
+    public function getSepaMandateDownloadEnabled()
+    {
+        return $this->sepa_mandate_download_enabled;
+    }
+
+    /**
      * @param string $bankaccountcheck_type
      */
     public function setBankAccountCheckType($bankaccountcheck_type)
@@ -731,6 +833,27 @@ class Payone_Core_Model_Config_Payment_Method
     public function isBankAccountCheckEnabled()
     {
         if ($this->getCheckBankAccount()) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isSepaMandateEnabled()
+    {
+        if ($this->getSepaMandateEnabled()) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isSepaDeShowBankDataEnabled() {
+        if ($this->getSepaDeShowBankData()) {
             return true;
         }
         return false;

@@ -33,6 +33,8 @@
 class Payone_Core_Model_Mapper_ApiRequest_Payment_Capture
     extends Payone_Core_Model_Mapper_ApiRequest_Payment_Abstract
 {
+    const EVENT_TYPE = 'capture';
+
     /** @var Mage_Sales_Model_Order_Invoice */
     protected $invoice = null;
 
@@ -70,6 +72,9 @@ class Payone_Core_Model_Mapper_ApiRequest_Payment_Capture
             }
         }
 
+        $this->dispatchEvent($this->getEventName(), array('request' => $request, 'invoice' => $this->getInvoice()));
+        $this->dispatchEvent($this->getEventPrefix() . '_all', array('request' => $request));
+
         return $request;
     }
 
@@ -104,8 +109,8 @@ class Payone_Core_Model_Mapper_ApiRequest_Payment_Capture
 
         // settleaccount possibilities depend on payment method:
         if ($paymentMethod instanceof Payone_Core_Model_Payment_Method_AdvancePayment
-        or $paymentMethod instanceof Payone_Core_Model_Payment_Method_OnlineBankTransfer)
-        {
+                or $paymentMethod instanceof Payone_Core_Model_Payment_Method_OnlineBankTransfer
+        ) {
             $payment = $paymentMethod->getInfoInstance();
             // Advancepayment and OnlineBankTransfer use NO/AUTO
             if ($this->isInvoiceLast() || $this->helperRegistry()->isPaymentCancelRegistered($payment)) {
@@ -117,13 +122,13 @@ class Payone_Core_Model_Mapper_ApiRequest_Payment_Capture
                 $business->setSettleaccount(Payone_Api_Enum_Settleaccount::NO);
             }
         }
-        elseif ($paymentMethod instanceof Payone_Core_Model_Payment_Method_SafeInvoice)
-        {
+        elseif ($paymentMethod instanceof Payone_Core_Model_Payment_Method_SafeInvoice
+                and $paymentMethod->getInfoInstance()->getPayoneSafeInvoiceType() == Payone_Api_Enum_FinancingType::BSV
+        ) {
             // BillSAFE always settles account:
             $business->setSettleaccount(Payone_Api_Enum_Settleaccount::YES);
         }
-        else
-        {
+        else {
             // all other can always use AUTO, regardless of complete or partial capture
             $business->setSettleaccount(Payone_Api_Enum_Settleaccount::AUTO);
         }
@@ -198,10 +203,10 @@ class Payone_Core_Model_Mapper_ApiRequest_Payment_Capture
         // Capture mode:
         $payment = $this->getPaymentMethod()->getInfoInstance();
         if ($this->getPaymentMethod() instanceof Payone_Core_Model_Payment_Method_SafeInvoice
-        or $this->helperRegistry()->isPaymentCancelRegistered($payment)) {
+                or $this->helperRegistry()->isPaymentCancelRegistered($payment)
+        ) {
             $invoicing->setCapturemode($this->mapCaptureMode());
         }
-
 
 
         return $invoicing;
@@ -265,5 +270,11 @@ class Payone_Core_Model_Mapper_ApiRequest_Payment_Capture
         $this->invoice = $invoice;
     }
 
-
+    /**
+     * @return string
+     */
+    public function getEventType()
+    {
+        return self::EVENT_TYPE;
+    }
 }

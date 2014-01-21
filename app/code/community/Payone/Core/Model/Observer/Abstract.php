@@ -44,6 +44,8 @@ abstract class Payone_Core_Model_Observer_Abstract
     
     /** @var Payone_Core_Helper_Config */
     protected $helperConfig = null;
+    /** @var Payone_Core_Helper_Score */
+    protected $helperScore = null;
 
     /**
      *
@@ -98,5 +100,16 @@ abstract class Payone_Core_Model_Observer_Abstract
             $this->helperConfig = $this->getFactory()->helperConfig();
         }
         return $this->helperConfig;
+    }
+
+    /**
+     * @return Payone_Core_Helper_Score
+     */
+    protected function helperScore()
+    {
+        if ($this->helperScore === null) {
+            $this->helperScore = $this->getFactory()->helperScore();
+        }
+        return $this->helperScore;
     }
 }

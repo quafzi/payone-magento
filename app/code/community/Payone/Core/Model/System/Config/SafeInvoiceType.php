@@ -37,7 +37,10 @@ class Payone_Core_Model_System_Config_SafeInvoiceType extends Payone_Core_Model_
      */
     public function toArray()
     {
-        $types = array(Payone_Api_Enum_FinancingType::BSV => Payone_Api_Enum_FinancingType::BSV);
+        $types = array(
+            Payone_Api_Enum_FinancingType::BSV => Payone_Api_Enum_FinancingType::BSV,
+            Payone_Api_Enum_FinancingType::KLV => Payone_Api_Enum_FinancingType::KLV,
+        );
 
         return $types;
     }

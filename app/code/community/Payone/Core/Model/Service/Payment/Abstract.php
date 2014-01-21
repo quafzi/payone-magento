@@ -85,7 +85,7 @@ abstract class Payone_Core_Model_Service_Payment_Abstract
 
         if ($response instanceof Payone_Api_Response_Error) {
             /** @var $response Payone_Api_Response_Error */
-            $this->throwMageException('There has been an error processing your payment');
+            $this->throwMageException($this->helper()->__('There has been an error processing your payment'));
         }
 
         return $response;

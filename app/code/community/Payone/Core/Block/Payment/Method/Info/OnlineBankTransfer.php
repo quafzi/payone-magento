@@ -65,4 +65,20 @@ class Payone_Core_Block_Payment_Method_Info_OnlineBankTransfer
     {
         return $this->getInfo()->getPayoneBankCode();
     }
+
+    /**
+     * @return string
+     */
+    public function getPayoneSepaIban()
+    {
+        return $this->getInfo()->getPayoneSepaIban();
+    }
+
+    /**
+     * @return string
+     */
+    public function getPayoneSepaBic()
+    {
+        return $this->getInfo()->getPayoneSepaBic();
+    }
 }

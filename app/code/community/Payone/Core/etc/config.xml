@@ -24,7 +24,7 @@
 <config>
     <modules>
         <Payone_Core>
-            <version>3.1.5</version>
+            <version>3.1.8</version>
         </Payone_Core>
     </modules>
 
@@ -177,6 +177,14 @@
                     <!-- Bank Account Code for: OnlineBankTransfer, DebitPayment -->
                     <to_order_payment>*</to_order_payment>
                 </payone_bank_code>
+                <payone_sepa_iban>
+                    <!-- Online Bank Transfer, DebitPayment: SEPA IBAN -->
+                    <to_order_payment>*</to_order_payment>
+                </payone_sepa_iban>
+                <payone_sepa_bic>
+                    <!-- Online Bank Transfer, DebitPayment: SEPA BIC -->
+                    <to_order_payment>*</to_order_payment>
+                </payone_sepa_bic>
                 <payone_bank_group>
                     <!-- Online Bank Transfer: Bank Group -->
                     <to_order_payment>*</to_order_payment>
@@ -185,6 +193,30 @@
                     <!-- Creditcard: Pseudo Card PAN-->
                     <to_order_payment>*</to_order_payment>
                 </payone_pseudocardpan>
+                <payone_customer_dob>
+                    <!-- Safe Invoice Klarna: Customer Date Of Birth -->
+                    <to_order_payment>*</to_order_payment>
+                </payone_customer_dob>
+                <payone_customer_gender>
+                    <!-- Safe Invoice Klarna: Customer Gender -->
+                    <to_order_payment>*</to_order_payment>
+                </payone_customer_gender>
+                <payone_customer_personalid>
+                    <!-- Safe Invoice Klarna: Customer Personalid -->
+                    <to_order_payment>*</to_order_payment>
+                </payone_customer_personalid>
+                <payone_billing_addressaddition>
+                    <!-- Safe Invoice Klarna: Billing Address Addition -->
+                    <to_order_payment>*</to_order_payment>
+                </payone_billing_addressaddition>
+                <payone_shipping_addressaddition>
+                    <!-- Safe Invoice Klarna: Shipping Address Addition -->
+                    <to_order_payment>*</to_order_payment>
+                </payone_shipping_addressaddition>
+                <payone_customer_telephone>
+                    <!-- Safe Invoice Klarna: Customer Telephone -->
+                    <to_order_payment>*</to_order_payment>
+                </payone_customer_telephone>
             </sales_convert_quote_payment>
             <sales_convert_quote_address>
                 <payone_addresscheck_score>
@@ -270,6 +302,15 @@
                     </payone_core_observer>
                 </observers>
             </payone_core_checkout_onepage_verify_payment>
+            <payone_core_checkout_onepage_debit_payment_checks>
+                <observers>
+                    <payone_core_observer>
+                        <type>singleton</type>
+                        <class>payone_core/observer_checkout_onepage_debitPayment</class>
+                        <method>performChecks</method>
+                    </payone_core_observer>
+                </observers>
+            </payone_core_checkout_onepage_debit_payment_checks>
             <sales_order_resource_init_virtual_grid_columns>
                 <observers>
                     <payone_core_observer>
@@ -507,6 +548,9 @@
             <template_debit_payment>
                 <use_global>1</use_global>
                 <check_bankaccount>0</check_bankaccount>
+                <sepa_de_show_bank_data>0</sepa_de_show_bank_data>
+                <sepa_mandate_enabled>1</sepa_mandate_enabled>
+                <sepa_mandate_download_enabled>1</sepa_mandate_download_enabled>
             </template_debit_payment>
             <template_online_bank_transfer>
                 <use_global>1</use_global>

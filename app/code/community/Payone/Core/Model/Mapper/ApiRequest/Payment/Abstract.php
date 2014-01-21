@@ -41,6 +41,8 @@ abstract class Payone_Core_Model_Mapper_ApiRequest_Payment_Abstract
     const DEFAULT_DISCOUNT_SKU = 'Discount';
     const DEFAULT_TAX_SKU = 'Tax';
 
+    const EVENT_PREFIX = 'payone_core_mapper_apirequest_payment';
+
     /** @var float */
     protected $amount = 0.00;
 
@@ -55,6 +57,11 @@ abstract class Payone_Core_Model_Mapper_ApiRequest_Payment_Abstract
 
     /** @var Payone_Core_Model_Config_Misc */
     protected $configMisc = null;
+
+    /**
+     * @return string
+     */
+    abstract public function getEventType();
 
     /**
      * @param Mage_Sales_Model_Order_Payment $payment
@@ -505,5 +512,31 @@ abstract class Payone_Core_Model_Mapper_ApiRequest_Payment_Abstract
     protected function helperRegistry()
     {
         return $this->getFactory()->helperRegistry();
+    }
+
+    protected function getEventPrefix()
+    {
+        return self::EVENT_PREFIX;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getEventName()
+    {
+        return $this->getEventPrefix() . '_' . $this->getEventType();
+    }
+
+    /**
+     * Wrapper for Mage::dispatchEvent()
+     *
+     * @param $name
+     * @param array $data
+     *
+     * @return Mage_Core_Model_App
+     */
+    protected function dispatchEvent($name, array $data = array())
+    {
+        return Mage::dispatchEvent($name, $data);
     }
 }

@@ -56,4 +56,32 @@ class Payone_Core_Block_Payment_Method_Form_DebitPayment
         $quote = $this->getQuote();
         return $quote->getBillingAddress()->getCountry();
     }
+
+    /**
+     * Return list of selected SEPA countries for debit payment
+     *
+     * @return array
+     */
+    public function getSelectedSepaCountries()
+    {
+        $paymentConfig = $this->getPaymentConfig();
+        $selectedCountryCodes = $paymentConfig->getSepaCountry();
+
+        if (!$selectedCountryCodes) {
+            return array();
+        }
+
+        /** @var Mage_Directory_Model_Resource_Country_Collection $countryCollection */
+        $countryCollection = Mage::getResourceModel('directory/country_collection');
+        $allCountries = $countryCollection->loadData()->toOptionArray(false);
+
+        $resultArr = array();
+        foreach ($allCountries as $country) {
+            if (in_array($country['value'], $selectedCountryCodes)) {
+                $resultArr[$country['value']] = $country['label'];
+            }
+        }
+
+        return $resultArr;
+    }
 }
