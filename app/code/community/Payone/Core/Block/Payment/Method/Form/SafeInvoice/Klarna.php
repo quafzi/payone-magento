@@ -126,11 +126,7 @@ class Payone_Core_Block_Payment_Method_Form_SafeInvoice_Klarna
      */
     public function isDobRequired()
     {
-        // required only for Austria (AT), Germany (DE) and Netherlands (NL)
-        $country = $this->getCountry();
-        if ($country != 'AT' and $country != 'DE' and $country != 'NL') {
-            return false;
-        }
+        // required for all countries
         // required only if customer didn't enter Dob in previous checkout step
         $customerDob = $this->getQuote()->getCustomerDob();
         if (empty($customerDob)) {

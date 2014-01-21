@@ -224,6 +224,13 @@ abstract class Payone_Core_Model_Mapper_ApiRequest_Payment_Authorize_Abstract
         }
         $personalData->setTelephonenumber($telephone);
 
+        // birthday mandatory
+        $birthdayDate = $info->getPayoneCustomerDob();
+        if (empty($birthdayDate)) {
+            $birthdayDate = $order->getCustomerDob();
+        }
+        $personalData->setBirthday($this->formatBirthday($birthdayDate));
+
         // IP Address is mandatory in case of "Klarna", even if not configured
         if ($personalData->getIp() == null) {
             $personalData->setIp($this->getCustomerIp());
@@ -254,12 +261,6 @@ abstract class Payone_Core_Model_Mapper_ApiRequest_Payment_Authorize_Abstract
             elseif ($genderLabel == 'Male') {
                 $personalData->setGender(Payone_Api_Enum_Gender::MALE);
             }
-            // birthday
-            $birthdayDate = $info->getPayoneCustomerDob();
-            if (empty($birthdayDate)) {
-                $birthdayDate = $order->getCustomerDob();
-            }
-            $personalData->setBirthday($this->formatBirthday($birthdayDate));
         }
 
         // personalid mandatory for Denmark (DK), Finland (FI), Norway (NO) and Sweden (SE)
@@ -448,7 +449,8 @@ abstract class Payone_Core_Model_Mapper_ApiRequest_Payment_Authorize_Abstract
                     if (!empty($iban) and !empty($bic)) {
                         $payment->setIban(strtoupper($iban));
                         $payment->setBic(strtoupper($bic)); // ensure bic and iban are sent uppercase
-                    } else {
+                    }
+                    else {
                         $payment->setBankaccount($info->getPayoneAccountNumber());
                         $payment->setBankcode($info->getPayoneBankCode());
                     }
@@ -498,7 +500,8 @@ abstract class Payone_Core_Model_Mapper_ApiRequest_Payment_Authorize_Abstract
             if (!empty($iban) and !empty($bic)) {
                 $payment->setIban(strtoupper($iban));
                 $payment->setBic(strtoupper($bic)); // ensure bic and iban are sent uppercase
-            } else {
+            }
+            else {
                 $payment->setBankaccount($info->getPayoneAccountNumber());
                 $payment->setBankcode($info->getPayoneBankCode());
             }
@@ -509,7 +512,8 @@ abstract class Payone_Core_Model_Mapper_ApiRequest_Payment_Authorize_Abstract
                 $mandateStatus = $checkoutSession->getPayoneSepaMandateStatus();
                 $mandateIdentification = $checkoutSession->getPayoneSepaMandateIdentification();
                 if ($mandateStatus == Payone_Core_Model_Service_Management_ManageMandate::STATUS_PENDING
-                    and !empty($mandateIdentification)) {
+                        and !empty($mandateIdentification)
+                ) {
                     $payment->setMandateIdentification($mandateIdentification);
                 }
             }
