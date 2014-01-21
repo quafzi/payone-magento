@@ -202,6 +202,19 @@ PAYONE.Handler.CreditCardCheck.OnepageCheckout = function () {
 
         checkout.setLoadWaiting('payment', false);
 
+		$('payone_creditcard_cc_number').removeClassName('validate-cc-number');
+		$('payone_creditcard_cc_number').removeClassName('validate-payone-cc-type');
+		$('payone_creditcard_cc_cid').removeClassName('required-entry');
+
+
+		$$('#co-payment-form input, #co-payment-form select').invoke('observe', 'change', function(event) {
+			$('payone_creditcard_cc_number').addClassName('validate-cc-number');
+			$('payone_creditcard_cc_number').addClassName('validate-payone-cc-type');
+			$('payone_creditcard_cc_cid').addClassName('required-entry');
+		});
+		
+		
+
         // Post payment form to Magento:
         var request = new Ajax.Request(
             payment.saveUrl,
@@ -215,6 +228,9 @@ PAYONE.Handler.CreditCardCheck.OnepageCheckout = function () {
         );
     };
 };
+
+
+
 
 PAYONE.Handler.CreditCardCheck.Admin = function () {
     this.origMethod = '';
