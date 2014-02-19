@@ -198,6 +198,7 @@ PAYONE.Handler.CreditCardCheck.OnepageCheckout = function () {
         cid = $('payone_creditcard_cc_cid');
         if (cid != undefined) {
             $('payone_creditcard_cc_cid').setValue('')
+			$('payone_creditcard_cc_cid').removeClassName('required-entry');
         }
 
         checkout.setLoadWaiting('payment', false);
@@ -205,12 +206,13 @@ PAYONE.Handler.CreditCardCheck.OnepageCheckout = function () {
 		// toggle validation classes
 		$('payone_creditcard_cc_number').removeClassName('validate-cc-number');
 		$('payone_creditcard_cc_number').removeClassName('validate-payone-cc-type');
-		$('payone_creditcard_cc_cid').removeClassName('required-entry');
 
 		$$('#co-payment-form input, #co-payment-form select').invoke('observe', 'change', function(e) {
 			$('payone_creditcard_cc_number').addClassName('validate-cc-number');
 			$('payone_creditcard_cc_number').addClassName('validate-payone-cc-type');
-			$('payone_creditcard_cc_cid').addClassName('required-entry');
+			if(cid != undefined){
+				$('payone_creditcard_cc_cid').addClassName('required-entry');
+			}
 		});
 		
 		
