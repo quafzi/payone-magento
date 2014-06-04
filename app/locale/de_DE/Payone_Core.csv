@@ -335,7 +335,7 @@
 "Account holder: %s","Kontoinhaber: %s"
 "Account number: xxx%s","Kontonummer: xxx%s"
 "Bank code: %s","Bankleitzahl: %s"
-"or enter your bank account data (only for German accounts):","oder bezahlen Sie wie gewohnt mit Ihren bakannten Kontodaten (nur für Deutsche Kontoverbindungen):"
+"or enter your bank account data (only for German accounts):","oder bezahlen Sie wie gewohnt mit Ihren bekannten Kontodaten (nur für deutsche Kontoverbindungen):"
 
 "Bank code must contain 8 digits","Bankleitzahl muss 8 Ziffern enthalten"
 "IBAN should contain only letters and digits","IBAN sollte nur Buchstaben und Ziffern enthalten"
