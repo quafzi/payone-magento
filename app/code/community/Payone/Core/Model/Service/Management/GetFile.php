@@ -52,8 +52,8 @@ class Payone_Core_Model_Service_Management_GetFile
         if (!$response instanceof Payone_Api_Response_Management_GetFile) {
             return false;
         }
-        // content of pdf file is saved in rawresponse
-        return $response->getRawResponse();
+        // return the content of the file:
+        return $response->getResponse();
     }
 
     /**
