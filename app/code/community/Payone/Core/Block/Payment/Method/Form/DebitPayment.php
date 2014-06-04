@@ -67,6 +67,10 @@ class Payone_Core_Block_Payment_Method_Form_DebitPayment
         $paymentConfig = $this->getPaymentConfig();
         $selectedCountryCodes = $paymentConfig->getSepaCountry();
 
+        if (!$selectedCountryCodes) {
+            return array();
+        }
+
         /** @var Mage_Directory_Model_Resource_Country_Collection $countryCollection */
         $countryCollection = Mage::getResourceModel('directory/country_collection');
         $allCountries = $countryCollection->loadData()->toOptionArray(false);
