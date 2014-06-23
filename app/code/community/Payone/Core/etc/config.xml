@@ -424,18 +424,6 @@
         </events>
     </global>
 
-    <admin>
-        <routers>
-            <payone_core>
-                <use>admin</use>
-                <args>
-                    <module>Payone_Core</module>
-                    <frontName>payone_core</frontName>
-                </args>
-            </payone_core>
-        </routers>
-    </admin>
-
     <adminhtml>
         <layout>
             <updates>
