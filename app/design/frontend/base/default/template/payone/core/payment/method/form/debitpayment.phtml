@@ -79,7 +79,7 @@ $configShowBankData = $this->getPaymentConfig()->isSepaDeShowBankDataEnabled() ?
                        oninput="inputToUpperCase(this); blockPaymentMethodInputs('<?php echo $code ?>', <?php echo $configShowBankData; ?>);"/>
             </div>
         </li>
-        <?php if ($configShowBankData): ?>
+        <?php if ($this->getPaymentConfig()->isSepaDeShowBankDataEnabled()): ?>
         <li id="input_box_payone_account_number">
             <?php echo $this->__('or enter your bank account data (only for German accounts):'); ?>
             <div class="input-box">
