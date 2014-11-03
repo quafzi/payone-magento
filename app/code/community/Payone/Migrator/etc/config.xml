@@ -59,13 +59,13 @@
 
     <admin>
         <routers>
-            <payone_migrator>
-                <use>admin</use>
+            <adminhtml>
                 <args>
-                    <module>Payone_Migrator</module>
-                    <frontName>payone_migrator</frontName>
+                    <modules>
+                        <payone_migrator before="Mage_Adminhtml">Payone_Migrator_Adminhtml</payone_migrator>
+                    </modules>
                 </args>
-            </payone_migrator>
+            </adminhtml>
         </routers>
     </admin>
 
