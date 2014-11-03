@@ -39,6 +39,7 @@ class Payone_Core_Model_Mapper_ApiRequest_Verification_AddressCheck
 
     /**
      * @param Mage_Customer_Model_Address_Abstract $address
+     *
      * @return Payone_Api_Request_AddressCheck
      */
     public function mapFromAddress(Mage_Customer_Model_Address_Abstract $address)
@@ -52,6 +53,11 @@ class Payone_Core_Model_Mapper_ApiRequest_Verification_AddressCheck
         // @todo add option to configure used Adresschecktype externaly
         if ($address->getAddressType() === 'billing') {
             $request->setAddresschecktype($config->getCheckBilling());
+
+            // check if billing is used for shipping and shipping-address has to be checked
+            if ($address->getUseForShipping() === true and $config->mustCheckShipping()) {
+                $request->setAddresschecktype($config->getCheckShipping());
+            }
         }
         elseif ($address->getAddressType() === 'shipping') {
             $request->setAddresschecktype($config->getCheckShipping());

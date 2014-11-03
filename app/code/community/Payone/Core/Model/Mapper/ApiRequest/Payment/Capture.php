@@ -93,6 +93,7 @@ class Payone_Core_Model_Mapper_ApiRequest_Payment_Capture
         $request->setCurrency($order->getOrderCurrencyCode());
         $request->setAmount($this->getAmount());
         $request->setRequest(Payone_Api_Enum_RequestType::CAPTURE);
+        Mage::log('Capture', null, 'test.log', true);
     }
 
     /**

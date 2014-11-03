@@ -24,9 +24,11 @@
 /**
  * @var $this Mage_Core_Block_Template
  */
-$url = Mage::helper('payone_core/url')->getMagentoUrl('payone_core/checkout_onepage/verifyPayment');
+if (Mage::getStoreConfig('payone_protect/general/enabled') == 1)
+{
+    $url = Mage::helper('payone_core/url')->getMagentoUrl('payone_core/checkout_onepage/verifyPayment');
 
-?>
+    ?>
 <script type="text/javascript">
     //<![CDATA[
     Event.observe(window, 'load', function () {
@@ -34,3 +36,6 @@ $url = Mage::helper('payone_core/url')->getMagentoUrl('payone_core/checkout_onep
     });
     //]]>
 </script>
+<?php
+
+}

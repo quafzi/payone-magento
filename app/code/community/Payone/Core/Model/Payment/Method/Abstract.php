@@ -31,7 +31,7 @@
  * @link            http://www.noovias.com
  */
 abstract class Payone_Core_Model_Payment_Method_Abstract
-    extends Mage_Payment_Model_Method_Abstract
+        extends Mage_Payment_Model_Method_Abstract
 {
     protected $_code = 'payone_abstract';
 
@@ -74,18 +74,24 @@ abstract class Payone_Core_Model_Payment_Method_Abstract
         if ($this->getConfig() instanceof Payone_Core_Model_Config_Payment_Method_Interface) {
             return $this->getConfig()->getName();
         }
-        /** @var $session Mage_Checkout_Model_Session */
-        $session = Mage::getSingleton('checkout/session');
-        $quote = $session->getQuote();
-        if (is_null($quote)) {
-            $quote = $this->getInfoInstance()->getQuote();
+        try {
+            // order has higher priority than quote
+            $order = $this->getInfoInstance()->getOrder();
+            if ($order instanceof Mage_Sales_Model_Order and $order->hasData()) {
+                return $this->getConfigByOrder($order)->getName();
+            }
+            /** @var $session Mage_Checkout_Model_Session */
+            $session = Mage::getSingleton('checkout/session');
+            $quote = $session->getQuote();
+            if (!$quote instanceof Mage_Sales_Model_Quote or !$quote->getId()) {
+                $quote = $this->getInfoInstance()->getQuote();
+            }
+            if ($quote instanceof Mage_Sales_Model_Quote and $quote->getId()) {
+                return $this->getConfigForQuote($quote)->getName();
+            }
         }
-        if ($quote instanceof Mage_Sales_Model_Quote) {
-            return $this->getConfigForQuote($quote)->getName();
-        }
-        $order = $this->getInfoInstance()->getOrder();
-        if ($order instanceof Mage_Sales_Model_Order) {
-            return $this->getConfigByOrder($order)->getName();
+        catch (Payone_Core_Exception_PaymentMethodConfigNotFound $e) {
+            return parent::getTitle(); // if for some reason config was not found, use parent method
         }
         // call parent method if no config available
         return parent::getTitle();
@@ -162,8 +168,9 @@ abstract class Payone_Core_Model_Payment_Method_Abstract
         }
 
         if ($this->getCode() == Payone_Core_Model_System_Config_PaymentMethodCode::CREDITCARD
-            or $this->getCode() == Payone_Core_Model_System_Config_PaymentMethodCode::SAFEINVOICE
-            or $this->getCode() == Payone_Core_Model_System_Config_PaymentMethodCode::FINANCING) {
+                or $this->getCode() == Payone_Core_Model_System_Config_PaymentMethodCode::SAFEINVOICE
+                or $this->getCode() == Payone_Core_Model_System_Config_PaymentMethodCode::FINANCING
+        ) {
             // Capture with amount=0, to notify PAYONE that the order is complete (invoiced/cancelled all items)
             // Only works with Creditcard at the moment (15.10.2013)
             $this->helperRegistry()->registerPaymentCancel($this->getInfoInstance());
@@ -402,9 +409,9 @@ abstract class Payone_Core_Model_Payment_Method_Abstract
         $checkResult->isAvailable = $isAvailable;
 
         $this->dispatchEvent('payment_method_is_active', array(
-            'result' => $checkResult,
-            'method_instance' => $this,
-            'quote' => $quote,
+                'result' => $checkResult,
+                'method_instance' => $this,
+                'quote' => $quote,
         ));
 
         return $checkResult->isAvailable;

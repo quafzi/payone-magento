@@ -68,7 +68,10 @@ class Payone_Core_Model_Config_General_Global extends Payone_Core_Model_Config_A
      * @var int
      */
     protected $proxy_mode = 0;
-
+    /**
+     * @var int
+     */
+    protected $currency_convert = 0;
     /**
      * initialize config with specificcounty as array
      * @param array $data
@@ -242,5 +245,21 @@ class Payone_Core_Model_Config_General_Global extends Payone_Core_Model_Config_A
     public function getProxyMode()
     {
         return $this->proxy_mode;
+    }
+
+    /**
+     * @param int $currency_convert
+     */
+    public function setCurrencyConvert($currency_convert)
+    {
+        $this->currency_convert = $currency_convert;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCurrencyConvert()
+    {
+        return $this->currency_convert;
     }
 }

@@ -46,6 +46,7 @@ class Payone_Core_Model_Observer_Sales_Quote_Address
         $quote = $event->getQuote();
         $quoteAddress = $event->getQuoteAddress();
         $errors = $event->getErrors();
+        $useForShipping = (bool) $event->getUseForShipping();
 
         $fullActionName = $event->getFullActionName();
 
@@ -57,9 +58,11 @@ class Payone_Core_Model_Observer_Sales_Quote_Address
 
 
             $addressType = $quoteAddress->getAddressType();
-            if (($addressType === 'billing' and $config->mustCheckBilling())
-               or ($addressType === 'shipping' and $config->mustCheckShipping()))
+            if ($this->mustCheckAddress($addressType, $config, $quote, $useForShipping))
             {
+                // Inject into QuoteAdress for later use in mapper
+                $quoteAddress->setUseForShipping($useForShipping);
+
                 // Config says we must perform an addresscheck:
                 $service = $this->getFactory()->getServiceVerificationAddressCheck($config);
 
@@ -87,5 +90,38 @@ class Payone_Core_Model_Observer_Sales_Quote_Address
             'checkout/onepage/saveShipping',
         );
         return $actions;
+    }
+
+    /**
+     * checks if an addresscheck must be performed
+     *
+     * @param $addressType
+     * @param Payone_Core_Model_Config_Protect_AddressCheck $config
+     * @param Mage_Sales_Model_Quote $quote
+     * @param $useForShipping
+     * @return bool
+     */
+    protected function mustCheckAddress($addressType, Payone_Core_Model_Config_Protect_AddressCheck $config, Mage_Sales_Model_Quote $quote, $useForShipping)
+    {
+        // check if address is shipping-address an shipping-address has to be checked
+        if ($addressType === 'shipping' and $config->mustCheckShipping()) {
+            return true;
+        }
+        // check if address is billing-address
+        if ($addressType === 'billing') {
+            // check if billing-address has to be checked
+            if ($config->mustCheckBilling()) {
+                return true;
+            }
+            // check if billing-address is used for shipping address and shipping-address has to be checked
+            if ($useForShipping === true and $config->mustCheckShipping() and !$quote->isVirtual()) {
+                return true;
+            }
+            // check if billing-address has to be checked for virtual order
+            if ($quote->isVirtual() and $config->mustCheckBillingForVirtualOrder()) {
+                return true;
+            }
+        }
+        return false;
     }
 }
