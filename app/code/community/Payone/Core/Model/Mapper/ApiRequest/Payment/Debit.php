@@ -90,6 +90,11 @@ class Payone_Core_Model_Mapper_ApiRequest_Payment_Debit
         $request->setAmount($this->getAmount() * -1);
         $request->setRequest(Payone_Api_Enum_RequestType::DEBIT);
         $request->setUseCustomerdata('yes');
+
+        Mage::log('aaa', null, 'test.log', true);
+        if($this->configPayment->getCurrencyConvert()) {
+            $request->setCurrency($order->getBaseCurrencyCode());
+        }
     }
 
     /**

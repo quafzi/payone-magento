@@ -145,6 +145,12 @@ abstract class Payone_Core_Model_Mapper_ApiRequest_Payment_Authorize_Abstract
         $request->setNarrativeText($narrativeText);
 
         $request->setAmount($order->getGrandTotal());
+
+        if($this->configPayment->getCurrencyConvert()) {
+            $request->setCurrency($order->getBaseCurrencyCode());
+            $request->setAmount($order->getBaseGrandTotal());
+        }
+
     }
 
 

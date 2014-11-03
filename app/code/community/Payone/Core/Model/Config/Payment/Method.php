@@ -175,6 +175,11 @@ class Payone_Core_Model_Config_Payment_Method
     protected $parent = null;
 
     /**
+     * @var int
+     */
+    protected $currency_convert = 0;
+
+    /**
      * Check if Method can be used in Country
      *
      * @param string $country
@@ -857,5 +862,21 @@ class Payone_Core_Model_Config_Payment_Method
             return true;
         }
         return false;
+    }
+
+    /**
+     * @param int $currency_convert
+     */
+    public function setCurrencyConvert($currency_convert)
+    {
+        $this->currency_convert = $currency_convert;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCurrencyConvert()
+    {
+        return $this->currency_convert;
     }
 }
