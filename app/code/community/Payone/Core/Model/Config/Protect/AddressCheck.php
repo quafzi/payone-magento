@@ -76,6 +76,9 @@ class Payone_Core_Model_Config_Protect_AddressCheck
      */
     protected $mapping_personstatus = null;
 
+    /** @var int */
+    protected $check_billing_for_virtual_order = 0;
+
     public function init(array $data)
     {
         foreach ($data as $key => $value) {
@@ -154,6 +157,17 @@ class Payone_Core_Model_Config_Protect_AddressCheck
     }
 
     /**
+     * @return bool
+     */
+    public function mustCheckBillingForVirtualOrder()
+    {
+        if ($this->getCheckBillingForVirtualOrder()) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * @param int $check_shipping
      */
     public function setCheckShipping($check_shipping)
@@ -167,6 +181,22 @@ class Payone_Core_Model_Config_Protect_AddressCheck
     public function getCheckShipping()
     {
         return $this->check_shipping;
+    }
+
+    /**
+     * @param int $check_billing_for_virtual_order
+     */
+    public function setCheckBillingForVirtualOrder($check_billing_for_virtual_order)
+    {
+        $this->check_billing_for_virtual_order = $check_billing_for_virtual_order;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCheckBillingForVirtualOrder()
+    {
+        return $this->check_billing_for_virtual_order;
     }
 
     /**

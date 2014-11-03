@@ -73,7 +73,7 @@ class Payone_Core_Model_System_Config_OrderStatus extends Payone_Core_Model_Syst
      */
     public function toGroupArray()
     {
-        $states = Mage::getSingleton('sales/order_config')->getStates();
+        $states = $this->getStates();
 
         $stateStatusArray = array();
         foreach ($this->_states as $state) {
@@ -133,5 +133,25 @@ class Payone_Core_Model_System_Config_OrderStatus extends Payone_Core_Model_Syst
         array_unshift($data, $this->helper()->__('-- Please Select --'));
 
         return $data;
+    }
+
+    /**
+     * Wrap for comaptibility issues
+     * @return array
+     */
+    protected function getStates()
+    {
+        if (version_compare($this->helper()->getMagentoVersion(), '1.5', '>')) {
+            $states = Mage::getSingleton('sales/order_config')->getStates();
+        }
+        else {
+            $states = array();
+            foreach (Mage::getConfig()->getNode('global/sales/order/states')->children() as $state) {
+                $label = (string)$state->label;
+                $states[$state->getName()] = Mage::helper('sales')->__($label);
+            }
+        }
+
+        return $states;
     }
 }
