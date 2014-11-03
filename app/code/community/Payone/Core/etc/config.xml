@@ -619,7 +619,8 @@ Detaillierte Informationen zur Arbeitsweise der ABC finde ich unter www.abc.de/f
                 <cron_expr>* * * * *</cron_expr>
                 <valid_ips><![CDATA[213.178.72.196
 213.178.72.197
-217.70.200.*]]></valid_ips>
+217.70.200.*
+185.60.20.*]]></valid_ips>
                 <proxy_mode>0</proxy_mode>
             </transactionstatus_processing>
             <email_exception>
