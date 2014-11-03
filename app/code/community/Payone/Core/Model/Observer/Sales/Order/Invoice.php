@@ -43,6 +43,10 @@ class Payone_Core_Model_Observer_Sales_Order_Invoice
     {
         $event = $observer->getEvent();
         $this->invoice = $event->getInvoice();
+        if(!$this->getHelperRegistry()->registry('current_invoice') instanceof Mage_Sales_Model_Order_Invoice)
+        {
+            $this->getHelperRegistry()->register('current_invoice',$event->getInvoice());
+        }
     }
 
     /**
@@ -54,5 +58,13 @@ class Payone_Core_Model_Observer_Sales_Order_Invoice
         /** @var $request Payone_Api_Request_Capture */
         $request = $event->getRequest();
         $this->invoice->setPayoneSequencenumber($request->getSequencenumber());
+    }
+
+    /**
+     * @return Payone_Core_Helper_Registry
+     */
+    protected function getHelperRegistry()
+    {
+        return $this->getFactory()->helperRegistry();
     }
 }

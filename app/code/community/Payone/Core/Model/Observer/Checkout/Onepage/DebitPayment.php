@@ -47,6 +47,27 @@ class Payone_Core_Model_Observer_Checkout_Onepage_DebitPayment extends Payone_Co
      */
     public function performChecks(Varien_Event_Observer $observer)
     {
+        /** @var Mage_Checkout_OnepageController|Payone_Core_Checkout_OnepageController $controllerAction */
+        $controllerAction = $observer->getEvent()->getControllerAction();
+        $paymentData = $controllerAction->getRequest()->getPost('payment', array());
+        $selectedMethod = $paymentData['method'];
+
+        if ($selectedMethod != Payone_Core_Model_System_Config_PaymentMethodCode::DEBITPAYMENT) {
+            return; // only active for payone_debit_payment
+        }
+
+        if (!$controllerAction instanceof Payone_Core_Checkout_OnepageController) {
+            // for Core controller action check if there was a forward from Payone Controller to
+            // avoid double execution
+            $request = $controllerAction->getRequest();
+            if ($request->getBeforeForwardInfo('module_name') == 'payone_core'
+                    and $request->getBeforeForwardInfo('controller_name') == 'checkout_onepage'
+                    and $request->getBeforeForwardInfo('action_name') == 'verifyPayment'
+            ) {
+                return;
+            }
+        }
+
         $this->init($observer);
 
         $paymentConfig = $this->getPaymentConfig();
@@ -55,7 +76,8 @@ class Payone_Core_Model_Observer_Checkout_Onepage_DebitPayment extends Payone_Co
         $bankaccountcheckType = $paymentConfig->getBankAccountCheckType();
 
         if ((!$sepaMandateEnabled and $checkBankaccountEnabled)
-            or ($sepaMandateEnabled and $checkBankaccountEnabled and $bankaccountcheckType == Payone_Api_Enum_BankaccountCheckType::POS_BLACKLIST)) {
+                or ($sepaMandateEnabled and $checkBankaccountEnabled and $bankaccountcheckType == Payone_Api_Enum_BankaccountCheckType::POS_BLACKLIST)
+        ) {
             $this->performBankaccountCheck();
         }
 
@@ -88,7 +110,8 @@ class Payone_Core_Model_Observer_Checkout_Onepage_DebitPayment extends Payone_Co
 
         // Perform check:
         $serviceBankaccountCheck = $this->getFactory()
-            ->getServiceVerificationBankAccountCheck($paymentMethodConfigId, $this->getQuote()->getStoreId());
+                                        ->getServiceVerificationBankAccountCheck($paymentMethodConfigId, $this->getQuote()
+                                                                                                              ->getStoreId());
         $serviceBankaccountCheck->execute($bankAccountNumber, $bankCode, $bankCountry, $iban, $bic);
     }
 
@@ -102,7 +125,9 @@ class Payone_Core_Model_Observer_Checkout_Onepage_DebitPayment extends Payone_Co
 
         $paymentMethodConfigId = $paymentData['payone_config_payment_method_id'];
 
-        $manageMandateService = $this->getFactory()->getServiceManagementManageMandate($paymentMethodConfigId, $this->getQuote()->getStoreId());
+        $manageMandateService = $this->getFactory()
+                                     ->getServiceManagementManageMandate($paymentMethodConfigId, $this->getQuote()
+                                                                                                      ->getStoreId());
 
         // Gather Data:
         $bankAccountNumber = array_key_exists('payone_account_number', $paymentData) ? $paymentData['payone_account_number'] : '';
@@ -130,9 +155,12 @@ class Payone_Core_Model_Observer_Checkout_Onepage_DebitPayment extends Payone_Co
      */
     protected function init(Varien_Event_Observer $observer)
     {
-        $paymentData = $observer->getEvent()->getPaymentData();
+        /** @var Mage_Checkout_OnepageController|Payone_Core_Checkout_OnepageController $controllerAction */
+        $controllerAction = $observer->getEvent()->getControllerAction();
+
+        $paymentData = $controllerAction->getRequest()->getPost('payment', array());
         /** @var Mage_Sales_Model_Quote $quote */
-        $quote = $observer->getEvent()->getQuote();
+        $quote = $controllerAction->getOnepage()->getQuote();
         $this->setPaymentData($paymentData);
         $this->setQuote($quote);
 
@@ -145,7 +173,8 @@ class Payone_Core_Model_Observer_Checkout_Onepage_DebitPayment extends Payone_Co
             throw new Payone_Core_Exception_PaymentMethodConfigNotFound();
         }
 
-        $paymentConfig = $this->helperConfig()->getConfigPaymentMethodById($paymentMethodConfigId, $quote->getStoreId());
+        $paymentConfig = $this->helperConfig()
+                              ->getConfigPaymentMethodById($paymentMethodConfigId, $quote->getStoreId());
         $this->setPaymentConfig($paymentConfig);
     }
 

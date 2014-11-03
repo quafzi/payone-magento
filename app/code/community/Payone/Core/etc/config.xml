@@ -24,7 +24,7 @@
 <config>
     <modules>
         <Payone_Core>
-            <version>3.1.8</version>
+            <version>3.1.9</version>
         </Payone_Core>
     </modules>
 
@@ -302,7 +302,7 @@
                     </payone_core_observer>
                 </observers>
             </payone_core_checkout_onepage_verify_payment>
-            <payone_core_checkout_onepage_debit_payment_checks>
+            <controller_action_predispatch_payone_core_checkout_onepage_verifyPayment>
                 <observers>
                     <payone_core_observer>
                         <type>singleton</type>
@@ -310,7 +310,16 @@
                         <method>performChecks</method>
                     </payone_core_observer>
                 </observers>
-            </payone_core_checkout_onepage_debit_payment_checks>
+            </controller_action_predispatch_payone_core_checkout_onepage_verifyPayment>
+            <controller_action_predispatch_checkout_onepage_savePayment>
+                <observers>
+                    <payone_core_observer>
+                        <type>singleton</type>
+                        <class>payone_core/observer_checkout_onepage_debitPayment</class>
+                        <method>performChecks</method>
+                    </payone_core_observer>
+                </observers>
+            </controller_action_predispatch_checkout_onepage_savePayment>
             <sales_order_resource_init_virtual_grid_columns>
                 <observers>
                     <payone_core_observer>

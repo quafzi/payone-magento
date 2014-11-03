@@ -74,6 +74,8 @@ class Payone_Core_Model_Observer_Sales_Order
 
         $methodInstance = $payment->getMethodInstance();
 
-        $methodInstance->cancel($payment);
+        if ($methodInstance instanceof Payone_Core_Model_Payment_Method_Abstract) {
+            $methodInstance->cancel($payment);
+        }
     }
 }

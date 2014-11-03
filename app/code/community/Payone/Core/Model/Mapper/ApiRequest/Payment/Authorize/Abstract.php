@@ -435,17 +435,18 @@ abstract class Payone_Core_Model_Mapper_ApiRequest_Payment_Authorize_Abstract
             $isRedirect = true;
         }
         elseif ($paymentMethod instanceof Payone_Core_Model_Payment_Method_OnlineBankTransfer) {
+            $country = $this->getOrder()->getBillingAddress()->getCountry();
             $payoneOnlinebanktransferType = $info->getPayoneOnlinebanktransferType();
             $iban = $info->getPayoneSepaIban();
             $bic = $info->getPayoneSepaBic();
 
             $payment = new Payone_Api_Request_Parameter_Authorization_PaymentMethod_OnlineBankTransfer();
+            $payment->setBankcountry($country);
             $payment->setOnlinebanktransfertype($payoneOnlinebanktransferType);
 
             switch ($payoneOnlinebanktransferType) {
                 case Payone_Api_Enum_OnlinebanktransferType::INSTANT_MONEY_TRANSFER:
                 case Payone_Api_Enum_OnlinebanktransferType::GIROPAY:
-                    $payment->setBankcountry($info->getPayoneSepaBankCountry());
                     if (!empty($iban) and !empty($bic)) {
                         $payment->setIban(strtoupper($iban));
                         $payment->setBic(strtoupper($bic)); // ensure bic and iban are sent uppercase
@@ -494,7 +495,7 @@ abstract class Payone_Core_Model_Mapper_ApiRequest_Payment_Authorize_Abstract
         }
         elseif ($paymentMethod instanceof Payone_Core_Model_Payment_Method_DebitPayment) {
             $payment = new Payone_Api_Request_Parameter_Authorization_PaymentMethod_DebitPayment();
-            $payment->setBankcountry($info->getPayoneSepaBankCountry());
+            $payment->setBankcountry($info->getPayoneBankCountry());
             $iban = $info->getPayoneSepaIban();
             $bic = $info->getPayoneSepaBic();
             if (!empty($iban) and !empty($bic)) {
