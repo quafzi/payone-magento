@@ -168,7 +168,7 @@ PAYONE.Handler.CreditCardCheck.OnepageCheckout = function () {
     this.haveToValidate = function () {
         var radio_p1_cc = $('p_method_payone_creditcard');
         if (radio_p1_cc != undefined && radio_p1_cc != null && radio_p1_cc.checked) {
-            if (checkout.loadWaiting != undefined && checkout.loadWaiting != false) {
+            if (checkout.loadWaiting != false) {
                 return 0;
             }
             if (payment.validate() != true) {
@@ -198,24 +198,9 @@ PAYONE.Handler.CreditCardCheck.OnepageCheckout = function () {
         cid = $('payone_creditcard_cc_cid');
         if (cid != undefined) {
             $('payone_creditcard_cc_cid').setValue('')
-			$('payone_creditcard_cc_cid').removeClassName('required-entry');
         }
 
         checkout.setLoadWaiting('payment', false);
-
-		// toggle validation classes
-		$('payone_creditcard_cc_number').removeClassName('validate-cc-number');
-		$('payone_creditcard_cc_number').removeClassName('validate-payone-cc-type');
-
-		$$('#co-payment-form input, #co-payment-form select').invoke('observe', 'change', function(e) {
-			$('payone_creditcard_cc_number').addClassName('validate-cc-number');
-			$('payone_creditcard_cc_number').addClassName('validate-payone-cc-type');
-			if(cid != undefined){
-				$('payone_creditcard_cc_cid').addClassName('required-entry');
-			}
-		});
-		
-		
 
         // Post payment form to Magento:
         var request = new Ajax.Request(
@@ -230,9 +215,6 @@ PAYONE.Handler.CreditCardCheck.OnepageCheckout = function () {
         );
     };
 };
-
-
-
 
 PAYONE.Handler.CreditCardCheck.Admin = function () {
     this.origMethod = '';

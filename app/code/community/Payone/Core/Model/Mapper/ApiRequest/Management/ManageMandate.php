@@ -73,6 +73,10 @@ class Payone_Core_Model_Mapper_ApiRequest_Management_ManageMandate
         $request->setPersonalData($this->mapPersonalData($quote));
         $request->setPayment($this->mapBankData($bankcountry, $bankaccount, $bankcode, $bic, $iban));
 
+        if($paymentConfig->getCurrencyConvert()) {
+            $request->setCurrency($quote->getBaseCurrencyCode());
+        }
+
         return $request;
     }
 

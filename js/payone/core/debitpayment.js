@@ -71,6 +71,9 @@ function checkIbanCountryCode(code) {
 }
 
 function disableElement(element) {
+    if (element == undefined) {
+        return;
+    }
     element.value = '';
     element.disabled = true;
     element.removeClassName('required-entry');
@@ -82,6 +85,9 @@ function disableElement(element) {
 }
 
 function enableElement(element) {
+    if (element == undefined) {
+        return;
+    }
     element.disabled = false;
     element.toggleClassName('require-entry');
 }
@@ -97,16 +103,23 @@ function blockPaymentMethodInputs(code, configShowBankData) {
         && input_sepa_bic_el.value != ''
         && Validation.get('validate-sepa-bic').test(input_sepa_bic_el.value) == true) {
         disableElement(input_account_number_el);
-        $('input_box_payone_account_number').hide();
+        var inputboxpayoneaccountnumber = $('input_box_payone_account_number');
+        if (inputboxpayoneaccountnumber != undefined) {
+            inputboxpayoneaccountnumber.hide();
+        }
         disableElement(input_bank_code_el);
-        $('input_box_payone_bank_code').hide();
+        var inputboxpayonebankcode = $('input_box_payone_bank_code');
+        if (inputboxpayonebankcode != undefined) {
+            inputboxpayonebankcode.hide();
+        }
     } else {
         enableElement(input_account_number_el);
         enableElement(input_bank_code_el);
         showBankData(code, configShowBankData);
     }
 
-    if (input_account_number_el.value != ''
+    if (input_account_number_el != undefined
+        && input_account_number_el.value != ''
         && Validation.get('validate-digits').test(input_account_number_el.value) == true
         && input_bank_code_el.value != ''
         && Validation.get('validate-bank-code').test(input_bank_code_el.value) == true
@@ -129,10 +142,10 @@ function blockPaymentMethodInputs(code, configShowBankData) {
  */
 function changeSubmitButtonStatus(checkboxEl) {
     if (checkboxEl.checked) {
-        $$('.btn-checkout')[0].enable();
+        $$('.btn-checkout')[0].removeAttribute("disabled");
         $$('.btn-checkout')[0].show();
     } else {
-        $$('.btn-checkout')[0].disable();
+        $$('.btn-checkout')[0].setAttribute("disabled", "disabled");
         $$('.btn-checkout')[0].hide();
     }
 }

@@ -27,7 +27,7 @@ $code = $this->getMethodCode();
 $paymentConfigId = $this->getPaymentConfig()->getId();
 $owner = $this->escapeHtml($this->getInfoData('payone_account_owner') ? $this->getInfoData('payone_account_owner') : $this->getBillingName());
 
-$configShowBankData = $this->getPaymentConfig()->isSepaDeShowBankDataEnabled();
+$configShowBankData = $this->getPaymentConfig()->getSepaDeShowBankData();
 ?>
 <fieldset class="form-list">
     <ul id="payment_form_<?php echo $code ?>" style="display:none">

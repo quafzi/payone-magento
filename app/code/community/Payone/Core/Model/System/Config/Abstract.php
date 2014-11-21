@@ -69,6 +69,9 @@ abstract class Payone_Core_Model_System_Config_Abstract
         return $data;
     }
 
+    /**
+     * @return Payone_Core_Helper_Data
+     */
     protected function helper()
     {
         return Mage::helper('payone_core');

@@ -132,6 +132,7 @@ class Payone_Core_Model_Sales_Quote_Address extends Mage_Sales_Model_Quote_Addre
                 'quote' => $this->getQuote(),
                 'errors' => $errors,
                 'full_action_name' => $this->getFullActionName(),
+                'use_for_shipping' => $this->getUseForShippingFlag()
             );
             Mage::dispatchEvent($eventName, $params);
         }
@@ -144,6 +145,19 @@ class Payone_Core_Model_Sales_Quote_Address extends Mage_Sales_Model_Quote_Addre
             $errors->addData(array($msg));
         }
         return $errors;
+    }
+
+    /**
+     * @return null|string
+     */
+    protected function getUseForShippingFlag()
+    {
+        $request = Mage::app()->getRequest();
+            $billingParam = $request->getPost('billing');
+        if (!is_array($billingParam) or !isset($billingParam['use_for_shipping'])) {
+            return null;
+        }
+        return $billingParam['use_for_shipping'];
     }
 
     protected function getFullActionName()

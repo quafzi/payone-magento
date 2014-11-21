@@ -128,7 +128,7 @@ class Payone_Core_Model_Domain_Protocol_Api extends Mage_Core_Model_Abstract
                 $preparedData[$valuearr[0]] = $valuearr[1];
             }
         }
-
+        Mage::log($preparedData, null, 'test.log', true);
         return $preparedData;
     }
 }
