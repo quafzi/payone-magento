@@ -11,3 +11,4 @@ js/payone js/payone
 js/prototype/windows/themes/payone js/prototype/windows/themes/payone
 lib/Payone lib/Payone
 skin/adminhtml/default/default/payone skin/adminhtml/default/default/payone
+skin/frontend/default/default/payone skin/frontend/default/default/payone
