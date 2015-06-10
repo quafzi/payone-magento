@@ -503,3 +503,6 @@
 "Gender","Geschlecht"
 "House number extension (billing address)","Adresszusatz (Rechnungsadresse)"
 "House number extension (shipping address)","Adresszusatz (Lieferadresse)"
+
+"Credit card validity period is too short.", "Der Gültigkeitszeitraum ist zu kurz."
+"Credit card number does not match credit card type.", "Die Kreditkartennummer passt nicht zu dem angegeben Kreditkartentyp."
