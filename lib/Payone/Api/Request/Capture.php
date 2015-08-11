@@ -61,6 +61,11 @@ class Payone_Api_Request_Capture extends Payone_Api_Request_Abstract
     protected $invoicing = null;
 
     /**
+     * @var string
+     */
+    protected $narrative_text = null;
+
+    /**
      * @param int $amount
      */
     public function setAmount($amount)
@@ -154,5 +159,21 @@ class Payone_Api_Request_Capture extends Payone_Api_Request_Abstract
     public function getInvoicing()
     {
         return $this->invoicing;
+    }
+
+    /**
+     * @return null
+     */
+    public function getNarrativeText()
+    {
+        return $this->narrative_text;
+    }
+
+    /**
+     * @param null $narrative_text
+     */
+    public function setNarrativeText($narrative_text)
+    {
+        $this->narrative_text = $narrative_text;
     }
 }

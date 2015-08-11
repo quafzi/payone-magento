@@ -75,6 +75,9 @@ class Payone_Core_TransactionStatusController extends Payone_Core_Controller_Abs
             // Handle Request:
             $response = $service->handleByPost();
 
+            // NEW forwarding handling
+            $this->_forwardStatus($order);
+            
             // Send Confirmation Message
             $this->getResponse()->setBody($response->getStatus());
         }
@@ -113,6 +116,67 @@ class Payone_Core_TransactionStatusController extends Payone_Core_Controller_Abs
     protected function getConfigTransactionStatusProcessing($storeId)
     {
         return $this->helperConfig()->getConfigMisc($storeId)->getTransactionstatusProcessing();
+    }
+    
+    protected function _forwardStatus($oOrder) {
+        $sAction = $this->getRequest()->getParam('txaction');
+
+        $oMisc = $this->helperConfig()->getConfigMisc($oOrder->getStoreId());
+        $oForwarding = $oMisc->getTransactionstatusForwarding();
+        if (!$oForwarding->isActive() || !$oForwarding->canForwardTxAction($sAction)) {
+            return;
+        }
+        $aForwardUrls = $oForwarding->getConfig($sAction);
+
+        foreach ($aForwardUrls as $aHost) {
+            $this->_forwardRequest($aHost);
+        }
+    }
+    
+    protected function _addParam($sKey, $mValue) {
+        $sParams = '';
+        if(is_array($mValue)) {
+            foreach ($mValue as $sKey2 => $mValue2) {
+                $sParams .= $this->_addParam($sKey.'['.$sKey2.']', $mValue2);
+            }
+        } else {
+            $sParams .= "&".$sKey."=".urlencode($mValue);
+        }
+        return $sParams;
+    }
+    
+    protected function _forwardRequest($aHost) {
+        if(array_key_exists('url', $aHost) === false) {
+            return;
+        }
+        $sUrl = $aHost['url'];
+        
+        $iTimeout = 15;
+        if(array_key_exists('timeout', $aHost) !== false) {
+            $iTimeout = $aHost['timeout'];
+        }
+        
+        $sParams = '';
+        foreach($_POST as $sKey => $mValue) {
+            $sParams .= $this->_addParam($sKey, $mValue);
+        }
+
+        $sParams = substr($sParams,1);
+
+        $oCurl = curl_init($sUrl);
+        curl_setopt($oCurl, CURLOPT_POST, 1);
+        curl_setopt($oCurl, CURLOPT_POSTFIELDS, $sParams);
+
+        curl_setopt($oCurl, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($oCurl, CURLOPT_SSL_VERIFYHOST, false);
+        curl_setopt($oCurl, CURLOPT_SSLVERSION, 3);
+
+        curl_setopt($oCurl, CURLOPT_RETURNTRANSFER, TRUE);
+        curl_setopt($oCurl, CURLOPT_TIMEOUT, $iTimeout);
+
+        $oResult = curl_exec($oCurl);
+
+        curl_close($oCurl);
     }
 
 }

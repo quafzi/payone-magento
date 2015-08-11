@@ -52,7 +52,7 @@ function payoneSwitchOnlineBankTransfer(element, country, currency) {
     var bankGroupSelectAt = $('payone_online_bank_transfer_bank_group_at');
     var bankGroupSelectNl = $('payone_online_bank_transfer_bank_group_nl');
 
-    if (ElementValue == '' || typeCode == 'PFF' || typeCode == 'PFC') {
+    if (ElementValue == '' || typeCode == 'PFF' || typeCode == 'PFC' || typeCode == 'P24') {
         disableAll();
     } else if (typeCode == 'PNT') {
         disableAll();
@@ -119,4 +119,10 @@ function payoneSwitchOnlineBankTransfer(element, country, currency) {
         bankGroupWrapNl.show();
         bankGroupSelectNl.removeAttribute("disabled");
     }
+}
+
+function copyOnlineBankTransferSepaIban(code) {
+    var input_sepa_iban_xxx_el = $(code + '_sepa_iban_xxx');
+    var input_sepa_iban_el = $(code + '_sepa_iban');
+    input_sepa_iban_el.value = input_sepa_iban_xxx_el.value;
 }

@@ -84,6 +84,7 @@ class Payone_Core_Model_Mapper_ApiRequest_Payment_Capture
     protected function mapDefaultCaptureParameters(Payone_Api_Request_Capture $request)
     {
         $order = $this->getOrder();
+        $invoice = $this->getInvoice();
 
         $transaction = $this->getFactory()->getModelTransaction();
         $transaction = $transaction->loadByPayment($order->getPayment());
@@ -91,9 +92,12 @@ class Payone_Core_Model_Mapper_ApiRequest_Payment_Capture
         $request->setTxid($order->getPayment()->getLastTransId());
         $request->setSequencenumber($transaction->getNextSequenceNumber());
         $request->setCurrency($order->getOrderCurrencyCode());
-        $request->setAmount($this->getAmount());
+        if(!empty($invoice) && $invoice->hasData()) {
+            $request->setAmount($invoice->getGrandTotal());
+        } else {
+            $request->setAmount($this->getAmount());
+        }
         $request->setRequest(Payone_Api_Enum_RequestType::CAPTURE);
-        Mage::log('Capture', null, 'test.log', true);
     }
 
     /**
@@ -172,6 +176,7 @@ class Payone_Core_Model_Mapper_ApiRequest_Payment_Capture
                 if ($number <= 0) {
                     continue; // Do not map items with zero quantity
                 }
+                $params['it'] = Payone_Api_Enum_InvoicingItemType::GOODS;
                 $params['id'] = $itemData->getSku();
                 $params['de'] = $itemData->getName();
                 $params['no'] = $number;
@@ -182,7 +187,8 @@ class Payone_Core_Model_Mapper_ApiRequest_Payment_Capture
                 }
 
                 // We have to load the tax percentage from the order item
-                $params['va'] = number_format($orderItem->getTaxPercent(), 0, '.', '');
+//                $params['va'] = number_format($orderItem->getTaxPercent(), 0, '.', '');
+                $params['va'] = round( $orderItem->getTaxPercent() * 100 );   // transfer vat in basis point format [#MAGE-186]
 
                 $item = new Payone_Api_Request_Parameter_Invoicing_Item();
                 $item->init($params);
@@ -195,7 +201,7 @@ class Payone_Core_Model_Mapper_ApiRequest_Payment_Capture
             }
 
             // Discounts:
-            $discountAmount = $invoice->getDiscountAmount(); // Discount Amount is positive on invoice.
+            $discountAmount = abs($invoice->getDiscountAmount()); // Discount Amount is positive on invoice.
             if ($discountAmount > 0) {
                 $invoicing->addItem($this->mapDiscountAsItem(-1 * $discountAmount));
             }

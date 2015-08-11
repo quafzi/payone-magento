@@ -58,7 +58,10 @@ class Payone_Core_Checkout_Onepage_PaymentController extends Payone_Core_Control
 
             if ($success === true) {
                 // Payment is okay. Redirect to standard Magento success page:
-                $this->_redirect('checkout/onepage/success');
+                $this->_redirect('checkout/onepage/success', array(
+                    '_nosid' => true,
+                    '_secure' => Mage::app()->getStore()->isCurrentlySecure())
+                );
                 return;
             }
         } catch (Exception $e) {
@@ -106,11 +109,11 @@ class Payone_Core_Checkout_Onepage_PaymentController extends Payone_Core_Control
         }
 
         // Load transaction status via order id, check for APPOINTED:
-        $txStatus = $this->getFactory()->getModelTransactionStatus();
+        $txStatus = $this->getFactory()->getModelTransaction();
         $txStatus->load($order->getIncrementId(), 'reference');
 
-        if (!$txStatus->hasData() or !$txStatus->getId() or !$txStatus->isAppointed()) {
-            // Wrong or no transactionStatus for this order, failure.
+        if (!$txStatus->hasData() or !$txStatus->getId()) {// or !$txStatus->isAppointed()
+            // Wrong or no transaction for this order, failure.
             $message = $helper->__('Sorry, your payment has not been confirmed by the payment provider.');
             $checkoutSession->addError($message);
             return false;

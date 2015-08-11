@@ -53,8 +53,12 @@ class Payone_Core_Block_Payment_Method_Form_DebitPayment
      */
     public function getCountry()
     {
-        $quote = $this->getQuote();
-        return $quote->getBillingAddress()->getCountry();
+        $country = $this->getSavedCustomerData('payone_bank_country');
+        if(empty($country)) {
+            $quote = $this->getQuote();
+            $country = $quote->getBillingAddress()->getCountry();
+        }
+        return $country;
     }
 
     /**

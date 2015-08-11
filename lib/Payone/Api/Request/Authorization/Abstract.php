@@ -95,7 +95,13 @@ abstract class Payone_Api_Request_Authorization_Abstract
      * @var Payone_Api_Request_Parameter_Invoicing_Transaction
      */
     protected $invoicing = null;
-
+    
+    /**
+     * Mandatory for PayPal Express Checkout
+     * Alphanumeric max 16 chars
+     * @var string 
+     */
+    protected $workorderid = null;
 
     /**
      * @param int $aid
@@ -289,5 +295,112 @@ abstract class Payone_Api_Request_Authorization_Abstract
     {
         return $this->invoicing;
     }
+    
+    /**
+     * @return string
+     */
+    function getWorkorderId() {
+        return $this->workorderid;
+    }
 
+    /**
+     * @param string $workorderid
+     */
+    function setWorkorderId($workorderid) {
+        $this->workorderid = $workorderid;
+    }
+    
+    public function convertToFrontendApiUrl() {
+        $sFrontendApiUrl = 'https://secure.pay1.de/frontend/';
+        $aFrontendUnsetParams = array(
+            'mid',
+            'integrator_name',
+            'integrator_version',
+            'solution_name',
+            'solution_version',
+            'ip',
+            'errorurl',
+            'salutation',
+            'pseudocardpan',
+        );
+        $aFrontendHashParams = array(
+            'aid',
+            'amount',
+            'backurl',
+            'clearingtype',
+            'currency',
+            'customerid',
+            'de',
+            'encoding',
+            'id',
+            'mode',
+            'no',
+            'portalid',
+            'pr',
+            'reference',
+            'request',
+            'successurl',
+            'targetwindow',
+            'va',
+            'key',
+            'invoiceappendix',
+            'invoice_deliverydate',
+            'invoice_deliveryenddate',
+            'param',
+            'narrative_text',
+        );
+        
+        $aParameters = $this->toArray();
+        $aParameters['targetwindow'] = 'parent';
+
+        $aHashParams = array();
+        foreach ($aParameters as $sKey => $sValue) {
+            if(array_search($sKey, $aFrontendUnsetParams) !== false) {
+                unset($aParameters[$sKey]);
+            } elseif(array_search($sKey, $aFrontendHashParams) !== false || stripos($sKey, '[') !== false) {
+                $aHashParams[$sKey] = $sValue;
+            }
+        }
+        $aParameters['hash'] = $this->_getFrontendHash($aHashParams);
+        
+        $sUrlParams = '?';
+        foreach ($aParameters as $sKey => $sValue) {
+            $sUrlParams .= $sKey.'='.urlencode($sValue).'&';
+        }
+        $sUrlParams = rtrim($sUrlParams, '&');
+        $sFrontendApiUrl = $sFrontendApiUrl.$sUrlParams;
+
+        return $sFrontendApiUrl;
+    }
+    
+    public function getFrontendApiResponse() {
+        $aResponse = array(
+            'redirecturl' => $this->convertToFrontendApiUrl(),
+            'status' => 'REDIRECT',
+            'txid' => '',
+        );
+        
+        return $aResponse;
+    }
+
+    protected function _getConfigKey() {
+        $oOrder = Mage::getSingleton('checkout/session')->getQuote();
+        $oPayment = $oOrder->getPayment();
+        $oPaymentMethod = $oPayment->getMethodInstance();
+        $oPaymentConfig = $oPaymentMethod->getConfigByOrder($oOrder);
+        return $oPaymentConfig->getKey();
+    }
+    
+    protected function _getFrontendHash($aHashParams) {
+        ksort($aHashParams, SORT_STRING);
+        unset($aHashParams['key']);
+        $aHashParams['key'] = $this->_getConfigKey();
+
+        $sHashString = '';
+        foreach ($aHashParams as $sKey => $sValue) {
+            $sHashString .= $sValue;
+        }
+        return md5($sHashString);
+    }
+    
 }

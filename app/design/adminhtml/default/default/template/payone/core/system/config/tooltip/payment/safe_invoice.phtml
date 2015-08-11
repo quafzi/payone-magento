@@ -21,11 +21,12 @@
  * @link            http://www.noovias.com
  */
 ?>
-<div class="field-name">Sichere Rechnungsart</div>
+<div class="field-name"><?php echo $this->__('Safe invoice'); ?></div>
 <div class="field-description">
-    Hier können Sie definieren welche Rechnungsarten sie im Checkout anbieten wollen.<br>
-    Folge Arten werden aktuell unterstützt:<br>
+	<?php echo $this->__('Here you can configure which types of safe invoice payment are available during checkout.'); ?><br>
+	<?php echo $this->__('The following providers are currently supported'); ?>:<br>
     <ul>
+		<li>Klarna</li>
         <li>BillSAFE</li>
     </ul>
 </div>

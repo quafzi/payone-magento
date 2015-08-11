@@ -75,6 +75,7 @@ class Payone_Core_Block_Payment_Method_Form_OnlineBankTransfer
         $block = $this->getLayout()->createBlock('core/template');
         $block->setTemplate('payone/core/payment/method/form/onlinebanktransfer/bankgroup.phtml');
         $block->setMethodCode($this->getMethodCode());
+        $block->setSavedCustomerBankGroup($this->getSavedCustomerData('payone_bank_group'));
         $html = $block->toHtml();
         return $html;
     }

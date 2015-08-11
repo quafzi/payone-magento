@@ -41,6 +41,10 @@
                     return params;
                 }
         );
+
+        if(typeof sCCRequestType != 'undefined' && sCCRequestType == 'hosted-Iframe') {
+            var iframes = payone.initHosted(fieldconfig, sTypeIdSelector);
+        }
     });
     //]]>
 </script>

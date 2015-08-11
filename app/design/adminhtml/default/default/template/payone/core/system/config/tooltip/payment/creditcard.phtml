@@ -21,26 +21,26 @@
  * @link            http://www.noovias.com
  */
 ?>
-<div class="field-name">Kartentyp</div>
+<div class="field-name"><?php echo $this->__('Credit Card brand'); ?></div>
 <div class="field-description">
-    Eine Auswahlliste aller unterstützten Kreditkartentypen. Eine Mehrfachauswahl ist möglich.<br>
-    Folgende Kartentypen sind möglich:<br>
+    <?php echo $this->__('A multiple choice list of all supported credit card brands.'); ?><br>
+    <?php echo $this->__('The following credit card brands are available'); ?>:<br>
     <ul>
-        <li>Visa</li>
-        <li>MasterCard</li>
-        <li>American Express</li>
-        <li>Diners-Club</li>
-        <li>JCB</li>
-        <li>Maestro International</li>
-        <li>Discover</li>
-        <li>Carte Bleue</li>
+        <li><?php echo $this->__('Visa'); ?></li>
+        <li><?php echo $this->__('MasterCard'); ?></li>
+        <li><?php echo $this->__('American Express'); ?></li>
+        <li><?php echo $this->__('Diners-Club'); ?></li>
+        <li><?php echo $this->__('JCB'); ?></li>
+        <li><?php echo $this->__('Maestro International'); ?></li>
+        <li><?php echo $this->__('Discover'); ?></li>
+        <li><?php echo $this->__('Carte Bleue'); ?></li>
     </ul>
 </div>
 <br>
-<div class="field-name">Prüfe Kartennummer</div>
+<div class="field-name"><?php echo $this->__('Check CVC'); ?></div>
 <div class="field-description">
-    Hier können Sie definieren ob während des Checkout Prozesses die Kartenprüfziffer abgefragt werden soll.<br>
-    <br>
-    <b>Achtung:</b>Diese Option ist nur verwendbar wenn dies Ihr Acquirer erlaubt.<br>
+	<?php echo $this->__('Here you can define whether the CVC should be checked during the checkout process.'); ?><br>
+	<br>
+	<?php echo $this->__('<b>Warning:</b> This option can only be used if your acquirer allows it.'); ?><br>
 </div>
 <br>

@@ -90,11 +90,6 @@ class Payone_Core_Model_Mapper_ApiRequest_Payment_Debit
         $request->setAmount($this->getAmount() * -1);
         $request->setRequest(Payone_Api_Enum_RequestType::DEBIT);
         $request->setUseCustomerdata('yes');
-
-        Mage::log('aaa', null, 'test.log', true);
-        if($this->configPayment->getCurrencyConvert()) {
-            $request->setCurrency($order->getBaseCurrencyCode());
-        }
     }
 
     /**
@@ -169,7 +164,8 @@ class Payone_Core_Model_Mapper_ApiRequest_Payment_Debit
 
 
                 // We have to load the tax percentage from the order item
-                $params['va'] = number_format($orderItem->getTaxPercent(), 0, '.', '');
+//                $params['va'] = number_format($orderItem->getTaxPercent(), 0, '.', '');
+                $params['va'] = round( $orderItem->getTaxPercent() * 100 );   // transfer vat in basis point format [#MAGE-186]
 
                 $item = new Payone_Api_Request_Parameter_Invoicing_Item();
                 $item->init($params);

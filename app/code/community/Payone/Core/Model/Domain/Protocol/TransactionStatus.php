@@ -134,52 +134,55 @@ class Payone_Core_Model_Domain_Protocol_TransactionStatus extends Mage_Core_Mode
      */
     public function getRawRequest()
     {
-        $allowedKeys = array(
-            'key',
-            'txaction',
-            'mode',
-            'portalid',
-            'aid',
-            'clearingtype',
-            'txtime',
-            'currency',
-            'userid',
-            'customerid',
-            'param',
-            'reference',
-            'sequencenumber',
-            'receivable',
-            'balance',
-            'failedcause',
-            'productid',
-            'accessid',
-            'reminderlevel',
-            'vaid',
-            'vreference',
-            'vxid',
-            'txid',
-            'invoiceid',
-            'invoice_grossamount',
-            'invoice_date',
-            'invoice_deliverydate',
-            'invoice_deliveryenddate',
-            'clearing_bankaccountholder',
-            'clearing_bankcountry',
-            'clearing_bankaccount',
-            'clearing_bankcode',
-            'clearing_bankiban',
-            'clearing_bankbic',
-            'clearing_bankcity',
-            'clearing_bankname',
-            'clearing_reference',
-            'clearing_duedate',
-            'clearing_legalnote',
-            'clearing_instructionnote');
+        $aRawData = $this->getRawRequestArray();
+        if(!$aRawData) {
+            $allowedKeys = array(
+                'key',
+                'txaction',
+                'mode',
+                'portalid',
+                'aid',
+                'clearingtype',
+                'txtime',
+                'currency',
+                'userid',
+                'customerid',
+                'param',
+                'reference',
+                'sequencenumber',
+                'receivable',
+                'balance',
+                'failedcause',
+                'productid',
+                'accessid',
+                'reminderlevel',
+                'vaid',
+                'vreference',
+                'vxid',
+                'txid',
+                'invoiceid',
+                'invoice_grossamount',
+                'invoice_date',
+                'invoice_deliverydate',
+                'invoice_deliveryenddate',
+                'clearing_bankaccountholder',
+                'clearing_bankcountry',
+                'clearing_bankaccount',
+                'clearing_bankcode',
+                'clearing_bankiban',
+                'clearing_bankbic',
+                'clearing_bankcity',
+                'clearing_bankname',
+                'clearing_reference',
+                'clearing_duedate',
+                'clearing_legalnote',
+                'clearing_instructionnote'
+            );
+            $aRawData = $this->__toArray($allowedKeys);
+        }
+        ksort($aRawData);
 
-        $rawData = $this->__toArray($allowedKeys);
-        ksort($rawData);
-
-        return $rawData;
+        return $aRawData;
 
     }
 
@@ -299,6 +302,16 @@ class Payone_Core_Model_Domain_Protocol_TransactionStatus extends Mage_Core_Mode
     public function setStatusError()
     {
         $this->setProcessingStatus(self::STATUS_ERROR);
+    }
+    
+    public function getRawRequestArray() {
+        if(!empty($this->_data['raw_request'])) {
+            $aRaw = unserialize($this->_data['raw_request']);
+            if($aRaw) {
+                return $aRaw;
+            }
+        }
+        return false;
     }
 
 }

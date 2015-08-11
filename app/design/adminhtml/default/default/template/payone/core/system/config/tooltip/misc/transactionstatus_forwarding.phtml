@@ -21,36 +21,35 @@
  * @link            http://www.noovias.com
  */
 ?>
-<b>Der Transaktionsstatus ist notwendig um evtl. nachfolgende Aktionen wie Warenversand oder ähnliches auszulösen. Um diesen Status auch an weitere<br>
-    Systeme zu übermitteln können Sie an dieser Stelle für jeden Status eine URL definieren an die dann dieser Status weitergeleitet werden kann.</b><br>
+<b><?php echo $this->__('The transaction status message can be used to trigger follow-up actions like shipping. To forward this status message to other systems you can define an URL here that will receive the forwarded transaction message.'); ?></b><br>
 <br>
 <ul class="payone-config-warning">
-    <li class="payone-config-warning-content"><span>Stellen Sie weiterhin sicher, dass die Cronjobs für ihr System korrekt eingerichtet sind.<span></li>
+    <li class="payone-config-warning-content"><span><?php echo $this->__('Please make sure that cron jobs are configured and working correctly in order to use this feature.'); ?><span></li>
 </ul>
-<div class="field-name">Weiterleitung</div>
+<div class="field-name"><?php echo $this->__('Forwarding'); ?></div>
 <div class="field-description">
     <ul>
-        <li>Status
+        <li><?php echo $this->__('Status'); ?>
             <ul>
-                <li>Erfolg</li>
-                <li>Einzug</li>
-                <li>Zahlung</li>
-                <li>Unterzahlung</li>
-                <li>Rückbelastung</li>
-                <li>Rückerstattung</li>
-                <li>Forderung</li>
-                <li>Mahnstatus</li>
-                <li>Buchung</li>
-                <li>Abrechnung</li>
-                <li>Umbuchung</li>
-                <li>Rechnungsbeleg</li>
+				<li><?php echo $this->__('Appointed'); ?></li>
+				<li><?php echo $this->__('Capture'); ?></li>
+				<li><?php echo $this->__('Paid'); ?></li>
+				<li><?php echo $this->__('Underpaid'); ?></li>
+				<li><?php echo $this->__('Cancelation'); ?></li>
+				<li><?php echo $this->__('Refund'); ?></li>
+				<li><?php echo $this->__('Debit'); ?></li>
+				<li><?php echo $this->__('Reminder'); ?></li>
+				<li><?php echo $this->__('Vauthorization'); ?></li>
+				<li><?php echo $this->__('Vsettlement'); ?></li>
+				<li><?php echo $this->__('Transfer'); ?></li>
+				<li><?php echo $this->__('Invoice'); ?></li>
             </ul>
         </li>
-        <li>URL<br>
-            Die URL des Empfängersystems.
+        <li><?php echo $this->__('URL'); ?><br>
+            <?php echo $this->__('The URL of the receiving system.'); ?>
         </li>
-        <li>Timeout<br>
-            Wie lange soll der Onlineshop auf Antwort des Empfängersystems warten.
+        <li><?php echo $this->__('Time out'); ?><br>
+            <?php echo $this->__('How long should Magento wait for the other system to receive the status.'); ?>
         </li>
     </ul>
 </div>

@@ -48,10 +48,6 @@ class Payone_TransactionStatus_Service_ProtocolRequest
         Payone_TransactionStatus_Response_Interface $response = null
     )
     {
-        $this->getServiceApplyFilters()->apply($request);
-        $this->getServiceApplyFilters()->apply($response);
-
-
         foreach ($this->loggers as $key => $logger)
         {
             /** @var $logger Payone_Protocol_Logger_Interface */

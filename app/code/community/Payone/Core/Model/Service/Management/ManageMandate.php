@@ -58,10 +58,9 @@ class Payone_Core_Model_Service_Management_ManageMandate
 
         $response = $this->getServiceApiManageMandate()->managemandate($request);
 
-        if (!$response instanceof Payone_Api_Response_Management_ManageMandate_Approved) {
-            throw new Mage_Core_Exception($this->helper()->__('There has been an error processing your request.'));
-        }
-
+//        if (!$response instanceof Payone_Api_Response_Management_ManageMandate_Approved) {
+//            throw new Mage_Payment_Exception($this->helper()->__('There has been an error processing your request.'));
+//        }
         return $response;
     }
 

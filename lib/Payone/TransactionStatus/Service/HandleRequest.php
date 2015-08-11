@@ -97,6 +97,10 @@ class Payone_TransactionStatus_Service_HandleRequest
             //
             $response = new Payone_TransactionStatus_Response('TSOK');
 
+            if($request->getClearingtype() == 'cc') {
+                $this->_handleTransactionId($request);
+            }
+
             // Protocol
             $this->protocol($request, $response);
         }
@@ -106,6 +110,16 @@ class Payone_TransactionStatus_Service_HandleRequest
         }
 
         return $response;
+    }
+    
+    protected function _handleTransactionId(Payone_TransactionStatus_Request $oRequest) {
+        $oFactory = new Payone_Core_Model_Factory();
+        $oTransaction = $oFactory->getModelTransaction();
+        $oTransaction->load($oRequest->getReference(), 'reference');
+        if($oTransaction->getFrontendApiCall() == 1 && !$oTransaction->getTxid()) {
+            $oTransaction->setTxid($oRequest->getTxid());
+            $oTransaction->save();
+        }
     }
 
     /**

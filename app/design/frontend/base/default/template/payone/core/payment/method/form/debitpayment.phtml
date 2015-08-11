@@ -53,16 +53,19 @@ $configShowBankData = $this->getPaymentConfig()->getSepaDeShowBankData();
         </li>
         <li id="input_box_payone_sepa_iban">
             <div class="input-box">
-                <label for="<?php echo $code ?>_sepa_iban">
+                <label for="<?php echo $code ?>_sepa_iban_xxx">
                     <?php echo $this->__('IBAN') ?>
                 </label>
                 <br class="clear"/>
-                <input type="text" id="<?php echo $code ?>_sepa_iban" name="payment[payone_sepa_iban]"
+                <input type="text" id="<?php echo $code ?>_sepa_iban_xxx"
                        title="<?php echo $this->__('IBAN') ?>"
-                       class="validate-sepa-iban required-entry input-text" value=""
+                       class="validate-sepa-iban required-entry input-text"
+                       value="<?php echo $this->strToXXX($this->getSavedCustomerData('payone_sepa_iban'));?>"
                        autocomplete="off" maxlength="34"
-                       onchange="inputToUpperCase(this); blockPaymentMethodInputs('<?php echo $code ?>', <?php echo $configShowBankData; ?>); checkIbanCountryCode('<?php echo $code ?>');"
-                       oninput="inputToUpperCase(this); blockPaymentMethodInputs('<?php echo $code ?>', <?php echo $configShowBankData; ?>); checkIbanCountryCode('<?php echo $code ?>');"/>
+                       onchange="inputToUppaerCaseAndNumbers(this); copyDebitPaymentSepaIban('<?php echo $code ?>'); blockPaymentMethodInputs('<?php echo $code ?>', <?php echo $configShowBankData; ?>); checkIbanCountryCode('<?php echo $code ?>');"
+                       oninput="inputToUppaerCaseAndNumbers(this); copyDebitPaymentSepaIban('<?php echo $code ?>'); blockPaymentMethodInputs('<?php echo $code ?>', <?php echo $configShowBankData; ?>); checkIbanCountryCode('<?php echo $code ?>');"/>
+                <input type="hidden" id="<?php echo $code ?>_sepa_iban" name="payment[payone_sepa_iban]"
+                       value="<?php echo $this->getSavedCustomerData('payone_sepa_iban');?>">
             </div>
         </li>
         <li id="input_box_payone_sepa_bic">
@@ -73,10 +76,11 @@ $configShowBankData = $this->getPaymentConfig()->getSepaDeShowBankData();
                 <br class="clear"/>
                 <input type="text" id="<?php echo $code ?>_sepa_bic" name="payment[payone_sepa_bic]"
                        title="<?php echo $this->__('BIC') ?>"
-                       class="validate-sepa-bic required-entry input-text" value=""
+                       class="validate-sepa-bic required-entry input-text"
+                       value="<?php echo $this->getSavedCustomerData('payone_sepa_bic');?>"
                        autocomplete="off" maxlength="11"
-                       onchange="inputToUpperCase(this); blockPaymentMethodInputs('<?php echo $code ?>', <?php echo $configShowBankData; ?>);"
-                       oninput="inputToUpperCase(this); blockPaymentMethodInputs('<?php echo $code ?>', <?php echo $configShowBankData; ?>);"/>
+                       onchange="inputToUppaerCaseAndNumbers(this); blockPaymentMethodInputs('<?php echo $code ?>', <?php echo $configShowBankData; ?>);"
+                       oninput="inputToUppaerCaseAndNumbers(this); blockPaymentMethodInputs('<?php echo $code ?>', <?php echo $configShowBankData; ?>);"/>
             </div>
         </li>
         <?php if ($configShowBankData): ?>
@@ -89,10 +93,11 @@ $configShowBankData = $this->getPaymentConfig()->getSepaDeShowBankData();
                 <br class="clear"/>
                 <input type="text" id="<?php echo $code ?>_account_number" name="payment[payone_account_number]"
                        title="<?php echo $this->__('Account number') ?>"
-                       class="validate-digits input-text" value=""
+                       class="validate-digits input-text"
+                       value="<?php echo $this->getSavedCustomerData('payone_account_number');?>"
                        autocomplete="off" maxlength="10"
-                       onchange="blockPaymentMethodInputs('<?php echo $code ?>', <?php echo $configShowBankData; ?>);"
-                       oninput="blockPaymentMethodInputs('<?php echo $code ?>', <?php echo $configShowBankData; ?>);"/>
+                       onchange="inputToNumbers(this); blockPaymentMethodInputs('<?php echo $code ?>', <?php echo $configShowBankData; ?>);"
+                       oninput="inputToNumbers(this); blockPaymentMethodInputs('<?php echo $code ?>', <?php echo $configShowBankData; ?>);"/>
             </div>
         </li>
         <li id="input_box_payone_bank_code">
@@ -103,9 +108,10 @@ $configShowBankData = $this->getPaymentConfig()->getSepaDeShowBankData();
                 <br class="clear"/>
                 <input type="text" id="<?php echo $code ?>_bank_code" name="payment[payone_bank_code]"
                        title="<?php echo $this->__('Bank code') ?>" class="validate-bank-code validate-digits input-text"
-                       value="" maxlength="8"
-                       onchange="blockPaymentMethodInputs('<?php echo $code ?>', <?php echo $configShowBankData; ?>);"
-                       oninput="blockPaymentMethodInputs('<?php echo $code ?>', <?php echo $configShowBankData; ?>);"/>
+                       value="<?php echo $this->getSavedCustomerData('payone_bank_code');?>"
+                       maxlength="8"
+                       onchange="inputToNumbers(this); blockPaymentMethodInputs('<?php echo $code ?>', <?php echo $configShowBankData; ?>);"
+                       oninput="inputToNumbers(this); blockPaymentMethodInputs('<?php echo $code ?>', <?php echo $configShowBankData; ?>);"/>
             </div>
         </li>
         <?php endif; ?>
@@ -119,9 +125,10 @@ $configShowBankData = $this->getPaymentConfig()->getSepaDeShowBankData();
 <script type="text/javascript">
     //    Add validation messages translation
     Translator.add('Bank code must contain 8 digits', '<?php echo $this->__('Bank code must contain 8 digits'); ?>');
-    Translator.add('IBAN should contain only letters and digits', '<?php echo $this->__('IBAN should contain nur letters and digits'); ?>');
+    Translator.add('IBAN should contain only letters and digits', '<?php echo $this->__('IBAN should contain only letters and digits'); ?>');
     Translator.add('BIC can contain only 8-11 characters (letters and digits)', '<?php echo $this->__('BIC can contain only 8-11 characters (letters and digits)'); ?>');
     Translator.add('Entered IBAN is not valid for selected bank country', '<?php echo $this->__('IBAN ist nicht gültig für gewähltes Bankland'); ?>');
 
     showBankData('<?php echo $code ?>', <?php echo $configShowBankData; ?>);
+    blockPaymentMethodInputs('<?php echo $code ?>', <?php echo $configShowBankData; ?>)
 </script>

@@ -21,17 +21,15 @@
  * @link            http://www.noovias.com
  */
 ?>
-<b>Hier können Sie eintragen welche Daten auf den Kontoabrechnungen des Käufers aus dem Shop erscheinen.</b><br>
+<b><?php echo $this->__('Here your can define what texts should appear on your customers account or credit card statements.'); ?></b><br>
 <br>
-<div class="field-name">Kreditkarte</div>
+<div class="field-name"><?php echo $this->__('Credit Card'); ?></div>
 <div class="field-description">
-    Hier können Sie eintragen welcher Text auf der Kreditkartenabrechnung des Käufers erscheint. Bitte prüfen Sie mit Ihrem Acquirer und PAYONE<br>
-    wieviele Zeichen an dieser Stelle für Sie zugelassen sind. Als Platzhalter können Sie die Variable <i>{{order_increment_id}}</i> verwenden.<br>
+	<?php echo $this->__("You can define here which text should appear on your customers' credit card statement. Please check with your acquirer and PAYONE how many characters you can use here. The variable <i>{{order_increment_id}}</i> can be used as a placeholder."); ?><br>
 </div>
 <br>
-<div class="field-name">Lastschrift</div>
+<div class="field-name"><?php echo $this->__('Direct Debit'); ?></div>
 <div class="field-description">
-    Hier können Sie eintragen welcher Text auf den Kontoauszügen des Käufers erscheint. Die zugelassene maximale Anzahl an Zeichen sind je 27 Zeichen in 3 Zeilen.<br>
-    Als Platzhalter können Sie die Variable <i>{{order_increment_id}}</i> verwenden.<br>
+	<?php echo $this->__("You can define here which text should appear on your customers' account statements. The maximum amount of characters is 3 lines with 27 characters each."); ?><br>
 </div>
 <br>

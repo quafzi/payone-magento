@@ -16,9 +16,9 @@
  * @package         Payone_Core_Model
  * @subpackage      System
  * @copyright       Copyright (c) 2012 <info@noovias.com> - www.noovias.com
- * @author          Matthias Walter <info@noovias.com>
+ * @author          Edward Mateja <edward.mateja@votum.de>
  * @license         <http://www.gnu.org/licenses/> GNU General Public License (GPL 3)
- * @link            http://www.noovias.com
+ * @link            http://www.votum.de
  */
 
 /**
@@ -26,9 +26,9 @@
  * @category        Payone
  * @package         Payone_Core_Model
  * @subpackage      System
- * @copyright       Copyright (c) 2012 <info@noovias.com> - www.noovias.com
+ * @copyright       Copyright (c) 2012 <info@votum.de> - www.votum.de
  * @license         <http://www.gnu.org/licenses/> GNU General Public License (GPL 3)
- * @link            http://www.noovias.com
+ * @link            http://www.votum.de
  */
 class Payone_Core_Model_System_Config_FinancingType extends Payone_Core_Model_System_Config_Abstract
 {
@@ -37,13 +37,20 @@ class Payone_Core_Model_System_Config_FinancingType extends Payone_Core_Model_Sy
      */
     public function toArray()
     {
-        $settings = new Payone_Settings_Configuration_PaymentMethod_Financing();
+        $types = array(
+            Payone_Api_Enum_FinancingType::CFR => Payone_Api_Enum_FinancingType::CFR,
+            Payone_Api_Enum_FinancingType::KLS => Payone_Api_Enum_FinancingType::KLS,
+        );
 
-        $types = $settings->getTypes();
-        if(array_key_exists(Payone_Api_Enum_FinancingType::BSV, $types))
-            unset($types[Payone_Api_Enum_FinancingType::BSV]); // BSV has a separate Payment method.
-        if(array_key_exists(Payone_Api_Enum_FinancingType::KLV, $types))
-            unset($types[Payone_Api_Enum_FinancingType::KLV]); // KLV has a separate Payment method.
         return $types;
+
+//        $settings = new Payone_Settings_Configuration_PaymentMethod_Financing();
+//
+//        $types = $settings->getTypes();
+//        if(array_key_exists(Payone_Api_Enum_FinancingType::BSV, $types))
+//            unset($types[Payone_Api_Enum_FinancingType::BSV]); // BSV has a separate Payment method.
+//        if(array_key_exists(Payone_Api_Enum_FinancingType::KLV, $types))
+//            unset($types[Payone_Api_Enum_FinancingType::KLV]); // KLV has a separate Payment method.
+//        return $types;
     }
 }

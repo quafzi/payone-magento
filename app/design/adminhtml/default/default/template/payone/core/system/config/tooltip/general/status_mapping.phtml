@@ -21,46 +21,42 @@
  * @link            http://www.noovias.com
  */
 ?>
-<p><strong>Der Status der Zahlung wird von der PAYONE Plattform mittels der Transaktionsstatusmeldung an den
-    Magento-Onlineshop versendet.<br>
-    Dieser Status kann viele verschiedene Zustände annehmen die äbhängig von der Zahlart sein können. An dieser Stelle
-    können Sie bestimmen<br>
-    welcher Zustand mit welchem Status in Magento verknüpft werden soll. Dies können Sie für alle Zahlarten
-    vornehmen.<br>
+<p><strong><?php echo $this->__('The status of a transaction is transmitted to the Magento Shop through a TransactionStatus message.'); ?><br>
+   <?php echo __('This status message can vary, depending on the payment method and the actual state of the transaction. Here you can map PAYONE transaction status to status of Magento orders. The setting can be configured individually per payment method.'); ?><br>
 </strong></p>
 <ul class="payone-config-warning">
-    <li class="payone-config-warning-content"><span>Stellen Sie weiterhin sicher, dass die Cronjobs für ihr System korrekt eingerichtet sind.<span></li>
+    <li class="payone-config-warning-content"><span><?php echo $this->__('Please make sure that Magento\'s cron jobs are configured correctly and working on your system.'); ?><span></li>
 </ul>
 <br>
-<div class="field-name">Transaktionsstatus-Meldung</div>
+<div class="field-name"><?php echo $this->__('TransactionStatus message'); ?></div>
 <div class="field-description">
-    <b>Optionen:</b><br>
+    <b><?php echo $this->__('Options'); ?>:</b><br>
     <ul>
-        <li>Erfolg</li>
-        <li>Einzug</li>
-        <li>Zahlung</li>
-        <li>Unterzahlung</li>
-        <li>Rückbelastung</li>
-        <li>Rückerstattung</li>
-        <li>Forderung</li>
-        <li>Mahnstatus</li>
-        <li>Buchung</li>
-        <li>Abrechnung</li>
-        <li>Umbuchung</li>
-        <li>Rechnungsbeleg</li>
+        <li><?php echo $this->__('Appointed'); ?></li>
+        <li><?php echo $this->__('Capture'); ?></li>
+        <li><?php echo $this->__('Paid'); ?></li>
+        <li><?php echo $this->__('Underpaid'); ?></li>
+        <li><?php echo $this->__('Cancelation'); ?></li>
+        <li><?php echo $this->__('Refund'); ?></li>
+        <li><?php echo $this->__('Debit'); ?></li>
+        <li><?php echo $this->__('Reminder'); ?></li>
+        <li><?php echo $this->__('Vauthorization'); ?></li>
+        <li><?php echo $this->__('Vsettlement'); ?></li>
+        <li><?php echo $this->__('Transfer'); ?></li>
+        <li><?php echo $this->__('Invoice'); ?></li>
     </ul>
 </div>
 <br>
-<div class="field-name">Magento-Status</div>
+<div class="field-name"><?php echo $this->__('Magento Status'); ?></div>
 <div class="field-description">
-    <b>Optionen:</b><br>
+    <b><?php echo $this->__('Options'); ?>:</b><br>
     <ul>
-        <li>Ausstehend</li>
-        <li>Verarbeitung</li>
-        <li>Vollständig</li>
-        <li>Geschlossen</li>
-        <li>Storniert</li>
-        <li>Zurückgestellt</li>
+        <li><?php echo $this->__('Open'); ?></li>
+        <li><?php echo $this->__('In Progress'); ?></li>
+        <li><?php echo $this->__('Complete'); ?></li>
+        <li><?php echo $this->__('Closed'); ?></li>
+        <li><?php echo $this->__('Cancelation'); ?></li>
+        <li><?php echo $this->__('Delivered'); ?></li>
     </ul>
 </div>
 <br>

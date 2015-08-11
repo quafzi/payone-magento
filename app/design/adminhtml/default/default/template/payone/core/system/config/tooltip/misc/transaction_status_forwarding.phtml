@@ -23,13 +23,13 @@
 
 $timeout = Payone_Core_Model_Service_TransactionStatus_Forward::DEFAULT_TIMEOUT;
 ?>
-Wählen Sie zunächst die Transaktionstatus-Meldungen aus welche weitergeleitet werden sollen.<br>
+<?php echo $this->__('Firstly, choose the transaction status messages you wish to be forwarded.'); ?><br>
 <br>
-Danach geben Sie die URL an, an welche die Status-Meldungen gesendet werden sollen.<br>
+<?php echo $this->__('Then, choose the URL they should be forwarded to.'); ?><br>
 <br>
-Die Meldungen werden so weitergegeben wie diese von PAYONE an Magento gemeldet wurden.<br>
+<?php echo $this->__('The status messages will be forwarded exactly as Magento receives them from PAYONE.'); ?><br>
 <br>
-Bei Bedarf können Sie im Feld Timeout selbigen erhöhen (Standard: <?php echo $timeout ?>s )<br>
+<?php echo $this->__('You can specify an individual time out, should this be necessary (default timeout: %ds )', $timeout); ?><br>
 <ul class="payone-config-warning">
-    <li class="payone-config-warning-content"><span>Stellen Sie weiterhin sicher, dass die Cronjobs für ihr System korrekt eingerichtet sind.<span></li>
+    <li class="payone-config-warning-content"><span><?php echo $this->__('Please make sure that cron jobs are configured and working correctly in order to use this feature.'); ?><span></li>
 </ul>

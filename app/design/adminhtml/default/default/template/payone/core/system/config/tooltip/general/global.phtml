@@ -21,48 +21,47 @@
  * @link            http://www.noovias.com
  */
 ?>
-<b>Um die Kommunikation mit der PAYONE Plattform sicherzustellen müssen in diesem Bereich die u.g. Daten aus dem PAYONE Merchant Interface eingetragen werden.</b><br>
+<b><?php echo $this->__('Enter the data from the PAYONE Merchant Interface shown below in this form to ensure communication with the PAYONE Platform.'); ?></b><br>
     <br>
     <img src="<?php echo $this->getSkinUrl('payone/core/images/magento_general_global.png'); ?>" alt="magento_general_global.png" /><br>
 <br>
-<div class="field-name">Merchant - ID</div>
+<div class="field-name"><?php echo $this->__('Merchant-ID'); ?></div>
 <div class="field-description">
-    Die Kundennummer, die Sie für Ihren Account bei PAYONE erhalten haben.<br>
+    <?php echo $this->__('The merchant ID you received from PAYONE.'); ?><br>
 </div>
 <br>
-<div class="field-name">Portal-ID</div>
+<div class="field-name"><?php echo $this->__('Portal-ID'); ?></div>
 <div class="field-description">
-    Die Identifikationsnummer des Zahlungsportals über das alle Transaktionen für Ihren Shop abgewickelt werden sollen.<br>
+	<?php echo $this->__('The ID number of the payment portal for processing of the all transactions of your shop.'); ?><br>
 </div>
 <br>
-<div class="field-name">Sub-Account-ID</div>
+<div class="field-name"><?php echo $this->__('Sub-Account-ID'); ?></div>
 <div class="field-description">
-    Die Identifikationsnnummer der Abrechnungseinheit die Sie im PMI erstellt haben.<br>
+    <?php echo $this->__('The ID number of the Sub-Account through which all your payments are going to be processed.'); ?><br>
 </div>
 <br>
-<div class="field-name">Sicherheitsschlüssel (Key)</div>
+<div class="field-name"><?php echo $this->__('Security Key'); ?></div>
 <div class="field-description">
-    Tragen Sie hier den von Ihnen definierten PMI-Sicherheitsschlüssel ein, um eine gesicherte Kommunikation zu gewährleisten.<br>
+    <?php echo $this->__('The key that you defined in the PMI to encrypt the queries sent to the PAYONE Platform.'); ?><br>
 </div>
 <br>
-<div class="field-name">Zahlung aus erlaubten Ländern</div>
+<div class="field-name"><?php echo $this->__('Payment from allowed countries'); ?></div>
 <div class="field-description">
-    Definieren Sie die Länder, in denen diese Einstellungen gelten. Die Einstellung folgt dem Magento Länderauswahlstandard.<br>
+	<?php echo $this->__('Define the countries to which this settings should apply. This setting follows the Magento country standard.'); ?>
 </div>
 <br>
-<div class="field-name">Autorisierungsmethode</div>
+<div class="field-name"><?php echo $this->__('Authorization method'); ?></div>
 <div class="field-description">
-    Hier können Sie einstellen welches Verfahren Sie für Ihre Transaktion verwenden wollen.<br>
+    <?php echo $this->__('Chose here which method to apply for your payments'); ?><br>
+    <?php echo $this->__('Note: For the online transfer methods giropay, SOFORT Banking, eps, PostFinance and iDEAL the payment is carried out fully and completely even if you have selected "Pre-authorisation". Despite this, you would still have to post the receivable via a separate capture, in this case.'); ?><br>
     <br>
-    <b>Optionen:</b><br>
+    <b><?php echo $this->__('Options'); ?>:</b><br>
     <ul>
-        <li>Vorautorisierung<br>
-            Dieses Verfahren versucht zunächst eine Reservierung des Betrages auf dem ausgewählten Zahlungsmittel. Zu einen späteren Zeitpunkt<br>
-            wird per Capture das Geld vom Zahlungsmittel abgebucht. Dieses Verfahren ist zu empfehlen, wenn Sie Versender von materiellen Gütern sind.<br>
-            Erst zum Zeitpunkt des Warenversandes wird dann der Geldeinzug vorgenommen.
+        <li><?php echo $this->__('Pre-authorization'); ?><br>
+			<?php echo $this->__('When selecting "Pre-authorisation" the amount to be paid is reserved during the ordering process. In this case, the actual capture of the amount must be initiated in a second step upon delivery of the goods. The receivable will only be posted after the amount has been captured.'); ?>
         </li>
-        <li>Autorisierung<br>
-            Dieses Verfahren zieht das Geld sofort vom ausgewählten Zahlungsmittel ein. Diese Methode empfiehlt sich für alle imateriellen Güter oder Content.
+        <li><?php echo $this->__('Authorization'); ?><br>
+            <?php echo $this->__('When selecting "Authorisation" the amount to be paid is debited directly in the course of the ordering process. The receivable is posted immediately.'); ?>
         </li>
     </ul>
 </div>

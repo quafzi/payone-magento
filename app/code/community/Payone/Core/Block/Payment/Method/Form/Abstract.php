@@ -259,4 +259,31 @@ class Payone_Core_Block_Payment_Method_Form_Abstract
         }
         return $this->factory;
     }
+
+    /**
+     * @param string $key
+     * @return string
+     */
+    public function getSavedCustomerData($key)
+    {
+        $paymentConfig = $this->getPaymentConfig();
+        if(Mage::getSingleton('customer/session')->isLoggedIn() && $paymentConfig->getCustomerFormDataSave()) {
+            $customerId = Mage::getSingleton('customer/session')->getCustomer()->getId();
+            $paymentCustomerModel = Mage::getModel('payone_core/domain_customer')->loadByCustomerIdPaymentCode($customerId, $this->getMethodCode());
+            if($keyData = $paymentCustomerModel->getCustomerData($key)) {
+                return $keyData;
+            }
+        }
+        return '';
+    }
+
+    /**
+     * @param string $text
+     * @return string
+     */
+    public function strToXXX($text) {
+        $result = str_repeat('x', strlen($text) - 8);
+        $result = substr($text, 0, 4).$result.substr($text, -4);
+        return $result;
+    }
 }

@@ -21,25 +21,9 @@
  * @link            http://www.noovias.com
  */
 ?>
-<b>Infoscore harte Merkmale:</b><br>
-Prüfung auf so genannte "harte" Negativmerkmale (z.B. Verbraucherinsolvenzverfahren, Haftbefehl zur Eidesstattliche
-Versicherung oder Erzwingung der Abgabe der Eidesstattlichen Versicherung).<br>
-Die Bonitätsprüfung unterstützt ausschließlich die Prüfung von Käufern aus Deutschland.<br>
-<br>
-<b>Infoscore alle Merkmale:</b><br>
-Prüfung auf so genannte "harte" Negativmerkmale (z.B. Verbraucherinsolvenzverfahren, Haftbefehl zur Eidesstattliche
-Versicherung oder Erzwingung der Abgabe der Eidesstattlichen Versicherung), "mittlere" Negativmerkmale
-(z.B. Mahnbescheid, Vollstreckungsbescheid oder Zwangsvollstreckung) und "weiche" Negativmerkmale
-(z.B. Inkasso-Mahnverfahren eingeleitet, Fortlauf des außergerichtlichen Inkasso-Mahnverfahrens nach Teilzahlung,
-Einstellung des außergerichtlichen Inkasso-Mahnverfahrens wegen Aussichtslosigkeit).<br>
-Die Bonitätsprüfung unterstützt ausschließlich die Prüfung von Käufern aus Deutschland.<br>
-<br>
-<b>Infoscore alle Merkmale+Boniscore:</b><br>
-Prüfung auf so genannte "harte" Negativmerkmale (z.B. Verbraucherinsolvenzverfahren, Haftbefehl zur Eidesstattliche
-Versicherung oder Erzwingung der Abgabe der Eidesstattlichen Versicherung), "mittlere" Negativmerkmale (z.B. Mahnbescheid,
-Vollstreckungsbescheid oder Zwangsvollstreckung) und "weiche" Negativmerkmale (z.B. Inkasso-Mahnverfahren eingeleitet,
-Fortlauf des außergerichtlichen Inkasso-Mahnverfahrens nach Teilzahlung, Einstellung des außergerichtlichen
-Inkasso-Mahnverfahrens wegen Aussichtslosigkeit). Die Bonitätsprüfung unterstützt ausschließlich die Prüfung von
-Käufern aus Deutschland.<br>
-<br>
-Der Boniscore ist ein Scorewert und ermöglicht eine höhere Trennschärfe bei vorliegenden Negativmerkmalen.
+<b><?php echo $this->__('Infoscore hard features'); ?></b><br>
+<?php echo $this->__('Check for so-called "hard" negative features (e.g. consumer insolvency proceedings, warrant for an affidavit or forced swearing of an affidavit'); ?><br>
+<b><?php echo $this->__('Infoscore all features'); ?></b><br>
+<?php echo $this->__('Check for so-called "hard" negative features (e.g. consumer insolvency proceedings, warrant for an affidavit or forced swearing of an affidavit, "medium" negative features (e.g. court order, writ of execution or foreclosure) and "soft" negative features (e.g. initiated debt collection proceedings, progression of an extrajudicial debt collection order, or cancelation of an extrajudicial payment procedure for futility).'); ?>
+<b><?php echo $this->__('Infoscore all features + Boniscore'); ?></b><br>
+<?php echo $this->__('Check for so-called "hard" negative features (e.g. consumer insolvency proceedings, warrant for an affidavit or forced swearing of an affidavit, "medium" negative features (e.g. court order, writ of execution or foreclosure) and "soft" negative features (e.g. initiated debt collection proceedings, progression of an extrajudicial debt collection order, or cancelation of an extrajudicial payment procedure for futility). The Boniscore is a score value and allows for higher selectivity at present negative attributes.'); ?>

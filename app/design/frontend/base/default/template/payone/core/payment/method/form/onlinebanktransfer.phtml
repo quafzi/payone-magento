@@ -46,6 +46,9 @@ $paymentType = $this->getInfoData('payone_onlinebanktransfer_type');
                             $paymentConfigId = $typeConfigId;
                             $selected = 'selected="selected"';
                         }
+                        if ($this->getSavedCustomerData('payone_onlinebanktransfer_type') == $type['code']) {
+                            $selected = 'selected="selected"';
+                        }
                         ?>
                         <option value="<?php echo $key ?>"<?php echo $selected; ?>>
                             <?php echo $type['name']; ?><span><?php echo $type['fee']; ?></span>
@@ -64,12 +67,15 @@ $paymentType = $this->getInfoData('payone_onlinebanktransfer_type');
                 <label for="<?php echo $code ?>_sepa_iban">
                     <?php echo $this->__('IBAN') ?>&nbsp;<span class="required">*</span>
                 </label><br class="clear"/>
-                <input type="text" id="<?php echo $code ?>_sepa_iban" name="payment[payone_sepa_iban]"
+                <input type="text" id="<?php echo $code ?>_sepa_iban_xxx"
                        title="<?php echo $this->__('IBAN') ?>"
-                       class="validate-sepa-iban required-entry input-text" value=""
+                       class="validate-sepa-iban required-entry input-text"
+                       value="<?php echo $this->strToXXX($this->getSavedCustomerData('payone_sepa_iban'));?>"
                        autocomplete="off" maxlength="34"
-                       onchange="inputToUpperCase(this);"
-                       oninput="inputToUpperCase(this);"/>
+                       onchange="inputToUppaerCaseAndNumbers(this); copyOnlineBankTransferSepaIban('<?php echo $code ?>');"
+                       oninput="inputToUppaerCaseAndNumbers(this); copyOnlineBankTransferSepaIban('<?php echo $code ?>');"/>
+                <input type="hidden" id="<?php echo $code ?>_sepa_iban" name="payment[payone_sepa_iban]"
+                       value="<?php echo $this->getSavedCustomerData('payone_sepa_iban');?>">
             </div>
         </li>
         <li id="sepa_bic_wrap" style="display:none;">
@@ -79,10 +85,11 @@ $paymentType = $this->getInfoData('payone_onlinebanktransfer_type');
                 </label><br class="clear"/>
                 <input type="text" id="<?php echo $code ?>_sepa_bic" name="payment[payone_sepa_bic]"
                        title="<?php echo $this->__('BIC') ?>"
-                       class="validate-sepa-bic required-entry input-text" value=""
+                       class="validate-sepa-bic required-entry input-text"
+                       value="<?php echo $this->getSavedCustomerData('payone_sepa_bic');?>"
                        autocomplete="off" maxlength="11"
-                       onchange="inputToUpperCase(this);"
-                       oninput="inputToUpperCase(this);"/>
+                       onchange="inputToUppaerCaseAndNumbers(this);"
+                       oninput="inputToUppaerCaseAndNumbers(this);"/>
             </div>
         </li>
         <li id="account_number_wrap" style="display:none;">
@@ -92,8 +99,12 @@ $paymentType = $this->getInfoData('payone_onlinebanktransfer_type');
                 </label><br class="clear"/>
                 <input type="text" id="<?php echo $code ?>_account_number" name="payment[payone_account_number]"
                        title="<?php echo $this->__('Account number') ?>"
-                       class="validate-digits required-entry input-text" value="" autocomplete="off"
-                       maxlength="10"/>
+                       class="validate-digits required-entry input-text"
+                       value="<?php echo $this->getSavedCustomerData('payone_account_number');?>"
+                       autocomplete="off"
+                       maxlength="10"
+                       onchange="inputToNumbers(this)"
+                       onimput="inputToNumbers(this)"/>
             </div>
         </li>
         <li id="bank_code_wrap" style="display:none;">
@@ -104,7 +115,10 @@ $paymentType = $this->getInfoData('payone_onlinebanktransfer_type');
                 <input type="text" id="<?php echo $code ?>_bank_code" name="payment[payone_bank_code]"
                        title="<?php echo $this->__('Bank code') ?>"
                        class="validate-bank-code validate-digits required-entry input-text"
-                       value="" maxlength="8"/>
+                       value="<?php echo $this->getSavedCustomerData('payone_bank_code');?>"
+                       maxlength="8"
+                       onchange="inputToNumbers(this)"
+                       onimput="inputToNumbers(this)"/>
             </div>
         </li>
         <?php echo $this->getBlockHtmlBankGroup(); ?>

@@ -92,6 +92,12 @@ function enableElement(element) {
     element.toggleClassName('require-entry');
 }
 
+function copyDebitPaymentSepaIban(code) {
+    var input_sepa_iban_xxx_el = $(code + '_sepa_iban_xxx');
+    var input_sepa_iban_el = $(code + '_sepa_iban');
+    input_sepa_iban_el.value = input_sepa_iban_xxx_el.value;
+}
+
 function blockPaymentMethodInputs(code, configShowBankData) {
     var input_sepa_iban_el = $(code + '_sepa_iban');
     var input_sepa_bic_el = $(code + '_sepa_bic');

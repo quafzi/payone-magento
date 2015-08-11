@@ -79,7 +79,7 @@ abstract class Payone_Core_Model_Mapper_ApiRequest_Payment_Abstract
     {
         $helper = $this->helper();
 
-        $solutionName = 'noovias';
+        $solutionName = 'votum';
         $solutionVersion = $helper->getPayoneVersion();
         $integratorName = 'magento';
         $integratorVersion = $helper->getMagentoVersion();
@@ -107,11 +107,13 @@ abstract class Payone_Core_Model_Mapper_ApiRequest_Payment_Abstract
         if (empty($sku)) {
             $sku = $this->helper()->__(self::DEFAULT_SHIPPING_SKU);
         }
+        $params['it'] = Payone_Api_Enum_InvoicingItemType::SHIPMENT;
         $params['id'] = $sku;
         $params['de'] = $order->getShippingDescription();
         $params['no'] = 1;
         $params['pr'] = $order->getShippingInclTax();
-        $params['va'] = $this->getShippingTaxRate();
+//        $params['va'] = $this->getShippingTaxRate();
+        $params['va'] = round( $this->getShippingTaxRate() * 100 );   // transfer vat in basis point format [#MAGE-186]
 
         if ($this->getPaymentMethod()->mustTransmitInvoicingItemTypes()) {
             $params['it'] = Payone_Api_Enum_InvoicingItemType::SHIPMENT;
@@ -138,7 +140,7 @@ abstract class Payone_Core_Model_Mapper_ApiRequest_Payment_Abstract
         if (empty($description)) {
             $description = $this->helper()->__(self::DEFAULT_DISCOUNT_SKU);
         }
-
+        $params['it'] = Payone_Api_Enum_InvoicingItemType::VOUCHER;
         $params['id'] = $sku;
         $params['de'] = $description;
         $params['no'] = 1;
@@ -168,7 +170,7 @@ abstract class Payone_Core_Model_Mapper_ApiRequest_Payment_Abstract
         if (empty($sku)) {
             $sku = $this->helper()->__(self::DEFAULT_SHIPPING_SKU);
         }
-
+        $params['it'] = Payone_Api_Enum_InvoicingItemType::SHIPMENT;
         $params['id'] = $sku;
         $params['de'] = $order->getShippingDescription();
         $params['no'] = 1;
@@ -201,6 +203,7 @@ abstract class Payone_Core_Model_Mapper_ApiRequest_Payment_Abstract
             $name = $this->helper()->__(self::DEFAULT_ADJUSTMENT_POSITIVE_SKU);
         }
 
+        $params['it'] = Payone_Api_Enum_InvoicingItemType::GOODS;
         $params['id'] = $sku;
         $params['de'] = $name;
         $params['no'] = 1;
@@ -234,6 +237,7 @@ abstract class Payone_Core_Model_Mapper_ApiRequest_Payment_Abstract
             $name = $this->helper()->__(self::DEFAULT_ADJUSTMENT_NEGATIVE_SKU);
         }
 
+        $params['it'] = Payone_Api_Enum_InvoicingItemType::GOODS;
         $params['id'] = $sku;
         $params['de'] = $name;
         $params['no'] = 1;

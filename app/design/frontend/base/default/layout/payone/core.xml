@@ -22,6 +22,61 @@
  */
 -->
 <layout>
+    <payone_core_pexpress_review translate="label">
+        <label>Payone PayPal Express Order Review Form</label>
+        <remove name="right"/>
+        <remove name="left"/>
+
+        <reference name="root">
+            <action method="setTemplate"><template>page/1column.phtml</template></action>
+        </reference>
+        <reference name="content">
+            <block type="payone_core/paypal_express_review" name="paypal.express.review" template="paypal/express/review.phtml">
+                <block type="payone_core/paypal_express_review_billing" name="express.review.billing" as="billing" template="paypal/express/review/address.phtml"/>
+                <block type="payone_core/paypal_express_review_shipping" name="express.review.shipping" as="shipping" template="paypal/express/review/address.phtml"/>
+                <block type="payone_core/paypal_express_review" name="express.review.shipping.method" as="shipping_method" template="paypal/express/review/shipping/method.phtml"/>
+                <block type="payone_core/paypal_express_review_details" name="paypal.express.review.details" as="details" template="paypal/express/review/details.phtml">
+                    <action method="addItemRender"><type>default</type><block>checkout/cart_item_renderer</block><template>checkout/onepage/review/item.phtml</template></action>
+                    <action method="addItemRender"><type>grouped</type><block>checkout/cart_item_renderer_grouped</block><template>checkout/onepage/review/item.phtml</template></action>
+                    <action method="addItemRender"><type>configurable</type><block>checkout/cart_item_renderer_configurable</block><template>checkout/onepage/review/item.phtml</template></action>
+                    <block type="checkout/cart_totals" name="paypal.express.review.details.totals" as="totals" template="checkout/onepage/review/totals.phtml"/>
+                </block>
+                <block type="checkout/agreements" name="paypal.express.review.details.agreements" as="agreements" template="checkout/onepage/agreements.phtml"/>
+            </block>
+        </reference>
+        <reference name="head">
+            <action method="addItem"><type>skin_js</type><name>js/checkout/review.js</name></action>
+        </reference>
+        <block type="core/text_list" name="additional.product.info" />
+    </payone_core_pexpress_review>
+
+    <checkout_cart_index>
+        <reference name="checkout.cart.top_methods">
+            <block type="payone_core/paypal_express_shortcut" name="payone.checkout.cart.methods.paypal_express.top" before="-" template="payone/core/paypal/express/shortcut.phtml">
+                <action method="setIsQuoteAllowed"><value>1</value></action>
+                <action method="setShowOrPosition"><value>after</value></action>
+            </block>
+        </reference>
+
+        <reference name="checkout.cart.methods">
+            <block type="payone_core/paypal_express_shortcut" name="payone.checkout.cart.methods.paypal_express.bottom" before="-" template="payone/core/paypal/express/shortcut.phtml">
+                <action method="setIsQuoteAllowed"><value>1</value></action>
+                <action method="setShowOrPosition"><value>after</value></action>
+            </block>
+        </reference>
+
+        <!--<update handle="SHORTCUT_popup" />-->
+    </checkout_cart_index>
+
+    <default>
+        <reference name="topCart.extra_actions">
+            <block type="payone_core/paypal_express_shortcut" name="payone.paypal.partner.top_cart.shortcut" template="payone/core/paypal/express/shortcut.phtml"/>
+        </reference>
+        <reference name="cart_sidebar.extra_actions">
+            <block type="payone_core/paypal_express_shortcut" name="payone.paypal.partner.cart_sidebar.shortcut" template="payone/core/paypal/express/shortcut.phtml"/>
+        </reference>
+    </default>
+
     <checkout_onepage_index>
         <reference name="head">
             <action method="addJs"><script>payone/core/client_api.js</script></action>
@@ -72,5 +127,21 @@
                    template="payone/core/checkout/onepage/success/sepamandatepdflink.phtml"
                    after="checkout.success" />
         </reference>
+        <reference name="content">
+            <block type="payone_core/checkout_onepage_success_barzahlen"
+                   template="payone/core/checkout/onepage/success/barzahlen.phtml"
+                   after="checkout.success" />
+        </reference>
     </checkout_onepage_success>
+
+    <payone_core_iframe_show translate="label">
+        <label>Payment with Yapital</label>
+        <reference name="content">
+            <block type="payone_core/checkout_onepage_payment_iframe" name="payone.core.checkout.iframe" template="payone/core/checkout/iframe.phtml" />
+        </reference>
+
+        <reference name="root">
+            <action method="setTemplate"><template>page/1column.phtml</template></action>
+        </reference>
+    </payone_core_iframe_show>
 </layout>

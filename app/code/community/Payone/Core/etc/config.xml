@@ -15,16 +15,16 @@
  * @category        Payone
  * @package         Payone_Core
  * @subpackage      etc
- * @copyright       Copyright (c) 2012 <info@noovias.com> - www.noovias.com
- * @author          Matthias Walter <info@noovias.com>
+ * @copyright       Copyright (c) 2012 <info@votum.de> - www.votum.de
+ * @author          Edward Mateja <edward.mateja@votum.de>
  * @license         <http://www.gnu.org/licenses/> GNU General Public License (GPL 3)
- * @link            http://www.noovias.com
+ * @link            http://www.votum.de
  */
 -->
 <config>
     <modules>
         <Payone_Core>
-            <version>3.2.0</version>
+            <version>3.3.9</version>
         </Payone_Core>
     </modules>
 
@@ -67,6 +67,9 @@
                     <config_payment_method>
                         <table>payone_config_payment_method</table>
                     </config_payment_method>
+                    <customer>
+                        <table>payone_customer</table>
+                    </customer>
                 </entities>
             </payone_core_resource>
 
@@ -157,6 +160,10 @@
                     <!-- Financing: Type -->
                     <to_order_payment>*</to_order_payment>
                 </payone_safe_invoice_type>
+                <payone_klarna_campaign_code>
+                    <!-- Financing Klarna: Campaign Code -->
+                    <to_order_payment>*</to_order_payment>
+                </payone_klarna_campaign_code>
                 <payone_onlinebanktransfer_type>
                     <!-- Online Bank Transfer: Type -->
                     <to_order_payment>*</to_order_payment>
@@ -328,6 +335,14 @@
                     </payone_core_observer>
                 </observers>
             </sales_order_resource_init_virtual_grid_columns>
+            <sales_order_payment_place_end>
+                <observers>
+                    <payone_core_observer>
+                        <class>payone_core/observer_sales_order</class>
+                        <method>paymentPlaceEnd</method>
+                    </payone_core_observer>
+                </observers>
+            </sales_order_payment_place_end>
             <sales_order_place_after>
                 <observers>
                     <payone_core_observer>
@@ -430,6 +445,15 @@
                     </payone_core_observer_config_protect>
                 </observers>
             </admin_system_config_changed_section_payone_protect>
+
+            <sales_order_save_commit_after>
+                <observers>
+                    <downloadable_observer>
+                        <class>downloadable/observer</class>
+                        <method>setLinkStatus</method>
+                    </downloadable_observer>
+                </observers>
+            </sales_order_save_commit_after>
         </events>
     </global>
 
@@ -509,6 +533,16 @@
                 <model>payone_core/payment_method_creditcard</model>
                 <group>payone</group>
             </payone_creditcard>
+            <payone_creditcard_iframe translate="title" module="payone_core">
+                <title>PAYONE - CreditCard Channel Frontend</title>
+                <model>payone_core/payment_method_creditcardIframe</model>
+                <group>payone</group>
+            </payone_creditcard_iframe>
+            <payone_barzahlen translate="title" module="payone_core">
+                <title>PAYONE - Barzahlen</title>
+                <model>payone_core/payment_method_barzahlen</model>
+                <group>payone</group>
+            </payone_barzahlen>
             <payone_cash_on_delivery translate="title" module="payone_core">
                 <title>PAYONE - Cash on Delivery</title>
                 <model>payone_core/payment_method_cashOnDelivery</model>
@@ -584,6 +618,12 @@
             <template_cash_on_delivery>
                 <use_global>1</use_global>
             </template_cash_on_delivery>
+            <template_creditcard_iframe>
+                <use_global>1</use_global>
+            </template_creditcard_iframe>
+            <template_barzahlen>
+                <use_global>1</use_global>
+            </template_barzahlen>
         </payone_payment>
         <payone_general>
             <global>
@@ -628,6 +668,7 @@ Detaillierte Informationen zur Arbeitsweise der ABC finde ich unter www.abc.de/f
                 <cron_expr>* * * * *</cron_expr>
                 <valid_ips><![CDATA[213.178.72.196
 213.178.72.197
+185.60.20.*
 217.70.200.*]]></valid_ips>
                 <proxy_mode>0</proxy_mode>
             </transactionstatus_processing>

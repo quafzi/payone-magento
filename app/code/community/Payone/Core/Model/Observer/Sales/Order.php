@@ -33,6 +33,7 @@
 class Payone_Core_Model_Observer_Sales_Order
     extends Payone_Core_Model_Observer_Abstract
 {
+
     /**
      * @param Varien_Event_Observer $observer
      * @return void
@@ -77,5 +78,65 @@ class Payone_Core_Model_Observer_Sales_Order
         if ($methodInstance instanceof Payone_Core_Model_Payment_Method_Abstract) {
             $methodInstance->cancel($payment);
         }
+    }
+
+    /**
+     *
+     * @param Varien_Event_Observer $observer (has data 'payment' with a payment info instance (Mage_Sales_Model_Order_Payment))
+     */
+    public function paymentPlaceEnd(Varien_Event_Observer $observer)
+    {
+        /** @var $payment Mage_Sales_Model_Order_Payment */
+        $payment = $observer->getEvent()->getPayment();
+
+        if(!$payment->getOrder()->getCustomerIsGuest()) {
+            $customer = $payment->getOrder()->getCustomer();
+            $customer->setPayoneLastPaymentMethod($payment->getMethod());
+            $customer->save();
+        }
+
+        if(($payment->getMethodInstance() instanceof Payone_Core_Model_Payment_Method_Abstract) && (!$payment->getOrder()->getCustomerIsGuest())) {
+            $customerId = $payment->getOrder()->getCustomer()->getId();
+            $customerSavedData = array();
+            $paymentMethodCode = '';
+            if($payment->getMethodInstance()->getCode() == Payone_Core_Model_System_Config_PaymentMethodCode::DEBITPAYMENT) {
+                $paymentMethodCode = $payment->getMethodInstance()->getCode();
+                $customerSavedData['payone_account_number'] = $payment->getPayoneAccountNumber()?$payment->getPayoneAccountNumber():'';
+                $customerSavedData['payone_bank_code']      = $payment->getPayoneBankCode()?$payment->getPayoneBankCode():'';
+                $customerSavedData['payone_sepa_iban']      = $payment->getPayoneSepaIban()?$payment->getPayoneSepaIban():'';
+                $customerSavedData['payone_sepa_bic']       = $payment->getPayoneSepaBic()?$payment->getPayoneSepaBic():'';
+                $customerSavedData['payone_bank_country']   = $payment->getPayoneBankCountry();
+            }
+            if($payment->getMethodInstance()->getCode() == Payone_Core_Model_System_Config_PaymentMethodCode::ONLINEBANKTRANSFER) {
+                $paymentMethodCode = $payment->getMethodInstance()->getCode();
+                $customerSavedData['payone_onlinebanktransfer_type'] = $payment->getPayoneOnlinebanktransferType();
+                $customerSavedData['payone_account_number'] = $payment->getPayoneAccountNumber()?$payment->getPayoneAccountNumber():'';
+                $customerSavedData['payone_bank_code']      = $payment->getPayoneBankCode()?$payment->getPayoneBankCode():'';
+                $customerSavedData['payone_sepa_iban']      = $payment->getPayoneSepaIban()?$payment->getPayoneSepaIban():'';
+                $customerSavedData['payone_sepa_bic']       = $payment->getPayoneSepaBic()?$payment->getPayoneSepaBic():'';
+                $customerSavedData['payone_bank_group']     = $payment->getPayoneBankGroup();
+            }
+            if($payment->getMethodInstance()->getCode() == Payone_Core_Model_System_Config_PaymentMethodCode::CREDITCARD) {
+                $paymentMethodCode = $payment->getMethodInstance()->getCode();
+                $customerSavedData['cc_owner'] = $payment->getCcOwner();
+                $customerSavedData['cc_type'] = $payment->getCcType();
+                $customerSavedData['cc_exp_year'] = $payment->getCcExpYear();
+                $customerSavedData['cc_exp_month'] = $payment->getCcExpMonth();
+                $customerSavedData['cc_number_enc'] = $payment->getCcNumberEnc();
+                $customerSavedData['payone_pseudocardpan'] = $payment->getPayonePseudocardpan();
+                $customerSavedData['payone_config_payment_method_id'] = $payment->getPayoneConfigPaymentMethodId();
+            }
+
+            if(!empty($paymentMethodCode)) {
+                $paymentCustomerModel = Mage::getModel('payone_core/domain_customer')->loadByCustomerIdPaymentCode($customerId, $paymentMethodCode);
+                $paymentCustomerModel->setCustomerId($customerId);
+                $paymentCustomerModel->setCode($paymentMethodCode);
+                $paymentCustomerModel->setCustomerData($customerSavedData);
+                $paymentCustomerModel->save();
+//                Mage::log($paymentMethodCode, null, 'test.log', true);
+            }
+        }
+
+
     }
 }
