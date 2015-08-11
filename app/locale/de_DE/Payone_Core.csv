@@ -971,3 +971,6 @@
 "Firstname","Vorname"
 "Lastname","Nachname"
 "What is this?","Was ist das?"
+
+"Credit card validity period is too short.","Der Gültigkeitszeitraum ist zu kurz."
+"Credit card number does not match credit card type.","Die Kreditkartennummer passt nicht zu dem angegebenen Kreditkartentyp."
