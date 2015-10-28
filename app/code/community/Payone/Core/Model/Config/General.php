@@ -48,6 +48,10 @@ class Payone_Core_Model_Config_General extends Payone_Core_Model_Config_AreaAbst
      * @var Payone_Core_Model_Config_General_PaymentCreditcard
      */
     protected $payment_creditcard;
+    /**
+     * @var Payone_Core_Model_Config_General_PaymentPaypalExpressCheckout
+     */
+    protected $payment_paypal_express_checkout;
 
     /**
      * @var Payone_Core_Model_Config_General_ParameterNarrativeText
@@ -86,6 +90,7 @@ class Payone_Core_Model_Config_General extends Payone_Core_Model_Config_AreaAbst
         return $this->parameter_invoice;
     }
 
+
     /**
      * @param Payone_Core_Model_Config_General_PaymentCreditcard $payment_creditcard
      */
@@ -100,6 +105,22 @@ class Payone_Core_Model_Config_General extends Payone_Core_Model_Config_AreaAbst
     public function getPaymentCreditcard()
     {
         return $this->payment_creditcard;
+    }
+
+    /**
+     * @param Payone_Core_Model_Config_General_PaymentPaypalExpressCheckout $payment_paypal_express_checkout
+     */
+    public function setPaymentPaypalExpressCheckout(Payone_Core_Model_Config_General_PaymentPaypalExpressCheckout $payment_paypal_express_checkout)
+    {
+        $this->payment_paypal_express_checkout = $payment_paypal_express_checkout;
+    }
+
+    /**
+     * @return Payone_Core_Model_Config_General_PaymentPaypalExpressCheckout
+     */
+    public function getPaymentPaypalExpressCheckout()
+    {
+        return $this->payment_paypal_express_checkout;
     }
 
     /**

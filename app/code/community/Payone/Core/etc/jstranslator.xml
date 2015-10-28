@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<jstranslator>
+    <!-- validation -->
+    <validate-payone-cc-type translate="message" module="core">
+        <message>Credit card number does not match credit card type.</message>
+    </validate-payone-cc-type>
+    <validate-payone-cc-validity-period translate="message" module="core">
+        <message>Credit card validity period is too short.</message>
+    </validate-payone-cc-validity-period>
+</jstranslator>

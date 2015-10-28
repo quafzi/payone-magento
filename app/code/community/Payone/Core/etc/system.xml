@@ -358,12 +358,61 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </min_validity_period>
+                        <cc_request_type translate="label">
+                            <label>Request-type</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>payone_core/system_config_creditcardRequestType</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </cc_request_type>
+                        <cc_template translate="label">
+                            <label>Input-configuration</label>
+                            <frontend_model>payone_core/adminhtml_system_config_form_field_creditcardTemplate</frontend_model>
+                            <backend_model>adminhtml/system_config_backend_serialized_array</backend_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </cc_template>
                     </fields>
                 </payment_creditcard>
+                <payment_paypal_express_checkout>
+                    <label>Payment Paypal Express Checkout</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>110</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <paypal_express_checkout_visible_on_cart translate="label">
+                            <label>PayPal Express Checkout Shortcut on Shopping Cart</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </paypal_express_checkout_visible_on_cart>
+                        <paypal_express_checkout_image translate="label">
+                            <label>Paypal Express Image Button</label>
+                            <frontend_type>image</frontend_type>
+                            <backend_model>adminhtml/system_config_backend_image</backend_model>
+                            <upload_dir config="system/filesystem/media" scope_info="1">payone</upload_dir>
+                            <base_url type="media" scope_info="1">payone</base_url>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Allowed file types: jpeg, gif, png.</comment>
+                        </paypal_express_checkout_image>
+                    </fields>
+                </payment_paypal_express_checkout>
                 <parameter_narrative_text>
                     <label>Narrative Text</label>
                     <frontend_type>text</frontend_type>
-                    <sort_order>110</sort_order>
+                    <sort_order>120</sort_order>
                     <show_in_default>1</show_in_default>
                     <show_in_website>1</show_in_website>
                     <show_in_store>1</show_in_store>
@@ -633,6 +682,15 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </check_cvc>
+                        <customer_form_data_save translate="label,comment">
+                            <label>Save payment data for logged in customer</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>270</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </customer_form_data_save>
                     </fields>
                 </template_creditcard>
                 <template_debit_payment translate="label" module="payone_core">
@@ -715,6 +773,15 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </sepa_mandate_download_enabled>
+                        <customer_form_data_save translate="label,comment">
+                            <label>Save payment data for logged in customer</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>270</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </customer_form_data_save>
                     </fields>
                 </template_debit_payment>
                 <template_online_bank_transfer translate="label" module="payone_core">
@@ -734,6 +801,15 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </types>
+                        <customer_form_data_save translate="label,comment">
+                            <label>Save payment data for logged in customer</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>270</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </customer_form_data_save>
                     </fields>
                 </template_online_bank_transfer>
                 <template_invoice translate="label" module="payone_core">
@@ -809,16 +885,34 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </types>
-                        <request_type translate="label">
-                            <label>Authorize-Method</label>
-                            <comment>Please note that for Commerz Finanz only the mode "preauthorization" is available. Afterwards payments must be captured. (CAPTURE)</comment>
-                            <frontend_type>select</frontend_type>
-                            <source_model>payone_core/system_config_authorizeMethodFinancing</source_model>
+                        <klarna_config translate="label">
+                            <label>Klarna Store-IDs</label>
+                            <comment>Required when using Klarna</comment>
+                            <frontend_model>payone_core/adminhtml_system_config_form_field_klarnaStoreId</frontend_model>
+                            <backend_model>adminhtml/system_config_backend_serialized_array</backend_model>
                             <sort_order>210</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
-                        </request_type>
+                        </klarna_config>
+                        <klarna_campaign_code translate="label, comment">
+                            <label>Klarna Campaign Code</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>220</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </klarna_campaign_code>
+                        <request_type_cfr translate="label">
+                            <label>Authorize-Method</label>
+                            <comment>Please note that for Commerz Finanz only the mode "preauthorization" is available. Afterwards payments must be captured. (CAPTURE)</comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>payone_core/system_config_authorizeMethodFinancing</source_model>
+                            <sort_order>230</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </request_type_cfr>
                     </fields>
                 </template_financing>
                 <template_wallet translate="label" module="payone_core">
@@ -858,6 +952,24 @@
                     <show_in_store>1</show_in_store>
                     <fields></fields>
                 </template_cash_on_delivery>
+                <template_creditcard_iframe translate="label" module="payone_core">
+                    <label>Creditcard Channel Frontend</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>7</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields></fields>
+                </template_creditcard_iframe>
+                <template_barzahlen translate="label" module="payone_core">
+                    <label>Barzahlen</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>7</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields></fields>
+                </template_barzahlen>
             </groups>
         </payone_payment>
 
@@ -882,7 +994,7 @@
                     <show_in_store>1</show_in_store>
                 </hint>
                 <address_check>
-                    <label>Addresscheck</label>
+                    <label>Address checking</label>
                     <frontend_type>text</frontend_type>
                     <sort_order>10</sort_order>
                     <show_in_default>1</show_in_default>
@@ -890,7 +1002,7 @@
                     <show_in_store>1</show_in_store>
                     <fields>
                         <hint translate="label">
-                            <label>Addresscheck</label>
+                            <label>Address checking</label>
                             <sort_order>0</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
@@ -1027,7 +1139,7 @@
                     </fields>
                 </address_check>
                 <creditrating>
-                    <label>Creditrating</label>
+                    <label>Credit rating</label>
                     <frontend_type>text</frontend_type>
                     <sort_order>20</sort_order>
                     <show_in_default>1</show_in_default>
@@ -1035,7 +1147,7 @@
                     <show_in_store>1</show_in_store>
                     <fields>
                         <hint translate="label">
-                            <label>Creditrating</label>
+                            <label>Credit rating</label>
                             <sort_order>0</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>

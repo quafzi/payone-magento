@@ -82,6 +82,21 @@ abstract class Payone_Api_Response_Authorization_Abstract
      * @var string
      */
     protected $mandate_identification = NULL;
+    
+    /**
+     * @var string
+     */
+    protected $paydata_content_encoding = NULL;
+    
+    /**
+     * @var string
+     */
+    protected $paydata_instruction_notes = NULL;
+    
+    /**
+     * @var string
+     */
+    protected $paydata_content_format = NULL;
 
 
     /**
@@ -275,4 +290,47 @@ abstract class Payone_Api_Response_Authorization_Abstract
     {
         return $this->mandate_identification;
     }
+    
+    /**
+     * @param string $sContentEncoding
+     */
+    public function setAddPaydataContentEncoding($sContentEncoding) {
+        $this->paydata_content_encoding = $sContentEncoding;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAddPaydataContentEncoding() {
+        return $this->paydata_content_encoding;
+    }
+    
+    /**
+     * @param string $sInstructionNotes
+     */
+    public function setAddPaydataInstructionNotes($sInstructionNotes) {
+        $this->paydata_instruction_notes = $sInstructionNotes;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAddPaydataInstructionNotes() {
+        return $this->paydata_instruction_notes;
+    }
+    
+    /**
+     * @param string $sContentFormat
+     */
+    public function setAddPaydataContentFormat($sContentFormat) {
+        $this->paydata_content_format = $sContentFormat;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAddPaydataContentFormat() {
+        return $this->paydata_content_format;
+    }
+
 }

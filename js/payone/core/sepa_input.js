@@ -32,6 +32,26 @@ function inputToUpperCase(input) {
 
 /**
  *
+ * @param input
+ */
+function inputToUppaerCaseAndNumbers(input) {
+    var caretPosition = getCaretPos(input);
+    input.value = input.value.toUpperCase().replace(/\W|[_]/g, '');
+    setCaretPos(input, caretPosition);
+}
+
+/**
+ *
+ * @param input
+ */
+function inputToNumbers(input) {
+    var caretPosition = getCaretPos(input);
+    input.value = input.value.replace(/\D/g, '');
+    setCaretPos(input, caretPosition);
+}
+
+/**
+ *
  * @param oField
  * @returns {number}
  */

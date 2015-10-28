@@ -21,12 +21,8 @@
  * @link            http://www.noovias.com
  */
 ?>
-<b>Basic:</b><br>
-Prüfung der Adresse auf Existenz sowie Ergänzung und Korrektur der Adresse
-(Möglich für Adressen aus Deutschland, Österreich, Schweiz, Niederlande, Belgien,
-Luxemburg, Frankreich, Italien, Spanien, Portugal, Dänemark, Schweden, Finnland,
-Norwegen, Polen, Slowakei, Tschechien, Ungarn, USA, Kanada)<br>
+<b><?php echo $this->__('Basic'); ?></b><br>
+<?php echo $this->__('Check if the address is existent, has a typo or is otherwise slightly malformed. This is possible for addresses from Germany, Austria, Switzerland, The Netherlands, Belgium, Luxemburg, France, Italy, Spain, Portugal, Denmark, Sweden, Finland, Norway, Poland, Slovakia, Czech Republic, Hungary, The United States, and Canada.'); ?><br>
+<b><?php echo $this->__('Person'); ?></b><br>
+<?php echo $this->__('Check if the given person is known at the given address, check if the address is existent, has a typo or is otherwise slightly malformed. This is only available for German addresses.'); ?><br>
 <br>
-<b>Person:</b><br>
-Prüfung ob die Person unter der angegebenen Adresse bekannt ist,
-Prüfung der Adresse auf Existenz sowie Ergänzung und Korrektur der Adresse (nur Deutschland)

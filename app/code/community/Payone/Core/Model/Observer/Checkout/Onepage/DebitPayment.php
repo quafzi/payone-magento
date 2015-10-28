@@ -82,7 +82,12 @@ class Payone_Core_Model_Observer_Checkout_Onepage_DebitPayment extends Payone_Co
         }
 
         if ($sepaMandateEnabled) {
-            $this->manageMandate();
+            $response = $this->manageMandate();
+            if($response instanceof Payone_Api_Response_Error) {
+                $controllerAction->setFlag('', Mage_Core_Controller_Varien_Action::FLAG_NO_DISPATCH, true);
+                $jsonResponse = array('error' => Mage::helper('payone_core')->__($response->getErrormessage()));
+                return $controllerAction->getResponse()->setBody(Mage::helper('core')->jsonEncode($jsonResponse));
+            }
         }
     }
 
@@ -137,16 +142,22 @@ class Payone_Core_Model_Observer_Checkout_Onepage_DebitPayment extends Payone_Co
         $bankCountry = array_key_exists('payone_bank_country', $paymentData) ? $paymentData['payone_bank_country'] : '';
 
         $response = $manageMandateService->execute($this->getQuote(), $bankCountry, $bankAccountNumber, $bankCode, $bic, $iban);
-        $mandateStatus = $response->getMandateStatus();
-        $mandateText = $response->getMandateText();
-        $mandateIdentification = $response->getMandateIdentification();
-        $sepaMandateDownloadEnabled = $paymentConfig->getSepaMandateDownloadEnabled();
+        if($response instanceof Payone_Api_Response_Management_ManageMandate_Approved) {
+            $mandateStatus = $response->getMandateStatus();
+            $mandateText = $response->getMandateText();
+            $mandateIdentification = $response->getMandateIdentification();
+            $sepaMandateDownloadEnabled = $paymentConfig->getSepaMandateDownloadEnabled();
 
-        $checkoutSession = $this->getFactory()->getSingletonCheckoutSession();
-        $checkoutSession->setPayoneSepaMandateStatus($mandateStatus);
-        $checkoutSession->setPayoneSepaMandateText($mandateText);
-        $checkoutSession->setPayoneSepaMandateIdentification($mandateIdentification);
-        $checkoutSession->setPayoneSepaMandateDownloadEnabled($sepaMandateDownloadEnabled);
+            $checkoutSession = $this->getFactory()->getSingletonCheckoutSession();
+            $checkoutSession->setPayoneSepaMandateStatus($mandateStatus);
+            $checkoutSession->setPayoneSepaMandateText($mandateText);
+            $checkoutSession->setPayoneSepaMandateIdentification($mandateIdentification);
+            $checkoutSession->setPayoneSepaMandateDownloadEnabled($sepaMandateDownloadEnabled);
+        }
+        return $response;
+//    else {
+//            Mage::log($response, null, 'test.log', true);
+//        }
     }
 
     /**

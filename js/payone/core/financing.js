@@ -31,4 +31,16 @@ function payoneSwitchFinancing(element)
     var typeCode = ElementValueSplit[1];
     $("payone_financing_fnc_type").setValue(typeCode);
     $("payone_financing_config_id").setValue(typeId);
+
+    var divTwo = $('payone_financing_klarna_additional_fields');
+
+    if (divTwo == undefined) {
+        return;
+    }
+
+    if (typeCode == 'KLS'){
+        divTwo.show();
+    } else {
+        divTwo.hide();
+    }
 }

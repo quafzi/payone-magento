@@ -24,10 +24,9 @@
 $link = Mage::helper('payone_core')->__('PAYONE > General');
 $url = $this->getUrl('adminhtml/system_config/edit', array('section' => 'payone_general'));
 ?>
-<div class="field-name">Versandkosten</div>
+<div class="field-name"><?php echo $this->__('Shipping costs'); ?></div>
 <div class="field-description">
-    Hier können Sie einstellen welche Artikelnummer die Versandkosten bei der Übertragung von Rechnungsinformationen bekommen.<br>
-    Um diese Optionen nutzen zu können ist eine Beauftragung des Moduls Invoicing bei PAYONE notwendig.<br>
-    Die Einstellung "Rechnungsinformationen versenden" im Bereich "<a href="<?php echo $this->escapeHtml($url) ?>"><?php echo $link ?></a>" muss auf "Ja" gestellt sein.<br>
-</div>
+    <?php echo $this->__('Here you can define which article number shipping costs have on the invoice when being transmitted to the PAYONE Platform.'); ?><br>
+    <?php echo $this->__('In order to use this option you have to purchase the Invoicing Module at PAYONE.'); ?><br>
+    <?php echo $this->__('The setting ""Transmit Invoice Information"" in the configuration of ""%s"" must be set to ""Yes"".', '<a href="' . $this->escapeHtml($url) . '">' . $link . '</a>'); ?><br>
 <br>

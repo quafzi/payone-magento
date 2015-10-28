@@ -143,7 +143,7 @@ class Payone_Core_Block_Adminhtml_System_Config_Form_Payment_Method
 
         $groupName = self::GROUP_TEMPLATE_PREFIX . $this->getMethodType();
         $group = $groups->$groupName;
-
+        
         $groupNameDefault = self::GROUP_TEMPLATE_PREFIX . self::GROUP_TEMPLATE_DEFAULT;
         $groupDefault = $groups->$groupNameDefault;
 
@@ -177,7 +177,6 @@ class Payone_Core_Block_Adminhtml_System_Config_Form_Payment_Method
 
         $this->_prepareFieldOriginalData($fieldset, $group);
         $this->_addElementTypes($fieldset);
-
 
         foreach ($groupDefault->fields as $elements) {
             foreach ($elements as $e) {

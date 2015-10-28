@@ -203,6 +203,21 @@ class Payone_Core_Model_Factory
     }
 
     /**
+     * @param Payone_Core_Model_Config_Payment_Method_Interface $config
+     * @return Payone_Core_Model_Mapper_ApiRequest_Payment_Genericpayment
+     */
+    public function getMapperPaymentRequestGenericpayment(Payone_Core_Model_Config_Payment_Method_Interface $config)
+    {
+        /** @var $mapper Payone_Core_Model_Mapper_ApiRequest_Payment_Genericpayment */
+        $mapper = Mage::getModel('payone_core/mapper_apiRequest_payment_genericpayment');
+        $mapper->setConfigPayment($config);
+        $mapper->setFactory($this);
+        $mapper->setIsAdmin($this->getIsAdmin());
+
+        return $mapper;
+    }
+
+    /**
      * @param Payone_Core_Model_Config_Protect_AddressCheck $configAddresscheck
      * @return Payone_Core_Model_Mapper_ApiRequest_Verification_AddressCheck
      */
@@ -365,6 +380,24 @@ class Payone_Core_Model_Factory
         $service->setMapper($mapper);
         $service->setHandler($handler);
         $service->setServiceApiPayment($this->getServiceApiPaymentDebit());
+
+        return $service;
+    }
+
+    /**
+     * @param Payone_Core_Model_Config_Payment_Method_Interface $config
+     * @return Payone_Core_Model_Service_Payment_Genericpayment
+     */
+    public function getServicePaymentGenericpayment(Payone_Core_Model_Config_Payment_Method_Interface $config)
+    {
+        $mapper = $this->getMapperPaymentRequestGenericpayment($config);
+        $handler = $this->getHandlerPaymentGenericpayment($config);
+
+        /** @var $service Payone_Core_Model_Service_Payment_Genericpayment */
+        $service = Mage::getModel('payone_core/service_payment_genericpayment');
+        $service->setMapper($mapper);
+        $service->setHandler($handler);
+        $service->setServiceApiPayment($this->getServiceApiPaymentGenericpayment());
 
         return $service;
     }
@@ -549,6 +582,17 @@ class Payone_Core_Model_Factory
     }
 
     /**
+     * @param Payone_Core_Model_Config_Payment_Method_Interface $config
+     * @return Payone_Core_Model_Handler_Payment_Abstract|Payone_Core_Model_Handler_Payment_Genericpayment
+     */
+    public function getHandlerPaymentGenericpayment(Payone_Core_Model_Config_Payment_Method_Interface $config)
+    {
+        /** @var $handler Payone_Core_Model_Handler_Payment_Genericpayment */
+        $handler = $this->getHandlerPayment('payone_core/handler_payment_genericpayment', $config);
+        return $handler;
+    }
+
+    /**
      * @return Payone_Core_Model_Handler_Management_GetInvoice
      */
     public function getHandlerManagementGetInvoice()
@@ -613,6 +657,14 @@ class Payone_Core_Model_Factory
         return $request;
     }
 
+    /**
+     * @return Payone_Api_Request_Genericpayment
+     */
+    public function getRequestPaymentGenericpayment()
+    {
+        $request = new Payone_Api_Request_Genericpayment();
+        return $request;
+    }
 
     /**
      * @return Payone_Api_Request_AddressCheck
@@ -715,6 +767,19 @@ class Payone_Core_Model_Factory
     {
         $builder = $this->getBuilder();
         $service = $builder->buildServicePaymentDebit();
+
+        $this->afterBuildServiceApi($service);
+
+        return $service;
+    }
+
+    /**
+     * @return Payone_Api_Service_Payment_Genericpayment
+     */
+    public function getServiceApiPaymentGenericpayment()
+    {
+        $builder = $this->getBuilder();
+        $service = $builder->buildServicePaymentGenericpayment();
 
         $this->afterBuildServiceApi($service);
 

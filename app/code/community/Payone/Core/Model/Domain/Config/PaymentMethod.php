@@ -427,7 +427,9 @@ class Payone_Core_Model_Domain_Config_PaymentMethod
         $keyPrefix = Payone_Core_Block_Adminhtml_System_Config_Form_Payment_Method::SECTION_PAYONE_PAYMENT . '/';
         $keyPrefix .= Payone_Core_Block_Adminhtml_System_Config_Form_Payment_Method::GROUP_TEMPLATE_PREFIX . $methodType . '/';
         foreach ($data as $key => $value) {
-            $configData[$keyPrefix . $key] = $value;
+            if(!is_null($value)) {
+                $configData[$keyPrefix . $key] = $value;
+            }
         }
 
         return $configData;

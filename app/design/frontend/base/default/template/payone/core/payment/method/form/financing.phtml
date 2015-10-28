@@ -69,5 +69,11 @@ $paymentConfigId = $this->getPaymentConfig()->getId();
                        id="<?php echo $code ?>_config_id" value="<?php echo $paymentConfigId; ?>"/>
             </div>
         </li>
+        <li>
+            <?php if ($this->showBlockHtmlKlarna()) :
+                echo $this->getBlockHtmlKlarna();
+            endif;
+            ?>
+        </li>
     </ul>
 </fieldset>

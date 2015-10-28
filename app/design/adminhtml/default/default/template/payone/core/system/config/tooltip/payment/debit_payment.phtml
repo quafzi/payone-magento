@@ -21,19 +21,15 @@
  * @link            http://www.noovias.com
  */
 ?>
-<div class="field-name">Prüfe Bankverbindung</div>
+<div class="field-name"><?php echo $this->__('Check bank account data'); ?></div>
 <div class="field-description">
-    Hier können Sie definieren ob eine zusätzliche Prüfung der Bankverbindungsdaten vorgenommen werden soll. Ebenfalls
-    besteht die Möglichkeit,<br>
-    dass Sie die Kontoverbindung mit einer POS-Sperrliste abgleichen können. Diese enthält Kontoverbindungsdaten mit
-    offene Forderungen aus dem stationären<br>
-    Einzelhandel und Daten aus der Auskunftei KUNO (https://www.kuno-sperrdienst.de).<br>
+    <?php echo $this->__('Here you can configure whether an additional check of the bank account data should be performed. Additionally, you can check the bank account data against the point-of-sale blacklist. This blacklist contains bank accounts with outstanding debts from retailers and information from the credit agency KUNO (https://www.kuno-sperrdienst.de).'); ?><br>
     <br>
-    <b>Optionen:</b><br>
+    <b><?php echo $this->__('Options'); ?>:</b><br>
     <ul>
-        <li>Ja</li>
-        <li>Nein</li>
-        <li>Prüfung gegen POS-Sperrliste</li>
+        <li><?php echo $this->__('Yes'); ?></li>
+        <li><?php echo $this->__('No'); ?></li>
+        <li><?php echo $this->__('Check against POS blacklist'); ?></li>
     </ul>
 </div>
 <br>

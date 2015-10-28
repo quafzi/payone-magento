@@ -71,6 +71,11 @@ class Payone_Api_Request_Debit extends Payone_Api_Request_Abstract
      * @var Payone_Api_Request_Parameter_Invoicing_Transaction
      */
     protected $invoicing = null;
+    
+    /**
+     * @var string
+     */
+    protected $narrative_text = null;
 
     /**
      * @param int $amount
@@ -214,5 +219,21 @@ class Payone_Api_Request_Debit extends Payone_Api_Request_Abstract
     public function getUseCustomerdata()
     {
         return $this->use_customerdata;
+    }
+
+    /**
+     * @return null
+     */
+    public function getNarrativeText()
+    {
+        return $this->narrative_text;
+    }
+
+    /**
+     * @param null $narrative_text
+     */
+    public function setNarrativeText($narrative_text)
+    {
+        $this->narrative_text = $narrative_text;
     }
 }

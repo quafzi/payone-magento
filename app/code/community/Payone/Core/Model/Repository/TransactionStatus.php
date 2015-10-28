@@ -68,6 +68,7 @@ class Payone_Core_Model_Repository_TransactionStatus
             $data[$key] = utf8_encode($value);
         }
 
+        $data['raw_request'] = serialize($_POST);
 
         $domainObject->setData($data);
 

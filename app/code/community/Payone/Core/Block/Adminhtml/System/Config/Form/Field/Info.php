@@ -65,7 +65,7 @@ class Payone_Core_Block_Adminhtml_System_Config_Form_Field_Info
     protected function getHintText()
     {
         $text = $this->helper('payone_core')
-                ->__('Klicken Sie hier um weitere Informationen zu diesem Bereich zu erhalten');
+                ->__('Click here to obtain more information on this section');
         return $text;
     }
 }

@@ -76,11 +76,16 @@ class Payone_Core_Model_Handler_Verification_AddressCheck
             }
 
             $personStatus = $response->getPersonstatus();
-            if (array_key_exists($personStatus, $mapping) and $personStatus != 'NONE') {
-                $score = $mapping[$personStatus];
-
+            if($personStatus != 'NONE') {
+                if (array_key_exists($personStatus, $mapping)) {
+                    $score = $mapping[$personStatus];
+                    $address->setData('payone_addresscheck_score', $score);
+                }
+            } else {
+                $score = 'G';
                 $address->setData('payone_addresscheck_score', $score);
             }
+
             $this->saveCustomerAddress($address);
         }
         elseif ($response instanceof Payone_Api_Response_AddressCheck_Invalid) {

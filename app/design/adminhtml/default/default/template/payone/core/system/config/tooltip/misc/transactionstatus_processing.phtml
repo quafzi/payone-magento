@@ -21,28 +21,28 @@
  * @link            http://www.noovias.com
  */
 ?>
-<b>Hier können Sie eintragen in welchem zeitlichen Intervall der Transaktionstatus von der PAYONE Plattform verarbeitet wird.</b><br>
+<b><?php echo $this->__('Here you can configure the time intervals in which the transaction messages from the PAYONE Platform will be processed.'); ?>
+</b><br>
 <br>
 <ul class="payone-config-warning">
-    <li class="payone-config-warning-content"><span>Stellen Sie weiterhin sicher, dass die Cronjobs für ihr System korrekt eingerichtet sind.<span></li>
+    <li class="payone-config-warning-content"><span><?php echo $this->__('Please make sure that cron jobs are configured and working correctly in order to use this feature.'); ?><span></li>
 </ul>
-<div class="field-name">Cron Expression</div>
+<div class="field-name"><?php echo $this->__('Cron Expression'); ?>'</div>
 <div class="field-description">
-    Tragen Sie hier den Wert für das Intervall der Verarbeitung ein.
-    Hier finden Sie die Beschreibung des Wertes: <a href="http://en.wikipedia.org/wiki/Cron#CRON_expression" target="_blank">Cron Expression</a>
+	<?php echo $this->__('Define the time interval for processing here.'); ?>
+	<?php echo $this->__('An explanation of this expression can be found here: <a href="http://en.wikipedia.org/wiki/Cron#CRON_expression" target="_blank">Cron Expression</a>'); ?>
     <br>
 </div>
 <br>
-<div class="field-name">Gültige PAYONE IPs</div>
+<div class="field-name"><?php echo $this->__('Valid PAYONE IPs'); ?></div>
 <div class="field-description">
-    Tragen Sie hier IP-Addressen ein, welche eine Weiterverarbeitung des Transaktionstatus initiieren dürfen.
-    Als Wildcard können Sie * verwenden.
+	<?php echo $this->__('Define the IPs that are allowed to trigger transaction status processing here. You can use * as a wild card.'); ?>
     <br>
-    <b>Beispiel:</b>
+    <b><?php echo $this->__('Examples'); ?>:</b>
     <br>
     <ul>
-        <li>Konkrete IP (127.0.0.1) </li>
-        <li>IPs mit Wildcard (127.0.0.* , 127.0.*.*)</li>
+        <li><?php echo $this->__('Full IP (127.0.0.1)'); ?></li>
+        <li><?php echo $this->__('IPs with wild card (127.0.0.* , 127.0.*.*)'); ?></li>
     </ul>
     <br>
 </div>

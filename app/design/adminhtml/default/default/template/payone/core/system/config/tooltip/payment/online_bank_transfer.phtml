@@ -21,17 +21,17 @@
  * @link            http://www.noovias.com
  */
 ?>
-<div class="field-name">Überweisungsart</div>
+<div class="field-name"><?php echo $this->__('Type of online bank transfer'); ?></div>
 <div class="field-description">
-    Hier können Sie definieren welche Onlineüberweisungsarten sie im Checkout anbieten wollen.<br>
-    Folge Arten werden aktuell unterstützt:<br>
+	<?php echo $this->__('You can define here which types of online bank transfer are available during checkout.'); ?><br>
+	<?php echo $this->__('The following providers are currently supported'); ?>:<br>
     <ul>
-        <li>Sofort-Überweisung</li>
-        <li>giropay</li>
-        <li>eps</li>
-        <li>PostFinance E-Finance</li>
-        <li>PostFinance Card</li>
-        <li>iDeal</li>
+        <li><?php echo $this->__('Sofort-Überweisung'); ?></li>
+        <li><?php echo $this->__('giropay'); ?></li>
+        <li><?php echo $this->__('eps'); ?></li>
+        <li><?php echo $this->__('PostFinance E-Finance'); ?></li>
+        <li><?php echo $this->__('PostFinance Card'); ?></li>
+        <li><?php echo $this->__('iDeal'); ?></li>
     </ul>
 </div>
 <br>

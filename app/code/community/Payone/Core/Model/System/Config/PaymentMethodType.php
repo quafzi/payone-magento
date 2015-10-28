@@ -35,12 +35,14 @@ class Payone_Core_Model_System_Config_PaymentMethodType extends Payone_Core_Mode
     const ADVANCEPAYMENT = 'advance_payment';
     const CASHONDELIVERY = 'cash_on_delivery';
     const CREDITCARD = 'creditcard';
+    const CREDITCARD_IFRAME = 'creditcard_iframe';
     const DEBITPAYMENT = 'debit_payment';
     const FINANCING = 'financing';
     const SAFEINVOICE = 'safe_invoice';
     const INVOICE = 'invoice';
     const ONLINEBANKTRANSFER = 'online_bank_transfer';
     const WALLET = 'wallet';
+    const BARZAHLEN = 'barzahlen';
 
     /**
      * @return array
@@ -51,12 +53,14 @@ class Payone_Core_Model_System_Config_PaymentMethodType extends Payone_Core_Mode
             self::ADVANCEPAYMENT => 'Advance Payment',
             self::CASHONDELIVERY => 'Cash on Delivery',
             self::CREDITCARD => 'Creditcard',
+            self::CREDITCARD_IFRAME => 'Creditcard Channel Frontend',
             self::DEBITPAYMENT => 'Debit Payment',
             self::FINANCING => 'Financing',
             self::SAFEINVOICE => 'Safe Invoice',
             self::INVOICE => 'Invoice',
             self::ONLINEBANKTRANSFER => 'Online Bank Transfer',
-            self::WALLET => 'Wallet'
+            self::WALLET => 'Wallet',
+            self::BARZAHLEN => 'Barzahlen'
         );
     }
 }

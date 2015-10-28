@@ -50,6 +50,14 @@ class Payone_Core_Model_Observer_Checkout_Onepage_Payment_Methods
          */
         $quote = $observer->getEvent()->getQuote();
 
+        if(!$quote->getCustomerIsGuest()) {
+            try {
+                $quote->getPayment()->setMethod($quote->getCustomer()->getPayoneLastPaymentMethod())->getMethodInstance();
+            } catch ( Exception $e ) {
+                Mage::logException($e);
+            }
+        }
+
         /** @var $fullActionName string */
         $fullActionName = $observer->getEvent()->getFullActionName();
         if ($fullActionName === 'checkout/onepage/index') {

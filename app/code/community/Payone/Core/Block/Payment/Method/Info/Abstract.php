@@ -112,4 +112,13 @@ class Payone_Core_Block_Payment_Method_Info_Abstract
         return $this->factory;
     }
 
+    /**
+     * @param string $text
+     * @return string
+     */
+    public function strToXXX($text) {
+        $result = str_repeat('x', strlen($text) - 8);
+        $result = substr($text, 0, 4).$result.substr($text, -4);
+        return $result;
+    }
 }

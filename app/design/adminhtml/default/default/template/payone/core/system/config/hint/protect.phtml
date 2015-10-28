@@ -27,20 +27,15 @@
  */
 ?>
 <p>
-    <b>Bitte beachten Sie, dass Sie die nachfolgenden Optionen nur dann nutzen können, wenn Sie das Modul Protect
-        von PAYONE beauftragt haben. <br>
-        Die Nutzung der Bonitätsprüfung und der Adressprüfung zieht variable Kosten pro Vorgang nach sich, die Sie
-        Ihrem Vertrag entnehmen können.
+    <b><?php echo $this->__("Be advised that you can only use these options if you purchase Protect from PAYONE."); ?><br>
+       <?php echo $this->__("Usage of credit checks and address verification generates variable costs. The exact prices are noted in your PAYONE contract."); ?>
     </b>
 </p>
 
 <p>
-    Bitte nehmen Sie die Einstellungen für die Bonitätsprüfung mit Bedacht vor.<br>
-    Die Bonitätsprüfung wird nach Eingabe der Personendaten durchgeführt und beeinflusst die Zahlungsarten, die
-    Ihren Kunden im Checkout-Prozess angeboten werden.<br>
-    Die Bonitätsprüfung sollte lediglich bei Zahlungsarten eingesetzt werden, die ein Zahlungsausfallrisiko für
-    Sie nach sich ziehen (z.B. offene Rechnung oder Lastschrift).<br>
-    Sie konfigurieren dies über die Einstellung "Bonitätsindex" in der Konfiguration der jeweiligen Zahlart.<br>
-    Sie sollten in Ihrem Shop außerdem in geeigneter Weise darauf hinweisen, dass Sie Bonitätsprüfungen über die
-    InfoScore Consumer Data GmbH durchführen.
+    <?php echo $this->__("Please use caution when configuring credit checks."); ?><br>
+    <?php echo $this->__("Credit checks are carried out after your customer entered their personal data. It affects the payment methods available to your customer during checkout."); ?><br>
+    <?php echo $this->__("Credit checks should only be used with payment methods that have the risk of shortfall in payment or fraud, for instance invoice or direct debit."); ?><br>
+    <?php echo $this->__("You can configure this behaviour through the credit rating index setting in the configuration of the respective payment method."); ?><br>
+    <?php echo $this->__("You should advise your customers that you perform credit checks with the InfoScore Consumer Data GmbH."); ?>
 </p>

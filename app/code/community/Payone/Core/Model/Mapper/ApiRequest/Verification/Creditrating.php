@@ -70,7 +70,7 @@ class Payone_Core_Model_Mapper_ApiRequest_Verification_Creditrating
 
         $request->setIntegratorName('Magento');
         $request->setIntegratorVersion($helper->getMagentoVersion());
-        $request->setSolutionName('noovias');
+        $request->setSolutionName('votum');
         $request->setSolutionVersion($helper->getPayoneVersion());
         if($customerId = $address->getCustomerId())
         {

@@ -21,36 +21,35 @@
  * @link            http://www.noovias.com
  */
 ?>
-<b>Konfigurieren Sie hier den E-Mailversand bei technischen Fehlern.</b><br>
+<b><?php echo $this->__('Configure e-mail notifications for technical difficulties.'); ?></b><br>
 <br>
-<div class="field-name">Aktiviert</div>
+<div class="field-name"><?php echo $this->__('Activated'); ?></div>
 <div class="field-description">
-    Hier aktivieren Sie den Fehleremailversand.<br>
+    <?php echo $this->__('Here you can activate e-mail notifications for technical difficulties'); ?><br>
     <br>
-    <b>Optionen:</b><br>
+    <b><?php echo $this->__('Options'); ?>:</b><br>
     <ul>
-        <li>Ja</li>
-        <li>Nein</li>
+        <li><?php echo $this->__('Yes'); ?></li>
+        <li><?php echo $this->__('No'); ?></li>
     </ul>
 </div>
-<br>
-<div class="field-name">Absender</div>
+<br><div class="field-name"><?php echo $this->__('Sender'); ?></div>
 <div class="field-description">
-    Hier können Sie den Absender der Mail auswählen den Sie in den Magento Einstellungen definiert haben.<br>
+	<?php echo $this->__('Here you can select the sender of the mail as defined in the general Magento e-mail settings.'); ?><br>
 </div>
 <br>
-<div class="field-name">Empfänger</div>
+<div class="field-name"><?php echo $this->__('Recipient'); ?></div>
 <div class="field-description">
-    Hier können Sie den Empfänger der Mail auswählen den Sie in den Magento Einstellungen definiert haben.<br>
+	<?php echo $this->__('Here you can select the recipient of the mail as defined in the general Magento e-mail settings.'); ?><br>
 </div>
 <br>
-<div class="field-name">Kopie an</div>
+<div class="field-name"><?php echo $this->__('Cc'); ?></div>
 <div class="field-description">
-    Hier können Sie als Freitext kommasepariert weitere Empfänger angeben.<br>
+    <?php echo $this->__('Here you can define additional recipients in a comma separated list.'); ?><br>
 </div>
 <br>
-<div class="field-name">Vorlage</div>
+<div class="field-name"><?php echo $this->__('Template'); ?></div>
 <div class="field-description">
-    Hier wählen Sie die Vorlage aus die beim Versand der Fehleremail verwendet werden soll.<br>
+	<?php echo $this->__('Choose the template to use for the AVS notification e-mail.'); ?><br>
 </div>
 <br>

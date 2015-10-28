@@ -21,128 +21,113 @@
  * @link            http://www.noovias.com
  */
 ?>
-<b>Die Bonitätsprüfung wird in Zusammenarbeit mit arvato Infoscore durchgeführt.<br>
-    ACHTUNG: Diese Prüfung ist nur für Kunden aus Deutschland möglich.<br>
-</b>
-<br>
-<div class="field-name">Aktiviert</div>
-<div class="field-description">
-    Hier aktivieren Sie die Bonitätsprüfung mit allen folgenden Konfigurationsmöglichkeiten.<br>
+    <b><?php echo $this->__('Credit assessment is done in cooperation with arvato Infoscore.'); ?><br>
+       <?php echo $this->__('<b>CAUTION:</b> Credit assessment is only available for German customers!'); ?><br>
+    </b>
     <br>
-    <b>Optionen:</b><br>
+    <div class="field-name"><?php echo $this->__('Activated'); ?></div>
+    <div class="field-description">
+        <?php echo $this->__('Here you can activate credit assessment with the following configuration options.'); ?><br>
+        <br>
+        <b><?php echo $this->__('Options'); ?>:</b><br>
+        <ul>
+            <li><?php echo $this->__('Yes'); ?></li>
+            <li><?php echo $this->__('No'); ?></li>
+        </ul>
+    </div>
+    <br>
+    <div class="field-name"><?php echo $this->__('Time of credit assessment'); ?></div>
+<div class="field-description">
+	<?php echo $this->__('You can configure at which time during the checkout your customer\'s credit score should be checked.'); ?>
+    <br>
+    <b><?php echo $this->__('Options'); ?>:</b><br>
     <ul>
-        <li>Ja</li>
-        <li>Nein</li>
+        <li><?php echo $this->__('Before choosing a payment method'); ?><br>
+			<?php echo $this->__("The customer's credit rating is checked as soon as the required name and address data is available. This is before the customer chooses a payment option. The customer can not see that a credit check is being run."); ?>
+        </li>
+        <li><?php echo $this->__('After choosing a payment method'); ?><br>
+			<?php echo $this->__('If you choose this option, you will be able to configure for which payment methods a credit assessment will be run. Optionally, you can choose whether a message should be displayed and if the customer has to agree to the credit assessment.'); ?>
+        </li>
     </ul>
 </div>
-<br>
-<div class="field-name">Zeitpunkt der Prüfung</div>
+<br><div class="field-name"><?php echo $this->__('Type of credit assessment'); ?></div>
 <div class="field-description">
-    Hier können Sie definieren wann der Kunde geprüft werden soll.<br>
+        <?php echo $this->__('You can configure which type of credit assessment should be performed.'); ?><br>
     <br>
-    <b>Optionen:</b><br>
+    <b><?php echo $this->__('Options'); ?>:</b><br>
     <ul>
-        <li>Vor Auswahl der Zahlart<br>
-            Die Bonität des Kunden wird geprüft, wenn die notwendigen Adress und Namesinformationen vorliegen. Dies geschieht vor der Auswahl der Zahlart.<br>
-            Diese Prüfung findet nicht sichtbar für den Kunden im Hintergrund statt.
+        <li><?php echo $this->__('Infoscore hard features'); ?><br>
+			<?php echo $this->__('Check for so-called "hard" negative features (e.g. consumer insolvency proceedings, warrant for an affidavit or forced swearing of an affidavit'); ?><br>
         </li>
-        <li>Nach Auswahl der Zahlart<br>
-            Bei Auswahl dieser Option erscheint ein Auswahlfeld in dem Sie auswählen können für welche Zahlarten eine anschließende Bonitätsprüfung stattfinden soll.<br>
-            Optional können Sie einstellen, ob ein "Allgemeinerhinweis" angezeigt werden soll und ob eine "Zustimmung des Kunden" notwendig ist.
+        <li><?php echo $this->__('Infoscore all features'); ?><br>
+            <?php echo $this->__('Check for so-called ""hard"" negative features (e.g. consumer insolvency proceedings, warrant for an affidavit or forced swearing of an affidavit, ""medium"" negative features (e.g. court order, writ of execution or foreclosure) and ""soft"" negative features (e.g. initiated debt collection proceedings, progression of an extrajudicial debt collection order, or cancelation of an extrajudicial payment procedure for futility).'); ?>
         </li>
-    </ul>
-</div>
-<br><div class="field-name">Bonitätschecktyp</div>
-<div class="field-description">
-    Hier können Sie konfigurieren welche Art von Überprüfung der Bonität durchgeführt werden soll.<br>
-    <br>
-    <b>Optionen:</b><br>
-    <ul>
-        <li>Infoscore harte Merkmale<br>
-            Prüfung auf so genannte "harte" Negativmerkmale (z.B. Verbraucherinsolvenzverfahren, Haftbefehl zur Eidesstattlichen Versicherung oder<br>
-            Erzwingung der Abgabe der Eidesstattlichen Versicherung).
-        </li>
-        <li>Infoscore alle Merkmale<br>
-            Prüfung auf so genannte "harte" Negativmerkmale (z.B. Verbraucherinsolvenzverfahren, Haftbefehl zur Eidesstattlichen Versicherung oder<br>
-            Erzwingung der Abgabe der Eidesstattlichen Versicherung), "mittlere" Negativmerkmale (z.B. Mahnbescheid, Vollstreckungsbescheid oder Zwangsvollstreckung)<br>
-            und "weiche" Negativmerkmale (z.B. Inkasso-Mahnverfahren eingeleitet, Fortlauf des außergerichtlichen Inkasso-Mahnverfahrens nach Teilzahlung,<br>
-            Einstellung des außergerichtlichen Inkasso-Mahnverfahrens wegen Aussichtslosigkeit).
-        </li>
-        <li>Infoscore alle Merkmale + Boniscore<br>
-            Prüfung auf so genannte "harte" Negativmerkmale (z.B. Verbraucherinsolvenzverfahren, Haftbefehl zur Eidesstattlichen Versicherung oder<br>
-            Erzwingung der Abgabe der Eidesstattlichen Versicherung), "mittlere" Negativmerkmale (z.B. Mahnbescheid, Vollstreckungsbescheid oder Zwangsvollstreckung)<br>
-            und "weiche" Negativmerkmale (z.B. Inkasso-Mahnverfahren eingeleitet, Fortlauf des außergerichtlichen Inkasso-Mahnverfahrens nach Teilzahlung,<br>
-            Einstellung des außergerichtlichen Inkasso-Mahnverfahrens wegen Aussichtslosigkeit). Der Boniscore ist ein Scorewert und ermöglicht eine<br>
-            höhere Trennschärfe bei vorliegenden Negativmerkmalen.
+        <li><?php echo $this->__('Infoscore all features + Boniscore'); ?><br>
+            <?php echo $this->__('Check for so-called ""hard"" negative features (e.g. consumer insolvency proceedings, warrant for an affidavit or forced swearing of an affidavit, ""medium"" negative features (e.g. court order, writ of execution or foreclosure) and ""soft"" negative features (e.g. initiated debt collection proceedings, progression of an extrajudicial debt collection order, or cancelation of an extrajudicial payment procedure for futility). The Boniscore is a score value and allows for higher selectivity at present negative attributes.'); ?>
         </li>
     </ul>
 </div>
 <br>
-<div class="field-name">Erlaubte Zahlarten bei Ampelwert "GELB"</div>
+<div class="field-name"><?php echo $this->__('Allowed payment methods for traffic light score "YELLOW"'); ?></div>
 <div class="field-description">
-    Hier wählen Sie die erlaubten Zahlarten bei einem Ergenis vom Typ <i>GELB</i> aus.<br>
+    <?php echo $this->__('Choose the payment methods that will be available to customers with traffic light score <i>YELLOW</i>.'); ?><br>
 </div>
 <br>
-<div class="field-name">Erlaubte Zahlarten bei Ampelwert "ROT"</div>
+<div class="field-name"><?php echo $this->__('Allowed payment methods for traffic light score "RED"'); ?></div>
 <div class="field-description">
-    Hier wählen Sie die erlaubten Zahlarten bei einem Ergenis vom Typ <i>ROT</i> aus.<br>
+        <?php echo $this->__('Choose the payment methods that will be available to customers with traffic light score <i>RED</i>.'); ?><br>
 </div>
 <br>
-<div class="field-name">A/B-Test-Modus aktivieren</div>
+<div class="field-name"><?php echo $this->__('Activate A/B test mode'); ?></div>
 <div class="field-description">
-    Stellen Sie hier die Häufigkeit der Bonitätsprüfungen ein.<br>
+    <?php echo $this->__('Here you can configure the frequency of credit assessments'); ?><br>
     <br>
-    <b>Optionen:</b><br>
+    <b><?php echo $this->__('Options'); ?>:</b><br>
     <ul>
-        <li>Ja<br>
-            Es wird ein Eingabefeld dargestellt in dem Sie die Anzahl als Ganzwert eintragen können mit der die jeweils n'te Bestellung<br>
-            nach den Kriterien aller anderen Parameter duchgeführt wird.
+        <li><?php echo $this->__('Yes'); ?><br>
+            <?php echo $this->__('An input box will be shown where you can configure an integer value. Every n-th order a credit assessment will be performed according to all other configured parameters.'); ?>
         </li>
-        <li>Nein</li>
-    </ul>
-</div>
-<br>
-<div class="field-name">Behandlung von Fehlern</div>
-<div class="field-description">
-    Konfiguration wie an dieser Stelle, bei Fehlern in der Prüfung oder Nichterreichbarkeit der Bonitätsprüfungssysteme, verfahren werden soll.<br>
-    Dies bezieht sich auf die Rückmeldung von der PAYONE Plattform mit dem Ergebnis
-    <span style="color:red; font-style:italic;">ERROR</span><br>
+        <li><?php echo $this->__('No'); ?></li>
+        </ul>
+    </div>
     <br>
-    <b>Optionen:</b><br>
+    <div class="field-name"><?php echo $this->__('Error handling'); ?></div>
+<div class="field-description">
+	<?php echo $this->__('Here you can configure how errors during address checks or the unavailability of the credit assessment systems should be handled. This applies to all PAYONE Platform responses with result <span style="color:red; font-style:italic;">ERROR</span>'); ?>
+    <br>
+    <br>
+    <b><?php echo $this->__('Options'); ?>:</b><br>
     <ul>
-        <li>Bestellprozess fortführen</li>
-        <li>Bestellprozess abbrechen</li>
-    </ul>
+        <li><?php echo $this->__('Continue checkout'); ?></li>
+        <li><?php echo $this->__('Cancel checkout'); ?></li>
+        </ul>
+    </div>
+    <br>
+    <div class="field-name"><?php echo $this->__('Validity period'); ?></div>
+<div class="field-description">
+	<?php echo $this->__('You can configure here for which time frame an credit assessment result is valid. During this period, no new credit assessment request will be sent for this user. This requires the customer to be registered with your shop, or that they registered during the checkout process.'); ?><br>
+    <br>
+    <?php echo $this->__('<b>Caution</b> This setting does not apply to guest buyers.'); ?>
 </div>
 <br>
-<div class="field-name">Gültigkeit</div>
+<div class="field-name"><?php echo $this->__('Mode'); ?></div>
 <div class="field-description">
-    Hier kann die Gültigkeitsdauer einer Bonitätsprüfung in Tagen eingestellt werden. Innerhalb dieses Zeitraumes werden keine weiteren Anfragen für diesen Benutzer gestellt.<br>
-    Vorraussetzung dafür ist das dieser Kunde registriert ist oder sich innerhalb des ersten Vorgangs registiert hat.<br>
+        <?php echo $this->__('Define in which mode requests will be sent to the PAYONE Platform.'); ?><br>
     <br>
-    <b>ACHTUNG</b> Für Gastkäufer greift die Gültigkeit nicht.<br>
-</div>
-<br>
-<div class="field-name">Betriebsmodus</div>
-<div class="field-description">
-    Hier legen Sie fest in welchem Betriebsmodus die Anfrage an die PAYONE Plattform gestellt wird.<br>
-    <br>
-    <b>Optionen:</b><br>
+    <b><?php echo $this->__('Options'); ?>:</b><br>
     <ul>
-        <li>Test</li>
-        <li>Live</li>
-    </ul>
+        <li><?php echo $this->__('Test'); ?></li>
+        <li><?php echo $this->__('Live'); ?></li>
+        </ul>
+    </div>
+    <br>
+    <div class="field-name"><?php echo $this->__('Minimal cart value'); ?></div>
+<div class="field-description">
+	<?php echo $this->__('Define a minimal cart value for credit assessment checks. Is the cart value below this, the credit assessment check will not be executed.'); ?><br>
 </div>
 <br>
-<div class="field-name">Mindestwert für Gesamtbestellung</div>
+<div class="field-name"><?php echo $this->__('Maximal cart value'); ?></div>
 <div class="field-description">
-    Der hier zu konfigurierende Wert ist der Wert, ab dem eine Bonitätsprüfung durchgeführt wird.<br>
-    Ist der Gesamtwarenkorbwert unterhalb dieses Wertes wird keine Bonitätsprüfung ausgeführt.<br>
-</div>
-<br>
-<div class="field-name">Höchstwert für Gesamtbestellung</div>
-<div class="field-description">
-    Der hier zu konfigurierende Wert ist der Wert, bis zu dem eine Bonitätsprüfung durchgeführt wird.<br>
-    Ist der Gesamtwarenkorbwert oberhalb dieses Wertes wird keine Bonitätsprüfung ausgeführt.<br>
+<?php echo $this->__('Define a maximal cart value for credit assessment checks. Is the cart value above this, the credit assessment check will not be executed.'); ?><br>
 </div>
 <br>

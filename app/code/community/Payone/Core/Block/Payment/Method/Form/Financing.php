@@ -15,10 +15,10 @@
  * @category        Payone
  * @package         Payone_Core_Block
  * @subpackage      Payment
- * @copyright       Copyright (c) 2012 <info@noovias.com> - www.noovias.com
- * @author          Matthias Walter <info@noovias.com>
+ * @copyright       Copyright (c) 2012 <info@votum.de> - www.votum.de
+ * @author          Edward Mateja <edward.mateja@votum.de>
  * @license         <http://www.gnu.org/licenses/> GNU General Public License (GPL 3)
- * @link            http://www.noovias.com
+ * @link            http://www.votum.de
  */
 
 /**
@@ -26,9 +26,9 @@
  * @category        Payone
  * @package         Payone_Core_Block
  * @subpackage      Payment
- * @copyright       Copyright (c) 2012 <info@noovias.com> - www.noovias.com
+ * @copyright       Copyright (c) 2012 <info@votum.de> - www.votum.de
  * @license         <http://www.gnu.org/licenses/> GNU General Public License (GPL 3)
- * @link            http://www.noovias.com
+ * @link            http://www.votum.de
  */
 class Payone_Core_Block_Payment_Method_Form_Financing
     extends Payone_Core_Block_Payment_Method_Form_Abstract
@@ -57,5 +57,40 @@ class Payone_Core_Block_Payment_Method_Form_Financing
     protected function getSystemConfigMethodTypes()
     {
         return $this->getFactory()->getModelSystemConfigFinancingType()->toSelectArray();
+    }
+
+    /**
+     * @return string
+     */
+    public function getBlockHtmlKlarna()
+    {
+        /** @var Payone_Core_Block_Payment_Method_Form_Financing_Klarna $block */
+        $block = $this->getLayout()->createBlock('payone_core/payment_method_form_financing_klarna');
+        $block->setQuote($this->getQuote());
+        $block->setPaymentMethodConfig($this->getPaymentConfig());
+        $html = $block->toHtml();
+        return $html;
+    }
+
+    /**
+     * @return bool
+     */
+    public function showBlockHtmlKlarna()
+    {
+        $types = $this->getTypes();
+
+        if (count($types) == 1) {
+            $type = array_pop($types);
+            if ($type['code'] == Payone_Api_Enum_FinancingType::KLS) {
+                return true;
+            }
+        } elseif (count($types) > 1) {
+            foreach ($types as $type) {
+                if ($type['code'] == Payone_Api_Enum_FinancingType::KLS) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

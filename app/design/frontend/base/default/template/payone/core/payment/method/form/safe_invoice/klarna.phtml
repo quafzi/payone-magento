@@ -44,7 +44,7 @@ $paymentMethodConfig = $this->getPaymentMethodConfig();
                         </label>
                         <br class="clear"/>
                         <select id="payone_klarna_additional_fields_customer_dob_day" class="required-entry"
-                                style="width: 60px;" onchange="payoneKlarnaCustomerDobInput()">
+                                style="width: 60px;" onchange="payoneKlarnaCustomerDobInput('payone_klarna_additional_fields_customer_dob_full')">
                             <option value="">--</option>
                             <?php for ($x = 1; $x <= 31; $x++): ?>
                                 <option value="<?php echo sprintf('%02d', $x); ?>">
@@ -53,7 +53,7 @@ $paymentMethodConfig = $this->getPaymentMethodConfig();
                             <?php endfor; ?>
                         </select>
                         <select id="payone_klarna_additional_fields_customer_dob_month" class="required-entry"
-                                style="width: 60px;" onchange="payoneKlarnaCustomerDobInput()">
+                                style="width: 60px;" onchange="payoneKlarnaCustomerDobInput('payone_klarna_additional_fields_customer_dob_full')">
                             <option value="">--</option>
                             <?php for ($x = 1; $x <= 12; $x++) : ?>
                                 <option value="<?php echo sprintf('%02d', $x); ?>">
@@ -62,7 +62,7 @@ $paymentMethodConfig = $this->getPaymentMethodConfig();
                             <?php endfor; ?>
                         </select>
                         <select id="payone_klarna_additional_fields_customer_dob_year" class="required-entry"
-                                style="width: 60px;" onchange="payoneKlarnaCustomerDobInput()">
+                                style="width: 60px;" onchange="payoneKlarnaCustomerDobInput('payone_klarna_additional_fields_customer_dob_full')">
                             <option value="">----</option>
                             <?php for ($x = date('Y'); $x > (date('Y') - 100); $x--) : ?>
                                 <option value="<?php echo $x; ?>">
@@ -90,7 +90,7 @@ $paymentMethodConfig = $this->getPaymentMethodConfig();
                             <?php $genderOptions = $this->getGenderOptions();
                             foreach ($genderOptions as $genderOption): ?>
                                 <option value="<?php echo $genderOption['value'] ?>">
-                                    <?php echo $genderOption['label'] ?>
+                                    <?php echo $this->__($genderOption['label']) ?>
                                 </option>
                             <?php endforeach; ?>
                         </select>

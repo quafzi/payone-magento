@@ -27,43 +27,43 @@
  */
 ?>
 <p>
-    <b>Zahlart</b><br>
+    <b><?php echo $this->__("Payment means"); ?></b><br>
     <br>
-    Hier fügen Sie eine weitere Zahlmethode zur Nutzung im Checkout Ihres Shop hinzu.
+    <?php echo $this->__("Here you can add additional payment means for your shop's checkout."); ?>
 </p>
-Folgende Zahlarten stehen zur Verfügung:<br>
+<?php echo $this->__("These payment methods are available:"); ?><br>
 <ul>
-    <li>Vorkasse (advance_payment)</li>
-    <li>Nachnahme (cash_on_delivery)</li>
-    <li>Kreditkarte (creditcard)</li>
-    <li>Lastschrift (debit_payment)</li>
-    <li>Rechnung (invoice)</li>
-    <li>Onlineüberweisung (online_bank_transfer)</li>
-    <li>Wallet (wallet)</li>
+    <li><?php echo $this->__("Prepayment (advance_payment)"); ?></li>
+    <li><?php echo $this->__("Cash on delivery (cash_on_delivery)"); ?></li>
+    <li><?php echo $this->__("Credit card (creditcard)"); ?></li>
+    <li><?php echo $this->__("Direct debit (debit_payment)"); ?></li>
+    <li><?php echo $this->__("Invoice (invoice)"); ?></li>
+    <li><?php echo $this->__("Online bank transfer (online_bank_transfer)"); ?></li>
+    <li><?php echo $this->__("Wallet (wallet)"); ?></li>
 </ul>
 <br>
-In der Übersicht sehen Sie die einzelnen angelegten Zahlarten mit folgenden Informationen:<br>
+<?php echo $this->__("In the overview the payment means are listed with these properties:"); ?><br>
 <br>
 <ul>
-    <li><strong>Reihenfolge</strong>
-        <br>Ganze Zahl die definiert an welcher Position im Checkout die Zahlmethode angezeigt wird
+    <li><strong><?php echo $this->__("Order"); ?></strong>
+        <br><?php echo $this->__("Integer defining the position of the payment method in checkout"); ?>
     </li>
-    <li><strong>Name</strong>
-        <br>Der von Ihnen eingegebene Name der Zahlmethode
+    <li><strong><?php echo $this->__("Name"); ?></strong>
+        <br><?php echo $this->__("Your specified name of the payment method"); ?>
     </li>
-    <li><strong>Art</strong>
-        <br>Die technische Bezeichnung der Zahlmethode
+    <li><strong><?php echo $this->__("Type"); ?></strong>
+        <br><?php echo $this->__("The technical identifier of the payment means"); ?>
     </li>
-    <li><strong>Geltungsbereich</strong>
-        <br>Anzeige für welche Ebene Ihres Magento-Shops diese Konfiguration gültig ist
+    <li><strong><?php echo $this->__("Scope"); ?></strong>
+        <br><?php echo $this->__("In which scope is this configuration valid?"); ?>
     </li>
-    <li><strong>Aktiviert</strong>
-        <br>Zeigt an ob diese Zahlmethode aktiv ist oder nicht.
+    <li><strong><?php echo $this->__("Active"); ?></strong>
+        <br><?php echo $this->__("Indicates, whether a payment method is active"); ?>
     </li>
-    <li><strong>ID</strong>
-        <br>eindeutige Identifikationsnummer der Zahlmethode
+    <li><strong><?php echo $this->__("ID"); ?></strong>
+        <br><?php echo $this->__("Unique ID of the payment method"); ?>
     </li>
-    <li><strong>Aktion</strong>
-        <br>Hier ist der Link zum Bearbeiten der jeweiligen Zahlungsmethode enthalten
+    <li><strong><?php echo $this->__("Action"); ?></strong>
+        <br><?php echo $this->__("Link to edit the respective payment method's configuration"); ?>
     </li>
 </ul>

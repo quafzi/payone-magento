@@ -61,7 +61,7 @@ class Payone_Core_Model_Mapper_ApiRequest_Verification_BankAccountCheck
 
         $request->setIntegratorName('Magento');
         $request->setIntegratorVersion($helper->getMagentoVersion());
-        $request->setSolutionName('noovias');
+        $request->setSolutionName('votum');
         $request->setSolutionVersion($helper->getPayoneVersion());
 
 
