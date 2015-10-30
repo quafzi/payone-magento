@@ -30,7 +30,7 @@
  * @license         <http://www.gnu.org/licenses/> GNU General Public License (GPL 3)
  * @link            http://www.noovias.com
  */
-class Payone_Core_Adminhtml_System_Config_PaymentController
+class Payone_Core_Adminhtml_Payonecore_Payone_System_Config_PaymentController
     extends Payone_Core_Controller_Adminhtml_Abstract
 {
     /**

@@ -57,7 +57,7 @@ class Payone_Core_Block_Adminhtml_System_Config_Form_Payment extends Mage_Adminh
 
     public function getSourceUrl()
     {
-        $url = $this->getUrl('payone_core/adminhtml_system_config_payment/', array('_current' => true));
+        $url = $this->getUrl('adminhtml/payonecore_system_config_payment/', array('_current' => true));
         return $url;
     }
 

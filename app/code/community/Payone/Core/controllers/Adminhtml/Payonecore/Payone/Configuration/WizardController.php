@@ -14,7 +14,7 @@
  *
  * @category        Payone
  * @package         Payone_Core_controllers
- * @subpackage      Adminhtml
+ * @subpackage      Adminhtml_Configuration_Wizard
  * @copyright       Copyright (c) 2012 <info@noovias.com> - www.noovias.com
  * @author          Matthias Walter <info@noovias.com>
  * @license         <http://www.gnu.org/licenses/> GNU General Public License (GPL 3)
@@ -25,19 +25,18 @@
  *
  * @category        Payone
  * @package         Payone_Core_controllers
- * @subpackage      Adminhtml
+ * @subpackage      Adminhtml_Configuration_Wizard
  * @copyright       Copyright (c) 2012 <info@noovias.com> - www.noovias.com
  * @license         <http://www.gnu.org/licenses/> GNU General Public License (GPL 3)
  * @link            http://www.noovias.com
  */
-class Payone_Core_Adminhtml_InformationController extends Payone_Core_Controller_Adminhtml_Abstract
+class Payone_Core_Adminhtml_Payonecore_Payone_Configuration_WizardController
+    extends Payone_Core_Controller_Adminhtml_Abstract
 {
-    /**
-     *
-     */
     public function indexAction()
     {
         $this->loadLayout();
         $this->renderLayout();
     }
+
 }
