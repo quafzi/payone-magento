@@ -44,18 +44,18 @@
         </reference>
     </payone_core_iframe>
 
-    <payone_core_adminhtml_information_index>
+    <adminhtml_payonecore_information_index>
         <reference name="content">
             <block type="payone_core/adminhtml_information"
                    name="payone_core_information" />
         </reference>
-    </payone_core_adminhtml_information_index>
+    </adminhtml_payonecore_information_index>
 
-    <payone_core_adminhtml_sales_order_index>
+    <adminhtml_payonecore_sales_order_index>
         <reference name="content">
             <block type="payone_core/adminhtml_sales_order" name="payone_core_sales_order" />
         </reference>
-    </payone_core_adminhtml_sales_order_index>
+    </adminhtml_payonecore_sales_order_index>
 
     <!--
     Sales Order View

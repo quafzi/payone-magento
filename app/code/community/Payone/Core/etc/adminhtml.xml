@@ -30,12 +30,12 @@
                 <sales_order module="payone_core">
                     <title>Orders</title>
                     <sort_order>10</sort_order>
-                    <action>payone_core/adminhtml_sales_order</action>
+                    <action>adminhtml/payonecore_sales_order</action>
                 </sales_order>
                 <transaction module="payone_core">
                     <title>Transactions</title>
                     <sort_order>20</sort_order>
-                    <action>payone_core/adminhtml_transaction</action>
+                    <action>adminhtml/payonecore_transaction</action>
                 </transaction>
                 <protocol module="payone_core">
                     <title>Logs</title>
@@ -44,12 +44,12 @@
                         <transactionStatus module="payone_core">
                             <title>Transactionstatus</title>
                             <sort_order>10</sort_order>
-                            <action>payone_core/adminhtml_protocol_transactionStatus</action>
+                            <action>adminhtml/payonecore_protocol_transactionStatus</action>
                         </transactionStatus>
                         <api module="payone_core">
                             <title>API</title>
                             <sort_order>20</sort_order>
-                            <action>payone_core/adminhtml_protocol_api</action>
+                            <action>adminhtml/payonecore_protocol_api</action>
                         </api>
                     </children>
                 </protocol>
@@ -80,19 +80,19 @@
                         <configuration_export module="payone_core">
                             <title>Export Configuration</title>
                             <sort_order>50</sort_order>
-                            <action>payone_core/adminhtml_system_configuration/export</action>
+                            <action>adminhtml/payonecore_system_configuration/export</action>
                         </configuration_export>
                     </children>
                 </configuration>
                 <configuration_wizard module="payone_core">
                     <title>Configuration-Wizard</title>
                     <sort_order>50</sort_order>
-                    <action>payone_core/adminhtml_configuration_wizard</action>
+                    <action>adminhtml/payonecore_configuration_wizard</action>
                 </configuration_wizard>
                 <information module="payone_core">
                     <title>Information</title>
                     <sort_order>60</sort_order>
-                    <action>payone_core/adminhtml_information/</action>
+                    <action>adminhtml/payonecore_information/</action>
                 </information>
             </children>
         </payone>

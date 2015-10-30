@@ -32,7 +32,7 @@ require_once 'Mage' . DS . 'Adminhtml' . DS . 'controllers' . DS . 'Sales' . DS 
  * @license         <http://www.gnu.org/licenses/> GNU General Public License (GPL 3)
  * @link            http://www.noovias.com
  */
-class Payone_Core_Adminhtml_Sales_Order_InvoiceController extends Mage_Adminhtml_Sales_Order_InvoiceController
+class Payone_Core_Adminhtml_Payonecore_Sales_Order_InvoiceController extends Mage_Adminhtml_Sales_Order_InvoiceController
 {
     /**
      * @return Mage_Core_Controller_Varien_Action

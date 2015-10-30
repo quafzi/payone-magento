@@ -30,7 +30,7 @@
  * @license         <http://www.gnu.org/licenses/> GNU General Public License (GPL 3)
  * @link            http://www.noovias.com
  */
-class Payone_Core_Adminhtml_Configuration_Wizard_PageController
+class Payone_Core_Adminhtml_Payonecore_Configuration_Wizard_PageController
     extends Payone_Core_Controller_Adminhtml_Configuration_Wizard_Abstract
 {
     public function preDispatch()

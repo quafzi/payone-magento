@@ -14,7 +14,7 @@
  *
  * @category        Payone
  * @package         Payone_Core_controllers
- * @subpackage      Adminhtml_Protocol
+ * @subpackage      Adminhtml
  * @copyright       Copyright (c) 2012 <info@noovias.com> - www.noovias.com
  * @author          Matthias Walter <info@noovias.com>
  * @license         <http://www.gnu.org/licenses/> GNU General Public License (GPL 3)
@@ -25,15 +25,15 @@
  *
  * @category        Payone
  * @package         Payone_Core_controllers
- * @subpackage      Adminhtml_Protocol
+ * @subpackage      Adminhtml
  * @copyright       Copyright (c) 2012 <info@noovias.com> - www.noovias.com
  * @license         <http://www.gnu.org/licenses/> GNU General Public License (GPL 3)
  * @link            http://www.noovias.com
  */
-class Payone_Core_Adminhtml_Protocol_ApiController extends Payone_Core_Controller_Adminhtml_Abstract
+class Payone_Core_Adminhtml_Payonecore_TransactionController extends Payone_Core_Controller_Adminhtml_Abstract
 {
     /**
-     * @return \Payone_Core_Adminhtml_Protocol_ApiController
+     * @return Payone_Core_Adminhtml_TransactionController
      */
     protected function _initAction()
     {
@@ -46,7 +46,7 @@ class Payone_Core_Adminhtml_Protocol_ApiController extends Payone_Core_Controlle
         );
 
         $this->_title($this->helper()->__('Payone'));
-        $this->_title($this->helper()->__('Protocol - API'));
+        $this->_title($this->helper()->__('Transaction'));
 
         return $this;
     }
@@ -66,7 +66,7 @@ class Payone_Core_Adminhtml_Protocol_ApiController extends Payone_Core_Controlle
     public function gridAction()
     {
         $this->getResponse()->setBody(
-            $this->getLayout()->createBlock('payone_core/adminhtml_protocol_api_grid')->toHtml()
+            $this->getLayout()->createBlock('payone_core/adminhtml_transaction_grid')->toHtml()
         );
     }
 
@@ -76,11 +76,18 @@ class Payone_Core_Adminhtml_Protocol_ApiController extends Payone_Core_Controlle
     public function viewAction()
     {
         $id = $this->getRequest()->getParam('id');
-        /** @var $model Payone_Core_Model_Domain_Protocol_Api */
-        $model = Mage::getModel('payone_core/domain_protocol_api')->load($id);
-        if ($model->getId() || $id == 0) {
+        /** @var $transactionModel Payone_Core_Model_Domain_Transaction */
+        $transactionModel = Mage::getModel('payone_core/domain_transaction')->load($id);
+        if ($transactionModel->getId() || $id == 0) {
 
-            Mage::register('payone_core_protocol_api', $model);
+            Mage::register('payone_core_transaction', $transactionModel);
+
+            /** @var $transactionStatusCollection Payone_Core_Model_Domain_Resource_Protocol_TransactionStatus_Collection */
+            $transactionStatusCollection = Mage::getModel('payone_core/domain_protocol_transactionStatus')
+                ->getCollection();
+            $transactionStatusCollection->getByTransaction($transactionModel);
+
+            Mage::register('payone_core_transactionstatus_collection', $transactionStatusCollection);
 
             $this->_initAction();
 
@@ -92,58 +99,30 @@ class Payone_Core_Adminhtml_Protocol_ApiController extends Payone_Core_Controlle
         }
         else {
             Mage::getSingleton('adminhtml/session')->addError(
-                $this->helper()->__('Api does not exist')
+                $this->helper()->__('Transaction does not exist')
             );
             $this->_redirect('*/*/');
         }
     }
 
     /**
-     * Export order grid to CSV format
+     *
      */
-    public function exportCsvAction()
+    public function transactionStatusGridAction()
     {
-        $fileName = 'protocol_api.csv';
+        $id = $this->getRequest()->getParam('id');
+        $transactionModel = Mage::getModel('payone_core/domain_transaction')->load($id);
 
-        /**
-         * @var $grid Payone_Core_Block_Adminhtml_Protocol_Api_Grid
-         */
-        $grid = $this->getLayout()->createBlock('payone_core/adminhtml_protocol_api_grid');
+        /** @var $transactionStatusCollection Payone_Core_Model_Domain_Resource_Protocol_TransactionStatus_Collection */
+        $transactionStatusCollection = Mage::getModel('payone_core/domain_protocol_transactionStatus')
+            ->getCollection();
+        $transactionStatusCollection->getByTransaction($transactionModel);
 
-        $this->_prepareDownloadResponse($fileName, $grid->getCsvFile());
+        Mage::register('payone_core_transactionstatus_collection', $transactionStatusCollection);
+
+        $this->getResponse()->setBody(
+            Mage::getBlockSingleton('payone_core/adminhtml_transaction_view_tab_transactionStatus')
+                ->toHtml()
+        );
     }
-
-    /**
-     * Export order grid to XML format
-     */
-    public function exportExcelAction()
-    {
-        $fileName = 'protocol_api.xls';
-
-        /**
-         * @var $grid Payone_Core_Block_Adminhtml_Protocol_Api_Grid
-         */
-        $grid = $this->getLayout()->createBlock('payone_core/adminhtml_protocol_api_grid');
-
-        $this->_prepareDownloadResponse($fileName, $grid->getExcelFile());
-    }
-
-    /**
-     * Export order grid to CSV format
-     */
-    public function exportCsvRawAction()
-    {
-        $fileName = 'protocol_api_raw.csv';
-
-        /**
-         * @var $collection Payone_Core_Model_Domain_Resource_Protocol_Api_Collection
-         */
-        $collection = Mage::getModel('payone_core/domain_protocol_api')->getCollection();
-
-        $serviceExport = $this->getFactory()->getServiceProtocolApiExport();
-        $csv = $serviceExport->exportCsv($collection);
-
-        $this->_prepareDownloadResponse($fileName, $csv);
-    }
-
 }
