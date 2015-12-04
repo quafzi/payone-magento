@@ -8,9 +8,9 @@ app/design/frontend/base/default/template/payone/*      app/design/frontend/base
 
 app/etc/modules/*                                       app/etc/modules/
 
-app/locale/de_DE/*                                      app/locale/de_DE/
+app/locale/de_DE/*.csv                                  app/locale/de_DE/
 app/locale/de_DE/template/email/payone/*                app/locale/de_DE/template/email/payone/
-app/locale/en_US/*                                      app/locale/en_US/
+app/locale/en_US/*.csv                                  app/locale/en_US/
 app/locale/en_US/template/email/payone/*                app/locale/en_US/template/email/payone/
 
 js/payone/*                                             js/payone/
