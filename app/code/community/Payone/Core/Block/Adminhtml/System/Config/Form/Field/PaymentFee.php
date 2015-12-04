@@ -40,17 +40,21 @@ class Payone_Core_Block_Adminhtml_System_Config_Form_Field_PaymentFee
     {
         $this->addColumn('shipping_method', array(
             'label' => Mage::helper('payone_core')->__('Shipping Method'),
-            'style' => 'min-width:120px;',
+            'style' => 'min-width:100px;',
         ));
 
         $this->addColumn('countries', array(
             'label' => Mage::helper('payone_core')->__('Countries'),
-            'style' => 'min-width:120px; min-height: 150px;',
+            'style' => 'min-width:100px; min-height: 150px;',
         ));
 
         $this->addColumn('fee_config', array(
             'label' => Mage::helper('payone_core')->__('Fee'),
-            'style' => 'width:120px;',
+            'style' => 'width:60px;',
+        ));
+        $this->addColumn('fee_type', array(
+            'label' => Mage::helper('payone_core')->__('Type'),
+            'style' => 'width:50px;',
         ));
         $this->_addAfter = false;
         $this->_addButtonLabel = Mage::helper('payone_core')->__('Add');
@@ -64,19 +68,17 @@ class Payone_Core_Block_Adminhtml_System_Config_Form_Field_PaymentFee
      */
     protected function _renderCellTemplate($columnName)
     {
-        if ($columnName == 'countries')
-        {
+        if ($columnName == 'countries') {
             $selectType = Payone_Core_Block_Adminhtml_System_Config_Form_Field_Abstract::PAYONE_CORE_FIELD_MULTISELECT;
             $modelConfigCode = $this->getFactory()->getModelSystemConfigCountryFull();
-        }
-        elseif ($columnName == 'shipping_method')
-        {
+        } elseif ($columnName == 'shipping_method') {
             $selectType = Payone_Core_Block_Adminhtml_System_Config_Form_Field_Abstract::PAYONE_CORE_FIELD_SELECT;
             $modelConfigCode = $this->getFactory()->getModelSystemConfigShippingMethod();
-        }
-        else
-        {
+        } elseif ($columnName == 'fee_config') {
             return parent::_renderCellTemplate($columnName);
+        } elseif ($columnName == 'fee_type') {
+            $selectType = Payone_Core_Block_Adminhtml_System_Config_Form_Field_Abstract::PAYONE_CORE_FIELD_SELECT;
+            $modelConfigCode = $this->getFactory()->getModelSystemConfigPaymentFeeType();
         }
 
         $options = $modelConfigCode->toOptionArray(true);

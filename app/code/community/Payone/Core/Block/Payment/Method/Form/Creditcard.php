@@ -151,20 +151,19 @@ class Payone_Core_Block_Payment_Method_Form_Creditcard
      */
     public function getCreditCardCid()
     {
-        $creditCardNumberEnc = $this->getSavedCustomerData('cc_number_enc');
-        if(empty($creditCardNumberEnc)) {
-            return '';
-        }
-        return 'xxx';
+        return '';
     }
-
+    
     /**
      * @return integer
      */
     public function getPayoneCreditCardCheckValidation()
     {
-        $creditCardNumberEnc = $this->getSavedCustomerData('cc_number_enc');
-        if(empty($creditCardNumberEnc)) {
+        $sEnc = $this->getCreditCardNumberEnc();
+        $sType = $this->getCreditCardType();
+        $sYear = $this->getCreditCardExpireYear();
+        $sMonth = $this->getCreditCardExpireMonth();
+        if(empty($sEnc) || empty($sType) || empty($sYear) || empty($sMonth)) {
             return 1;
         }
         return 0;
@@ -255,7 +254,7 @@ class Payone_Core_Block_Payment_Method_Form_Creditcard
                 'encoding' => 'UTF-8',
                 'language' => $language,
                 'solution_version' => $helper->getPayoneVersion(),
-                'solution_name' => 'votum',
+                'solution_name' => 'fatchip',
                 'integrator_version' => $helper->getMagentoVersion(),
                 'integrator_name' => 'Magento',
                 'storecarddata' => 'yes',

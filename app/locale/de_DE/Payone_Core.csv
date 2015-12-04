@@ -345,11 +345,12 @@
 "Credit Card Type","Kreditkartentyp"
 "Credit Card Number","Kreditkartennummer"
 "Expiration Date","Verfallsdatum"
+"Please fill in all required fields","Bitte f&uuml;llen Sie alle Pflichtfelder aus"
 
 "Account holder: %s","Kontoinhaber: %s"
 "Account number: xxx%s","Kontonummer: xxx%s"
 "Bank code: %s","Bankleitzahl: %s"
-"or enter your bank account data (only for German accounts):","oder bezahlen Sie wie gewohnt mit Ihren bekannten Kontodaten (nur für deutsche Kontoverbindungen):"
+"or enter your bank account data (only for German accounts):","oder bezahlen Sie wie gewohnt mit Ihren bekannten Kontodaten (nur für Deutsche Kontoverbindungen):"
 
 "Bank code must contain 8 digits","Bankleitzahl muss 8 Ziffern enthalten"
 "IBAN should contain only letters and digits","IBAN sollte nur Buchstaben und Ziffern enthalten"
@@ -972,5 +973,5 @@
 "Lastname","Nachname"
 "What is this?","Was ist das?"
 
-"Credit card validity period is too short.","Der Gültigkeitszeitraum ist zu kurz."
-"Credit card number does not match credit card type.","Die Kreditkartennummer passt nicht zu dem angegebenen Kreditkartentyp."
+"Always","Immer"
+"Only on first order with this card","Bei erster Bestellung mit der Karte"

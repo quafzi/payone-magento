@@ -67,7 +67,7 @@
  * @method setTypes($types)
  * @method setKlarnaConfig($klarnaConfig)
  * @method setCheckCvc($checkCvc)
- * @method int getCheckCvc()
+ * @method string getCheckCvc()
  * @method setCheckBankAccount($checkBankaccount)
  * @method int getCheckBankAccount()
  * @method setSepaCountry($sepaCountry)

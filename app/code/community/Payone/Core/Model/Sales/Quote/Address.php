@@ -71,13 +71,6 @@ class Payone_Core_Model_Sales_Quote_Address extends Mage_Sales_Model_Quote_Addre
                 $errors = $address->validate();
             }
         }
-        elseif ($this->helperCompatibility()->isEnabledDhlAccount()) {
-            /**
-             * @var $address Dhl_Account_Model_Quote_Address
-             */
-            $address = Mage::getModel('dhlaccount/quote_address', $this->getData());
-            $errors = $address->validate();
-        }
         elseif ($this->helperCompatibility()->isEnabledGoMageLightCheckout()) {
             /**
              * @var $address GoMage_Checkout_Model_Quote_Address

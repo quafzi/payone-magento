@@ -187,9 +187,38 @@ class Payone_Core_Block_Payment_Method_Form_Financing_Klarna
     {
         $customerResource = $this->getFactory()->getSingletonCustomerResource();
         $options = $customerResource->getAttribute('gender')->getSource()->getAllOptions();
+        $options = $this->_filterGenderOptions($options);
         return $options;
     }
 
+    protected function _filterGenderOptions($options) {
+        $aAdded = array();
+        $aFilteredOptions = array();
+        $aWhitelist = array(
+            'male' => array(
+                'male',
+                'männlich',
+            ),
+            'female' => array(
+                'female',
+                'weiblich',
+            ),
+        );
+        foreach ($options as $aOption) {
+            $sLowerLabel = strtolower($aOption['label']);
+            if(array_search($sLowerLabel, $aAdded) === false) {
+                foreach ($aWhitelist as $sKey => $aList) {
+                    if(array_search($sLowerLabel, $aList) !== false) {
+                        $aAdded[] = $sLowerLabel;
+                        $aFilteredOptions[] = $aOption;
+                        unset($aWhitelist[$sKey]);// only allow one of the whitelisted gender-terms
+                    }
+                }
+            }
+        }
+        return $aFilteredOptions;
+    }
+    
     /**
      * @return bool
      */

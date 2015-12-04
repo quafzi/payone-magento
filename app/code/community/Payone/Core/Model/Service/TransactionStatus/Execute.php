@@ -92,10 +92,15 @@ class Payone_Core_Model_Service_TransactionStatus_Execute extends Payone_Core_Mo
         $transactionStatus->setStatusRunning();
         $transactionStatus->save();
 
-        $this->getServiceProcess()->execute($transactionStatus);
+        try {
+            $this->getServiceProcess()->execute($transactionStatus);
+            $transactionStatus->setStatusOk();
+        } catch (Exception $e) {
+            $transactionStatus->setStatusError();
+            $transactionStatus->setProcessingError($e->getMessage());
+        }
 
         $transactionStatus->setProcessedAt(date('Y-m-d H:i:s'));
-        $transactionStatus->setStatusOk();
         $transactionStatus->save();
 
         // Reset Store

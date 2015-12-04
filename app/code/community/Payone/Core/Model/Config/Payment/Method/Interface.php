@@ -181,12 +181,12 @@ interface Payone_Core_Model_Config_Payment_Method_Interface
     public function getCustomerFormDataSave();
 
     /**
-     * @param int $check_cvc
+     * @param string $check_cvc
      */
     public function setCheckCvc($check_cvc);
 
     /**
-     * @return int
+     * @return string
      */
     public function getCheckCvc();
 

@@ -6,11 +6,12 @@ app/design/adminhtml/default/default/template/payone/*  app/design/adminhtml/def
 app/design/frontend/base/default/layout/payone/*        app/design/frontend/base/default/layout/payone/
 app/design/frontend/base/default/template/payone/*      app/design/frontend/base/default/template/payone/
 
-app/etc/modules/Payone_Core.xml                         app/etc/modules/Payone_Core.xml
-app/etc/modules/Payone_Migrator.xml                     app/etc/modules/Payone_Migrator.xml
+app/etc/modules/*                                       app/etc/modules/
 
-app/locale/de_DE/Payone_Core.csv                        app/locale/de_DE/Payone_Core.csv
+app/locale/de_DE/*                                      app/locale/de_DE/
 app/locale/de_DE/template/email/payone/*                app/locale/de_DE/template/email/payone/
+app/locale/en_US/*                                      app/locale/en_US/
+app/locale/en_US/template/email/payone/*                app/locale/en_US/template/email/payone/
 
 js/payone/*                                             js/payone/
 js/prototype/windows/themes/payone/*                    js/prototype/windows/themes/payone/

@@ -67,7 +67,7 @@ class Payone_Core_Model_Service_TransactionStatus_Process extends Payone_Core_Mo
     {
         $order = $this->getFactory()->getModelSalesOrder();
         $order->loadByIncrementId($transactionStatus->getReference());
-
+        
         if (!$order->hasData()) {
             throw new Payone_Core_Exception_OrderNotFound('Reference "'.$transactionStatus->getReference().'"."');
         }
@@ -112,6 +112,7 @@ class Payone_Core_Model_Service_TransactionStatus_Process extends Payone_Core_Mo
             self::EVENT_PARAMETER_CONFIG => $config,
             // @todo we should add order as param  cause observers may need it
         );
+
         $this->dispatchEvent(self::EVENT_NAME_PREFIX . self::EVENT_NAME_ALL, $params);
         $this->dispatchEvent(self::EVENT_NAME_PREFIX . $transactionStatus->getTxaction(), $params);
     }

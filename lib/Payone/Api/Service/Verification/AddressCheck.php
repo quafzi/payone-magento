@@ -71,7 +71,7 @@ class Payone_Api_Service_Verification_AddressCheck
             $requestParams = $request->toArray();
 
             $responseRaw = $this->getAdapter()->request($requestParams);
-
+            
             $response = $this->getMapperResponse()->map($responseRaw);
 
             $this->protocol($request, $response);

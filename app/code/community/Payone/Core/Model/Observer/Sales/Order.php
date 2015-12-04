@@ -33,6 +33,7 @@
 class Payone_Core_Model_Observer_Sales_Order
     extends Payone_Core_Model_Observer_Abstract
 {
+
     /**
      * @param Varien_Event_Observer $observer
      * @return void
@@ -90,8 +91,10 @@ class Payone_Core_Model_Observer_Sales_Order
 
         if(!$payment->getOrder()->getCustomerIsGuest()) {
             $customer = $payment->getOrder()->getCustomer();
-            $customer->setPayoneLastPaymentMethod($payment->getMethod());
-            $customer->save();
+            if($customer) {
+                $customer->setPayoneLastPaymentMethod($payment->getMethod());
+                $customer->save();
+            }
         }
 
         if(($payment->getMethodInstance() instanceof Payone_Core_Model_Payment_Method_Abstract) && (!$payment->getOrder()->getCustomerIsGuest())) {

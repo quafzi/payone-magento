@@ -65,7 +65,25 @@ class Payone_Core_Model_Sales_Quote_Address_Total_Fee
             return $this;
         }
 
+        /*
+         * This does not work here:
+         * $quote->getSubtotal();
+         * $quote->getGrandTotal();
+         * 
+         * because this method is called during the calculation process of those methods and thus the value is not available then
+         */
+        $aTotals = $quote->getTotals();
+        $dSubTotal = 0;
+        if(isset($aTotals['subtotal'])) {
+            $dSubTotal = $aTotals['subtotal']->getValue();
+        }
+        
         $paymentFee = $feeConfig['fee_config'];
+        if(isset($feeConfig['fee_type'][0]) && $feeConfig['fee_type'][0] == 'percent') {
+            $paymentFee = $dSubTotal * $paymentFee / 100;
+        }
+        
+
         $oldShippingAmount = $address->getBaseShippingAmount();
         $newShippingAmount = $oldShippingAmount + $paymentFee;
 

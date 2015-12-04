@@ -103,19 +103,31 @@ class Payone_Core_Block_Payment_Method_Form_Abstract
         return $this->getPaymentConfig()->getFeeConfigForQuote($this->getQuote());
     }
 
+    protected function _calcFeePrice() {
+        $oQuote = $this->getQuote();
+        
+        $feeConfig = $this->getFeeConfig();
+
+        $price = 0.0;
+        if (is_array($feeConfig) and array_key_exists('fee_config', $feeConfig) and !empty($feeConfig['fee_config'])) {
+            $price = $feeConfig['fee_config'];
+            if(isset($feeConfig['fee_type'][0]) && $feeConfig['fee_type'][0] == 'percent') {
+                $price = $oQuote->getSubtotal() * $price / 100;
+            }
+            #$oQuote->getSubtotal();
+            #$oQuote->getGrandTotal();
+        }
+        return $price;
+    }
+    
     /**
      * Formatted Fee price e.g. '2,50 €' or '$11.50'
      * @return string
      */
     public function getFeePrice()
     {
-        $feeConfig = $this->getFeeConfig();
-
-        $price = 0.0;
-        if (is_array($feeConfig) and array_key_exists('fee_config', $feeConfig) and !empty($feeConfig['fee_config'])) {
-            $price = $feeConfig['fee_config'];
-        }
-
+        $price = $this->_calcFeePrice();
+        
         $formattedPrice = $this->getQuote()->getStore()->formatPrice($price);
         return $formattedPrice;
     }
@@ -138,7 +150,7 @@ class Payone_Core_Block_Payment_Method_Form_Abstract
      * code - type code, e.g. 'V', PNC', 'BSV'
      * name - name for display, e.g. "Visa", "Sofortueberweisung" "BillSafe'
      * fee - Formatted fee price for this type, empty if no price is configured.
-     * check_cvc - 1 or 0, depends on the used configuration. only set for Creditcard
+     * check_cvc - no, only_first, always - depends on the used configuration. only set for Creditcard
      * config_id - Id of the payment method configuration for this card type
      *
      * @api
@@ -160,7 +172,7 @@ class Payone_Core_Block_Payment_Method_Form_Abstract
                 $feeConfig = $config->getFeeConfigForQuote($quote);
 
                 if (is_array($feeConfig) and array_key_exists('fee_config', $feeConfig) and !empty($feeConfig['fee_config'])) {
-                    $formattedFeePrice = $this->getFormattedFeePriceLabel($feeConfig['fee_config']);
+                    $formattedFeePrice = $this->getFormattedFeePriceLabel($this->_calcFeePrice());
                 }
                 else {
                     $formattedFeePrice = '';
@@ -221,7 +233,7 @@ class Payone_Core_Block_Payment_Method_Form_Abstract
         $id = 'payone_payment_fee_' . $this->getMethodCode();
 
         $formatting = ' <span id=' . $id . '>' . $text . '</span>';
-
+        
         return $formatting;
     }
 
@@ -282,11 +294,12 @@ class Payone_Core_Block_Payment_Method_Form_Abstract
      * @return string
      */
     public function strToXXX($text) {
-        if($text){
+        if(!empty($text)) {
             $result = str_repeat('x', strlen($text) - 8);
             $result = substr($text, 0, 4).$result.substr($text, -4);
-            return $result;
+        } else {
+            $result = $text;
         }
-        return;
+        return $result;
     }
 }

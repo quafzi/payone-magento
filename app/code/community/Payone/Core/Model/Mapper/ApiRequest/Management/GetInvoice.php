@@ -60,7 +60,7 @@ class Payone_Core_Model_Mapper_ApiRequest_Management_GetInvoice
 
         $request->setIntegratorName('Magento');
         $request->setIntegratorVersion($helper->getMagentoVersion());
-        $request->setSolutionName('votum');
+        $request->setSolutionName('fatchip');
         $request->setSolutionVersion($helper->getPayoneVersion());
 
         $invoiceTitle = 'RG-' . $txId . '-' . $sequenceNumber;

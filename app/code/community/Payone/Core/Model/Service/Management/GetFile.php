@@ -89,3 +89,4 @@ class Payone_Core_Model_Service_Management_GetFile
         return $this->serviceApiGetFile;
     }
 }
+ 

@@ -81,7 +81,7 @@ class Payone_Core_Model_Mapper_ApiRequest_Verification_AddressCheck
 
         $request->setIntegratorName('Magento');
         $request->setIntegratorVersion($helper->getMagentoVersion());
-        $request->setSolutionName('votum');
+        $request->setSolutionName('fatchip');
         $request->setSolutionVersion($helper->getPayoneVersion());
 
 

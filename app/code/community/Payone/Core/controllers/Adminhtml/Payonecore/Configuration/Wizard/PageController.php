@@ -79,7 +79,7 @@ class Payone_Core_Adminhtml_Payonecore_Configuration_Wizard_PageController
             ->setWebsite($configPage->getData('codes/website'))
             ->setStore($configPage->getData('codes/store'));
 
-        $this->loadLayout('payone_core_adminhtml_configuration_wizard_page_edit');
+        $this->loadLayout('adminhtml_payonecore_configuration_wizard_page_edit');
         $this->renderLayout();
     }
 

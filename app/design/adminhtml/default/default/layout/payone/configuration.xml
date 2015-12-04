@@ -104,7 +104,7 @@
     </adminhtml_payonecore_configuration_wizard_page_iframe>
 
     <adminhtml_payonecore_configuration_wizard_page_view>
-        <update handle="payone_core_adminhtml_configuration_wizard_page_iframe" />
+        <update handle="adminhtml_payonecore_configuration_wizard_page_iframe" />
         <reference name="content">
             <block type="payone_core/adminhtml_configuration_wizard_page_view"
                    name="payone.config.wizard.page.view"
@@ -113,7 +113,7 @@
     </adminhtml_payonecore_configuration_wizard_page_view>
 
     <adminhtml_payonecore_configuration_wizard_page_edit>
-        <update handle="payone_core_adminhtml_configuration_wizard_page_iframe" />
+        <update handle="adminhtml_payonecore_configuration_wizard_page_iframe" />
         <reference name="content">
             <block type="payone_core/adminhtml_configuration_wizard_page_edit"
                    name="payone.config.wizard.page.edit"
@@ -127,7 +127,7 @@
     </adminhtml_payonecore_configuration_wizard_page_edit>
 
     <adminhtml_payonecore_configuration_wizard_page_index>
-        <update handle="payone_core_adminhtml_configuration_wizard_page_view" />
+        <update handle="adminhtml_payonecore_configuration_wizard_page_view" />
         <reference name="payone.config.wizard.page.view">
             <action method="removeButton"><name>back</name></action>
             <block type="adminhtml/template"
@@ -142,11 +142,11 @@
     </adminhtml_payonecore_configuration_wizard_page_index>
 
     <adminhtml_payonecore_configuration_wizard_page_payment>
-        <update handle="payone_core_adminhtml_configuration_wizard_page_payment_index" />
+        <update handle="adminhtml_payonecore_configuration_wizard_page_payment_index" />
     </adminhtml_payonecore_configuration_wizard_page_payment>
 
     <adminhtml_payonecore_configuration_wizard_page_payment_index>
-        <update handle="payone_core_adminhtml_configuration_wizard_page_view" />
+        <update handle="adminhtml_payonecore_configuration_wizard_page_view" />
         <reference name="payone.config.wizard.page.view">
             <block type="payone_core/adminhtml_system_config_payment"
                    name="payone.config.wizard.page.payment"
@@ -155,7 +155,7 @@
     </adminhtml_payonecore_configuration_wizard_page_payment_index>
 
     <adminhtml_payonecore_configuration_wizard_page_payment_edit>
-        <update handle="payone_core_adminhtml_configuration_wizard_page_iframe" />
+        <update handle="adminhtml_payonecore_configuration_wizard_page_iframe" />
         <reference name="content">
             <block type="payone_core/adminhtml_system_config_payment_edit"
                    name="payone.core.payment.edit"
@@ -164,7 +164,7 @@
     </adminhtml_payonecore_configuration_wizard_page_payment_edit>
 
     <adminhtml_payonecore_configuration_wizard_page_finish>
-        <update handle="payone_core_adminhtml_configuration_wizard_page_view" />
+        <update handle="adminhtml_payonecore_configuration_wizard_page_view" />
         <reference name="payone.config.wizard.page.view">
             <action method="removeButton"><name>back</name></action>
             <action method="removeButton"><name>save</name></action>

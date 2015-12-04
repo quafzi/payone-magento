@@ -62,7 +62,7 @@ class Payone_Core_Model_Mapper_ApiRequest_Management_ManageMandate
         $request->setEncoding('UTF-8');
         $request->setIntegratorName('Magento');
         $request->setIntegratorVersion($helper->getMagentoVersion());
-        $request->setSolutionName('votum');
+        $request->setSolutionName('fatchip');
         $request->setSolutionVersion($helper->getPayoneVersion());
 
         // special parameters

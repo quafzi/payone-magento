@@ -117,4 +117,17 @@ class Payone_Core_Block_Adminhtml_Configuration_Wizard_Page_View
     {
         return Mage::helper('payone_core/wizard');
     }
+    
+    protected function _prepareLayout()
+    {
+        foreach ($this->_buttons as $level => $buttons) {
+            foreach ($buttons as $id => $data) {
+                $childId = $this->_prepareButtonBlockId($id);
+                $this->_addButtonChildBlock($childId);
+            }
+        }
+        $this->setChild('plane', $this->getLayout()->createBlock('payone_core/adminhtml_configuration_wizard_page_view_plane'));
+        return $this;
+    }
+    
 }

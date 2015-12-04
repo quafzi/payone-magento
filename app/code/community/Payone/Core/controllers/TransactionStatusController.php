@@ -169,13 +169,21 @@ class Payone_Core_TransactionStatusController extends Payone_Core_Controller_Abs
 
         curl_setopt($oCurl, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($oCurl, CURLOPT_SSL_VERIFYHOST, false);
-        curl_setopt($oCurl, CURLOPT_SSLVERSION, 3);
 
         curl_setopt($oCurl, CURLOPT_RETURNTRANSFER, TRUE);
         curl_setopt($oCurl, CURLOPT_TIMEOUT, $iTimeout);
 
         $oResult = curl_exec($oCurl);
 
+        $sCurlError = curl_error($oCurl);
+        $sCurlErrorNr = curl_errno($oCurl);
+        if(!empty($sCurlError) && !empty($sCurlErrorNr)) {
+            $sLogDir = dirname(__FILE__).'/../../../../../../var/log/';
+            $oLog = fopen($sLogDir.'payone_transaction_forwarding.log', "a");
+            fwrite($oLog, date('[Y-m-d H:i:s]').' - Curl-Error-Nr: '.$sCurlErrorNr.' - Message: '.$sCurlError."\n");
+            fclose($oLog);
+        }
+        
         curl_close($oCurl);
     }
 

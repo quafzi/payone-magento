@@ -24,7 +24,7 @@
 <config>
     <modules>
         <Payone_Core>
-            <version>3.3.9</version>
+            <version>3.4.9</version>
         </Payone_Core>
     </modules>
 
@@ -359,15 +359,6 @@
                     </payone_core_observer>
                 </observers>
             </sales_order_payment_cancel>
-            <payone_core_transactionstatus_all>
-                <observers>
-                    <payone_core_observer_forwarding>
-                        <type>singleton</type>
-                        <class>payone_core/observer_transactionStatus_forwarding</class>
-                        <method>onAll</method>
-                    </payone_core_observer_forwarding>
-                </observers>
-            </payone_core_transactionstatus_all>
             <payone_core_transactionstatus_appointed>
                 <observers>
                     <payone_core_observer_orderConfirmation>
@@ -493,7 +484,7 @@
                 </Payone_Core>
             </modules>
         </translate>
-
+        
     </adminhtml>
 
     <frontend>
@@ -646,6 +637,7 @@
                 <online_bank_transfer>a:1:{s:18:"_1343118466182_182";a:2:{s:8:"txaction";a:1:{i:0;s:9:"appointed";}s:12:"state_status";a:1:{i:0;s:21:"processing|processing";}}}</online_bank_transfer>
                 <cash_on_delivery>a:1:{s:18:"_1338893625332_332";a:2:{s:8:"txaction";a:1:{i:0;s:9:"appointed";}s:12:"state_status";a:1:{i:0;s:21:"processing|processing";}}}</cash_on_delivery>
                 <wallet>a:1:{s:18:"_1343137411652_652";a:2:{s:8:"txaction";a:1:{i:0;s:9:"appointed";}s:12:"state_status";a:1:{i:0;s:21:"processing|processing";}}}</wallet>
+                <barzahlen>a:1:{s:23:"_payone_status_mapping4";a:2:{s:8:"txaction";a:1:{i:0;s:9:"appointed";}s:12:"state_status";a:1:{i:0;s:21:"processing|processing";}}}</barzahlen>
             </status_mapping>
         </payone_general>
         <payone_protect>
@@ -658,8 +650,8 @@
             <creditcrating>
                 <integration_event>before_payment</integration_event>
                 <handle_response_error>continue_checkout</handle_response_error>
-                <payment_hint_text><![CDATA[Ich willige ein, dass von XY-Shop zum Zweck der eigenen Kreditprüfung ggf. Bonitätsinformationen auf der Basis mathematisch-statistischer Verfahren von der Firma ABC, Musterstr. 1, 11111 Musterhausen abgerufen und während der Dauer der Kundenbeziehung Adress- und ggf. Negativdaten an die ABC übermittelt werden, die bei berechtigtem Interesse Dritten für Kreditprüfungszwecke Bonitätsinformationen auf Basis mathematisch-statistischer Verfahren zur Verfügung stellt.
-Detaillierte Informationen zur Arbeitsweise der ABC finde ich unter www.abc.de/fghi…]]>
+                <payment_hint_text><![CDATA[Ich willige ein, dass von XY-Shop zum Zweck der eigenen Kreditpr&uuml;fung ggf. Bonit&auml;tsinformationen auf der Basis mathematisch-statistischer Verfahren von der Firma ABC, Musterstr. 1, 11111 Musterhausen abgerufen und w&auml;hrend der Dauer der Kundenbeziehung Adress- und ggf. Negativdaten an die ABC &Uuml;bermittelt werden, die bei berechtigtem Interesse Dritten f&uuml;r Kreditpr&uuml;fungszwecke Bonit&auml;tsinformationen auf Basis mathematisch-statistischer Verfahren zur Verf&uuml;gung stellt.
+Detaillierte Informationen zur Arbeitsweise der ABC finde ich unter www.abc.de/fghi...]]>
                 </payment_hint_text>
             </creditcrating>
         </payone_protect>

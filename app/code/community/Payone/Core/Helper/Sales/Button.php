@@ -78,7 +78,7 @@ class Payone_Core_Helper_Sales_Button
         /** @var $invoice Mage_Sales_Model_Order_Invoice */
         $invoice = Mage::registry('current_invoice');
 
-        $url = $this->getUrl('payone_core/adminhtml_sales_order_invoice/getInvoice', array('invoice_id' => $invoice->getId()));
+        $url = $this->getUrl('adminhtml/payonecore_sales_order_invoice/getInvoice', array('invoice_id' => $invoice->getId()));
         return $url;
     }
 

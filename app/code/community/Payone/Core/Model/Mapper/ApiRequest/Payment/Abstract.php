@@ -79,7 +79,7 @@ abstract class Payone_Core_Model_Mapper_ApiRequest_Payment_Abstract
     {
         $helper = $this->helper();
 
-        $solutionName = 'votum';
+        $solutionName = 'fatchip';
         $solutionVersion = $helper->getPayoneVersion();
         $integratorName = 'magento';
         $integratorVersion = $helper->getMagentoVersion();
@@ -112,12 +112,7 @@ abstract class Payone_Core_Model_Mapper_ApiRequest_Payment_Abstract
         $params['de'] = $order->getShippingDescription();
         $params['no'] = 1;
         $params['pr'] = $order->getShippingInclTax();
-//        $params['va'] = $this->getShippingTaxRate();
         $params['va'] = round( $this->getShippingTaxRate() * 100 );   // transfer vat in basis point format [#MAGE-186]
-
-        if ($this->getPaymentMethod()->mustTransmitInvoicingItemTypes()) {
-            $params['it'] = Payone_Api_Enum_InvoicingItemType::SHIPMENT;
-        }
 
         $item = new Payone_Api_Request_Parameter_Invoicing_Item();
         $item->init($params);
@@ -145,10 +140,8 @@ abstract class Payone_Core_Model_Mapper_ApiRequest_Payment_Abstract
         $params['de'] = $description;
         $params['no'] = 1;
         $params['pr'] = $discountAmount;
-
-        if ($this->getPaymentMethod()->mustTransmitInvoicingItemTypes()) {
-            $params['it'] = Payone_Api_Enum_InvoicingItemType::VOUCHER;
-        }
+        $params['va'] = round( $this->getShippingTaxRate() * 100 ); // assuming that it has the same tax-rate as shipping - dont know from where to get the tax
+        
         $item = new Payone_Api_Request_Parameter_Invoicing_Item();
         $item->init($params);
 
@@ -175,10 +168,8 @@ abstract class Payone_Core_Model_Mapper_ApiRequest_Payment_Abstract
         $params['de'] = $order->getShippingDescription();
         $params['no'] = 1;
         $params['pr'] = $creditmemo->getShippingInclTax();
-        if ($this->getPaymentMethod()->mustTransmitInvoicingItemTypes()) {
-            $params['it'] = Payone_Api_Enum_InvoicingItemType::SHIPMENT;
-        }
-
+        $params['va'] = round( $this->getShippingTaxRate() * 100 );
+        
         $item = new Payone_Api_Request_Parameter_Invoicing_Item();
         $item->init($params);
 
@@ -203,15 +194,13 @@ abstract class Payone_Core_Model_Mapper_ApiRequest_Payment_Abstract
             $name = $this->helper()->__(self::DEFAULT_ADJUSTMENT_POSITIVE_SKU);
         }
 
-        $params['it'] = Payone_Api_Enum_InvoicingItemType::GOODS;
+        $params['it'] = Payone_Api_Enum_InvoicingItemType::VOUCHER;
         $params['id'] = $sku;
         $params['de'] = $name;
         $params['no'] = 1;
         $params['pr'] = $creditmemo->getAdjustmentPositive();
-        if ($this->getPaymentMethod()->mustTransmitInvoicingItemTypes()) {
-            $params['it'] = Payone_Api_Enum_InvoicingItemType::VOUCHER;
-        }
-
+        $params['va'] = round( $this->getShippingTaxRate() * 100 ); // assuming that it has the same tax-rate as shipping - dont know from where to get the tax
+        
         $item = new Payone_Api_Request_Parameter_Invoicing_Item();
         $item->init($params);
 
@@ -242,9 +231,8 @@ abstract class Payone_Core_Model_Mapper_ApiRequest_Payment_Abstract
         $params['de'] = $name;
         $params['no'] = 1;
         $params['pr'] = $creditmemo->getAdjustmentNegative() * (-1);
-        if ($this->getPaymentMethod()->mustTransmitInvoicingItemTypes()) {
-            $params['it'] = Payone_Api_Enum_InvoicingItemType::GOODS;
-        }
+        $params['va'] = round( $this->getShippingTaxRate() * 100 ); // assuming that it has the same tax-rate as shipping - dont know from where to get the tax
+
 
         $item = new Payone_Api_Request_Parameter_Invoicing_Item();
         $item->init($params);

@@ -60,12 +60,12 @@
     <admin>
         <routers>
             <adminhtml>
-                <args>
-                    <modules>
-                        <payone_migrator before="Mage_Adminhtml">Payone_Migrator_Adminhtml</payone_migrator>
-                    </modules>
-                </args>
-            </adminhtml>
+				<args>
+					<modules>
+						<payone_migrator before="Mage_Adminhtml">Payone_Migrator_Adminhtml</payone_migrator>
+					</modules>
+				</args>
+			</adminhtml>
         </routers>
     </admin>
 

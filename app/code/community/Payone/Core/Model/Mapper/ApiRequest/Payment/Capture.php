@@ -98,7 +98,6 @@ class Payone_Core_Model_Mapper_ApiRequest_Payment_Capture
             $request->setAmount($this->getAmount());
         }
         $request->setRequest(Payone_Api_Enum_RequestType::CAPTURE);
-        Mage::log('Capture', null, 'test.log', true);
     }
 
     /**
@@ -182,10 +181,6 @@ class Payone_Core_Model_Mapper_ApiRequest_Payment_Capture
                 $params['de'] = $itemData->getName();
                 $params['no'] = $number;
                 $params['pr'] = $itemData->getPriceInclTax();
-
-                if ($this->getPaymentMethod()->mustTransmitInvoicingItemTypes()) {
-                    $params['it'] = Payone_Api_Enum_InvoicingItemType::GOODS;
-                }
 
                 // We have to load the tax percentage from the order item
 //                $params['va'] = number_format($orderItem->getTaxPercent(), 0, '.', '');

@@ -98,10 +98,10 @@ PAYONE.Service.CreditCardCheck = function (handler, form, config) {
         var cvcDiv = $("payone_creditcard_cc_cid_div");
         if (cvcDiv != undefined && cvcDiv != null) {
             configCcKey = config[ccKey];
-            if (configCcKey != undefined && configCcKey != 0) {
+            if (configCcKey != undefined && (configCcKey == 'always' || (configCcKey == 'only_first' && $('payone_cc_check_validation').value == 1))) {
                 cvcDiv.show();
-            }
-            else {
+                $('payone_cc_check_validation').value = 1;
+            } else {
                 cvcDiv.hide();
             }
         }
@@ -153,10 +153,11 @@ PAYONE.Service.CreditCardCheck = function (handler, form, config) {
     
     this.creditcardcheckHosted = function() {
         if (this.iframes.isComplete()) {
+            $('payone_creditcard_hosted_error').hide();
             $('payone_creditcard_cc_owner').value = $('firstname').value + ' ' + $('lastname').value;            
             this.iframes.creditCardCheck('processPayoneResponseCCHosted');
         } else {
-            console.debug("not complete");
+            $('payone_creditcard_hosted_error').show();
         }
     }
 
@@ -169,10 +170,14 @@ PAYONE.Service.CreditCardCheck = function (handler, form, config) {
         data = {
             'cardexpiremonth':$('payone_creditcard_cc_expiration_month').value,
             'cardexpireyear':$('payone_creditcard_cc_expiration_year').value,
-            'cardholder':$('payone_creditcard_cc_owner').value,
-            'cardtype':$('payone_creditcard_cc_type').value,
-            'cardpan':$('payone_creditcard_cc_number').value
+            'cardtype':$('payone_creditcard_cc_type').value
         };
+        if($('payone_pseudocardpan').value == '') {
+            data.cardholder = $('payone_creditcard_cc_owner').value;
+            data.cardpan = $('payone_creditcard_cc_number').value;
+        } else {
+            data.pseudocardpan = $('payone_pseudocardpan').value;
+        }
 
         cid = $('payone_creditcard_cc_cid');
         if (cid != undefined) {
@@ -230,7 +235,11 @@ PAYONE.Handler.CreditCardCheck.OnepageCheckout = function () {
     this.handleResponse = function (response) {
         if (response.status != 'VALID') {
             // Failure
-            alert(response.customermessage);
+            if(typeof response.customermessage != 'undefined') {
+                alert(response.customermessage);
+            } else if(typeof response.errormessage != 'undefined') {
+                alert(response.errormessage);
+            }
             checkout.setLoadWaiting(false);
             return false;
         }
@@ -284,7 +293,12 @@ PAYONE.Handler.CreditCardCheck.Admin = function () {
     this.handleResponse = function (response) {
         if (response.status != 'VALID') {
             // Failure
-            alert(response.customermessage);
+            // Failure
+            if(typeof response.customermessage != 'undefined') {
+                alert(response.customermessage);
+            } else if(typeof response.errormessage != 'undefined') {
+                alert(response.errormessage);
+            }
             return false;
         }
 
@@ -316,9 +330,11 @@ PAYONE.Validation.CreditCard = function (config) {
 
     this.validate = function (form) {
         this.initValidationType();
-
-        Validation.add('validate-payone-cc-type', 'Credit card number does not match credit card type.', this.validateType, this);
-        Validation.add('validate-payone-cc-validity-period', 'Credit card validity period is too short.', this.validateValidityPeriod, this);
+        
+        if($('payone_pseudocardpan').value == '') {
+            Validation.add('validate-payone-cc-type', 'Credit card number does not match credit card type.', this.validateType, this);
+            Validation.add('validate-payone-cc-validity-period', 'Credit card validity period is too short.', this.validateValidityPeriod, this);
+        }
 
         var validator = new Validation(form);
         return validator.validate();
@@ -414,7 +430,8 @@ PAYONE.Validation.CreditCard = function (config) {
     };
 };
 
-function payoneChangedCreditCardNumber() {
+function payoneChangedCreditCardInfo() {
+    $('payone_pseudocardpan').value = '';
     $('payone_cc_check_validation').value = 1;
     $('payone_creditcard_cc_number').addClassName('validate-cc-number');
 }

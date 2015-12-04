@@ -48,6 +48,10 @@ class Payone_Api_Response_AddressCheck_Valid
     /**
      * @var string
      */
+    protected $street2 = NULL;
+    /**
+     * @var string
+     */
     protected $streetname = NULL;
     /**
      * @var string
@@ -154,6 +158,15 @@ class Payone_Api_Response_AddressCheck_Valid
      */
     public function setStreet($street)
     {
+        $sNewStreet2 = '';
+        if(stripos($street, '\n') !== false) {//MAGE-195 - split address by the \n and write it in the 2. address field
+            $aStreetExpl = explode('\n', $street);
+            
+            $street = $aStreetExpl[0];
+            unset($aStreetExpl[0]);
+            $sNewStreet2 = implode(' - ', $aStreetExpl);
+        }
+        $this->setStreet2($sNewStreet2);
         $this->street = $street;
     }
 
@@ -163,6 +176,22 @@ class Payone_Api_Response_AddressCheck_Valid
     public function getStreet()
     {
         return $this->street;
+    }
+    
+    /**
+     * @param string $street2
+     */
+    public function setStreet2($street2)
+    {
+        $this->street2 = $street2;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStreet2()
+    {
+        return $this->street2;
     }
 
     /**

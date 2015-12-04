@@ -1496,6 +1496,14 @@ class Payone_Core_Model_Factory
     {
         return Mage::getSingleton('payone_core/system_config_clearingType');
     }
+    
+    /**
+     * @return Payone_Core_Model_System_Config_PaymentFeeType
+     */
+    public function getModelSystemConfigPaymentFeeType()
+    {
+        return Mage::getSingleton('payone_core/system_config_paymentFeeType');
+    }
 
     /**
      * @return Payone_Core_Model_System_Config_Mode

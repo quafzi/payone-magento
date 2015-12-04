@@ -76,48 +76,72 @@ function payoneSwitchOnlineBankTransfer(element, country, currency) {
     }
 
     function disableAll() {
-        accountNumberWrap.hide();
-        accountNumberInput.setAttribute("disabled", "disabled");
-        bankCodeWrap.hide();
-        bankCodeInput.setAttribute("disabled", "disabled");
-        sepaIbanWrap.hide();
-        sepaIbanInput.setAttribute("disabled", "disabled");
-        sepaBicWrap.hide();
-        sepaBicInput.setAttribute("disabled", "disabled");
-        bankGroupWrapAt.hide();
-        bankGroupSelectAt.setAttribute("disabled", "disabled");
-        bankGroupWrapNl.hide();
-        bankGroupSelectNl.setAttribute("disabled", "disabled");
+        if(accountNumberWrap) {
+            accountNumberWrap.hide();
+            accountNumberInput.setAttribute("disabled", "disabled");
+        }
+        if(bankCodeWrap) {
+            bankCodeWrap.hide();
+            bankCodeInput.setAttribute("disabled", "disabled");
+        }
+        if(sepaIbanWrap) {
+            sepaIbanWrap.hide();
+            sepaIbanInput.setAttribute("disabled", "disabled");
+        }
+        if(sepaBicWrap) {
+            sepaBicWrap.hide();
+            sepaBicInput.setAttribute("disabled", "disabled");
+        }
+        if(bankGroupWrapAt) {
+            bankGroupWrapAt.hide();
+            bankGroupSelectAt.setAttribute("disabled", "disabled");
+        }
+        if(bankGroupWrapNl) {
+            bankGroupWrapNl.hide();
+            bankGroupSelectNl.setAttribute("disabled", "disabled");
+        }
     }
 
     function enableAccountNumber() {
-        accountNumberWrap.show();
-        accountNumberInput.removeAttribute("disabled");
+        if(accountNumberWrap) {
+            accountNumberWrap.show();
+            accountNumberInput.removeAttribute("disabled");
+        }
     }
 
     function enableBankCode() {
-        bankCodeWrap.show();
-        bankCodeInput.removeAttribute("disabled");
+        if(bankCodeWrap) {
+            bankCodeWrap.show();
+            bankCodeInput.removeAttribute("disabled");
+        }
     }
 
     function enableSepaIban() {
-        sepaIbanWrap.show();
-        sepaIbanInput.removeAttribute("disabled");
+        if(sepaIbanWrap) {
+            sepaIbanWrap.show();
+            sepaIbanInput.removeAttribute("disabled");
+        }
     }
 
     function enableSepaBic() {
-        sepaBicWrap.show();
-        sepaBicInput.removeAttribute("disabled");
+        if(sepaBicWrap) {
+            sepaBicWrap.show();
+            sepaBicInput.removeAttribute("disabled");
+        }
     }
 
     function enableBankGroupAt() {
-        bankGroupWrapAt.show();
-        bankGroupSelectAt.removeAttribute("disabled");
+        if(bankGroupWrapAt) {
+            bankGroupWrapAt.show();
+            bankGroupSelectAt.removeAttribute("disabled");
+        }
     }
 
     function enableBankGroupNl() {
-        bankGroupWrapNl.show();
-        bankGroupSelectNl.removeAttribute("disabled");
+        if(bankGroupWrapNl) {
+            bankGroupWrapNl.show();
+            bankGroupSelectNl.removeAttribute("disabled");
+        }
     }
 }
 

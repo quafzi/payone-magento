@@ -71,13 +71,13 @@
 
     <admin>
         <routers>
-            <payone_licensemanager>
-                <use>admin</use>
-                <args>
-                    <module>Payone_Licensemanager</module>
-                    <frontName>payonelicensemanager</frontName>
-                </args>
-            </payone_licensemanager>
+            <adminhtml>
+				<args>
+					<modules>
+						<payone_licensemanager before="Mage_Adminhtml">Payone_Licensemanager_Adminhtml</payone_licensemanager>
+					</modules>
+				</args>
+			</adminhtml>
         </routers>
     </admin>
 

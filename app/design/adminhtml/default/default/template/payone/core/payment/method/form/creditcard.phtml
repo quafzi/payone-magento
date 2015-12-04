@@ -23,7 +23,6 @@
 
 /** @var $this Payone_Core_Block_Payment_Method_Form_Creditcard */
 $code = $this->getMethodCode();
-$displayCvc = null;
 ?>
 <script>
     var sCCRequestType = '<?php echo $this->getCCRequestType(); ?>'
@@ -121,14 +120,11 @@ $displayCvc = null;
                     <?php
                     foreach ($this->getTypes() as $key => $type) :
                         $selected = $this->getCreditCardType() == $type['code'] ? 'selected="selected"' : '';
-                        if ($displayCvc === null) {
-                            $displayCvc = $type['check_cvc'];
-                        }
                         ?>
                         <option value="<?php echo $key ?>" <?php echo $selected; ?>>
                             <?php echo $type['name'] ?><span><?php echo $type['fee']; ?></span>
                         </option>
-                        <?php endforeach; ?>
+                    <?php endforeach; ?>
                 </select>
                 <input type="hidden" id="<?php echo $code ?>_cc_type" name="payment[cc_type]" value="<?php echo $this->getCreditCardType();?>" class=""/>
             </div>

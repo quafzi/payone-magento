@@ -24,7 +24,7 @@
 <layout>
 
     <!-- Wizard -->
-    <payone_migrator_adminhtml_migration_index>
+    <adminhtml_payonemigrator_migration_index>
         <reference name="head">
             <action method="addJs"><script>payone/migrator/migration.js</script></action>
             <action method="addCss"><name>payone/migrator/migration.css</name></action>
@@ -33,10 +33,10 @@
             <block type="adminhtml/template" name="payone.migration.index"
                    template="payone/migrator/migration/index.phtml" />
         </reference>
-    </payone_migrator_adminhtml_migration_index>
+    </adminhtml_payonemigrator_migration_index>
 
-    <payone_migrator_adminhtml_migration_wizard_page_migrator>
-        <update handle="payone_core_adminhtml_configuration_wizard_page_view" />
+    <adminhtml_payonemigrator_migration_wizard_page_migrator>
+        <update handle="adminhtml_payonecore_configuration_wizard_page_view" />
         <reference name="head">
             <action method="addJs"><script>payone/migrator/migration.js</script></action>
             <action method="addCss"><name>payone/migrator/migration.css</name></action>
@@ -47,6 +47,6 @@
             <block type="adminhtml/template" name="payone.migration.index"
                    template="payone/migrator/migration/index.phtml" />
         </reference>
-    </payone_migrator_adminhtml_migration_wizard_page_migrator>
+    </adminhtml_payonemigrator_migration_wizard_page_migrator>
 
 </layout>

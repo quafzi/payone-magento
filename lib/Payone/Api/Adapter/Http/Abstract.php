@@ -73,7 +73,7 @@ abstract class Payone_Api_Adapter_Http_Abstract
         $this->params[self::SDK_VERSION_KEY] = self::SDK_VERSION;
 
         $responseRaw = $this->doRequest();
-
+        
         $result = $this->parseResponse($responseRaw);
 
         return $result;

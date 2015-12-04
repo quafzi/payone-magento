@@ -38,11 +38,6 @@ class Payone_Core_Helper_Compatibility
         return $this->isModuleActive('Dsdata_NoState');
     }
 
-    public function isEnabledDhlAccount()
-    {
-        return $this->isModuleActive('Dhl_Account');
-    }
-
     public function isEnabledGoMageLightCheckout()
     {
         return $this->isModuleActive('GoMage_Checkout');

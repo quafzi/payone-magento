@@ -56,7 +56,7 @@ class Payone_Api_Adapter_Http_Curl extends Payone_Api_Adapter_Http_Abstract
         curl_setopt($curl, CURLOPT_TIMEOUT, self::DEFAULT_TIMEOUT);
 
         $result = curl_exec($curl);
-
+        
         $this->setRawResponse($result);
 
         if (curl_getinfo($curl, CURLINFO_HTTP_CODE) != 200) {

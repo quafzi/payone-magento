@@ -55,7 +55,7 @@ function nextStepWithAddresscheckOutput(transport, address_type, origSaveMethod)
                 handleCorrectedAddress(response.message.payone_address_corrected, address_type);
                 response.message = response.message.payone_address_corrected.customermessage;
 
-                    transport.responseText = '{"error":1,"message":"' + response.message + '"}';
+                    //transport.responseText = '{"error":1,"message":"' + response.message + '"}';
             }
 
         }
@@ -66,16 +66,32 @@ function nextStepWithAddresscheckOutput(transport, address_type, origSaveMethod)
 
 
 function handleCorrectedAddress(data, address_type) {
-
-    $(address_type + ':street1').value = data.street;
-    $(address_type + ':street2').value = '';
-    $(address_type + ':city').value = data.city;
-    $(address_type + ':postcode').value = data.postcode;
-    Element.show(address_type + '-new-address-form');
-
-
-    var addressSelectBox = $(address_type + '-address-select');
-    if(addressSelectBox != undefined)
-        addressSelectBox.value = '';
-
+    sConfirmMessage  = data.customermessage + "\n\n";
+    sConfirmMessage += data.street + "\n";
+    if(data.street2 != '') {
+        sConfirmMessage += data.street2 + "\n";
+    }
+    sConfirmMessage += data.city + "\n";
+    sConfirmMessage += data.postcode;
+    if(confirm(sConfirmMessage)) {
+        $(address_type + ':street1').value = data.street;
+        $(address_type + ':street2').value = data.street2;
+        $(address_type + ':city').value = data.city;
+        $(address_type + ':postcode').value = data.postcode;
+        Element.show(address_type + '-new-address-form');
+        
+        var addressSelectBox = $(address_type + '-address-select');
+        if(addressSelectBox != undefined)
+            addressSelectBox.value = '';
+    } else {
+        if($(address_type + '-new-address-form') && !$(address_type + "_change_denied")) {
+            var newHiddenInput = document.createElement("input");
+            newHiddenInput.setAttribute("type", "hidden");
+            newHiddenInput.setAttribute("id", address_type + "_change_denied");
+            newHiddenInput.setAttribute("name", address_type + "_change_denied");
+            newHiddenInput.setAttribute("value", "1");
+            
+            document.getElementById(address_type + '-new-address-form').parentNode.appendChild(newHiddenInput);
+        }
+    }
 }

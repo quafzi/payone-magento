@@ -30,7 +30,7 @@
  * @license         <http://www.gnu.org/licenses/> GNU General Public License (GPL 3)
  * @link            http://www.noovias.com
  */
-class Payone_Migrator_Adminhtml_MigrationController
+class Payone_Migrator_Adminhtml_Payonemigrator_MigrationController
     extends Payone_Migrator_Controller_Adminhtml_Abstract
 {
     public function indexAction()

@@ -142,9 +142,9 @@ class Payone_Core_Model_Config_Payment_Method
     protected $paypal_express_image = '';
 
     /**
-     * @var int
+     * @var string
      */
-    protected $check_cvc = 0;
+    protected $check_cvc = 'no';
     /**
      * @var int
      */
@@ -349,7 +349,7 @@ class Payone_Core_Model_Config_Payment_Method
     }
 
     /**
-     * @param int $check_cvc
+     * @param string $check_cvc
      */
     public function setCheckCvc($check_cvc)
     {
@@ -357,10 +357,16 @@ class Payone_Core_Model_Config_Payment_Method
     }
 
     /**
-     * @return int
+     * @return string
      */
     public function getCheckCvc()
     {
+        //backward compatibility to the old 0/1 style
+        if($this->check_cvc == '1') {
+            $this->check_cvc = 'always';
+        } elseif($this->check_cvc == '0') {
+            $this->check_cvc = 'no';
+        }
         return $this->check_cvc;
     }
 
