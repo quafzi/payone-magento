@@ -79,17 +79,17 @@ class Payone_Core_Block_Adminhtml_Sales_Order_View_Tab_TransactionStatus
 
     public function getRowUrl($row)
     {
-        return $this->getUrl('payone_core/adminhtml_protocol_transactionStatus/view', array('id' => $row->getId()));
+        return $this->getUrl('adminhtml/payonecore_protocol_transactionStatus/view', array('id' => $row->getId()));
     }
 
     public function getGridUrl()
     {
-        return $this->getUrl('payone_core/adminhtml_sales_order/transactionStatusGrid', array('_current' => true));
+        return $this->getUrl('adminhtml/payonecore_sales_order/transactionStatusGrid', array('_current' => true));
     }
 
     public function getTabUrl()
     {
-        return $this->getUrl('payone_core/adminhtml_sales_order/transactionStatusGrid', array('_current' => true));
+        return $this->getUrl('adminhtml/payonecore_sales_order/transactionStatusGrid', array('_current' => true));
     }
 
     protected function _prepareCollection()
