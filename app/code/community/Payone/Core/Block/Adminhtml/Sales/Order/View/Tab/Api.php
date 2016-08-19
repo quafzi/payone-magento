@@ -110,7 +110,7 @@ class Payone_Core_Block_Adminhtml_Sales_Order_View_Tab_Api
      */
     public function getGridUrl()
     {
-        return $this->getUrl('payone_core/adminhtml_sales_order/apiGrid', array('_current' => true));
+        return $this->getUrl('adminhtml/payonecore_sales_order/apiGrid', array('_current' => true));
     }
 
     /**
@@ -118,7 +118,7 @@ class Payone_Core_Block_Adminhtml_Sales_Order_View_Tab_Api
      */
     public function getTabUrl()
     {
-        return $this->getUrl('payone_core/adminhtml_sales_order/apiGrid', array('_current' => true));
+        return $this->getUrl('adminhtml/payonecore_sales_order/apiGrid', array('_current' => true));
     }
 
     /**
