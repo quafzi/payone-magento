@@ -14,5 +14,3 @@ Contributions
 =============
 
 Just fork a create pull requests. Nothing new so far.
-
-@KK: can be deleted as soon as changes are merge to original fork.
